@@ -9,9 +9,10 @@
 
 ---
 
-## 🌐 Live Demo
+## 🌐 Live Website
 
-> **[kam-connect.vercel.app](https://kam-connect.vercel.app)** *(Vercel deployment)*
+> ### 🔗 **[https://kam-connect.vercel.app](https://kam-connect.vercel.app)**
+> *Deployed on Vercel — Always live, always free*
 
 **Demo Login — No OTP needed:**
 | Role | What you can do |

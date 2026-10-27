@@ -19,7 +19,7 @@ const uid = (prefix = '') => prefix + '_' + Date.now() + '_' + Math.random().toS
 
 // ── ensure DB is ready before every request ───────────────────────────────────
 app.use(async (req, res, next) => {
-  try { await db.init(); next(); } catch (e) { res.status(500).json({ ok: false, error: 'DB init failed' }); }
+  try { await db.ensureReady(); next(); } catch (e) { res.status(500).json({ ok: false, error: 'DB init failed: ' + e.message }); }
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════

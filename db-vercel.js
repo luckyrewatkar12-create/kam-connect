@@ -22,7 +22,12 @@ async function init() {
     ready = true;
     console.log('[db-vercel] In-memory DB initialised with seed data');
   })();
-  return initPromise;
+  await initPromise;
+}
+
+// ensure DB is ready — call before any query
+async function ensureReady() {
+  if (!ready) await init();
 }
 
 // no-op on Vercel — in-memory only
@@ -183,4 +188,4 @@ function tryParse(v, fallback) {
   try { return JSON.parse(v); } catch { return fallback; }
 }
 
-module.exports = { init, run, all, get, save, parseWorker, parseJob };
+module.exports = { init, ensureReady, run, all, get, save, parseWorker, parseJob };

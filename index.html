@@ -166,6 +166,100 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
   #ai-win{right:calc(50% - 300px + 12px)}
 }
 @media(max-width:500px){.g2{grid-template-columns:1fr}}
+
+/* ── VISUAL FEATURES ─────────────────────────────────────── */
+
+/* Animated gradient hero banner */
+.hero-banner{
+  background:linear-gradient(135deg,#EFF6FF 0%,#F0F9FF 40%,#F5F3FF 70%,#FFF7ED 100%);
+  background-size:300% 300%;
+  animation:hbg 8s ease infinite;
+  padding:24px 16px 20px;
+  position:relative;
+  overflow:hidden;
+}
+@keyframes hbg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* Floating blobs behind hero */
+.hero-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;pointer-events:none;animation:blob-float 6s ease-in-out infinite}
+.hero-blob.b1{width:180px;height:180px;background:rgba(14,165,233,.3);top:-40px;right:-30px;animation-delay:0s}
+.hero-blob.b2{width:140px;height:140px;background:rgba(124,58,237,.25);bottom:-20px;left:10px;animation-delay:2s}
+.hero-blob.b3{width:100px;height:100px;background:rgba(245,158,11,.2);top:40px;left:40%;animation-delay:4s}
+@keyframes blob-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.08)}}
+
+/* Live stats bar */
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#fff;border:1px solid var(--br);border-radius:var(--r);margin:0 16px;box-shadow:0 2px 12px rgba(14,165,233,.08);overflow:hidden}
+.stat-item{padding:14px 10px;text-align:center;border-right:1px solid var(--br);position:relative}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:22px;font-weight:800;color:var(--p);line-height:1;display:block}
+.stat-lbl{font-size:10px;color:var(--tx3);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:3px;display:block}
+.stat-item::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:30px;height:2px;background:var(--p);border-radius:2px;opacity:0;transition:.3s}
+.stat-item:hover::after{opacity:1}
+
+/* Verified badge pulse */
+.vr-pulse{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--ok);background:rgba(16,185,129,.1);padding:3px 9px;border-radius:20px;border:1px solid rgba(16,185,129,.25)}
+.vr-pulse::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ok);display:block;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+
+/* Card shimmer loading skeleton */
+.shimmer{background:linear-gradient(90deg,#f0f0f0 25%,#e0e8f0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:16px;display:block}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Slide-in animation for cards */
+.slide-up{animation:slideUp .4s ease both}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Category icon hover glow */
+.ci:hover .ci-icon{transform:scale(1.15) rotate(-5deg)}
+.ci-icon{transition:.25s;display:block;font-size:24px}
+
+/* Worker card rating bar */
+.rt-bar{height:4px;background:var(--br);border-radius:2px;overflow:hidden;margin-top:6px}
+.rt-fill{height:100%;background:linear-gradient(90deg,var(--ok),var(--acc));border-radius:2px;transition:width .8s ease}
+
+/* Gradient category chips */
+.cat-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:.2s}
+.cat-chip:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+
+/* Online indicator on worker avatars */
+.av-wrap{position:relative;display:inline-block;flex-shrink:0}
+.av-wrap .online-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--ok);border:2px solid #fff}
+.av-wrap .offline-dot{position:absolute;bottom:1px;right:1px;width:10px;height:10px;border-radius:50%;background:var(--tx3);border:2px solid #fff}
+
+/* Trending badge */
+.trend-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:linear-gradient(135deg,#FF6B6B,#FF8E53);color:#fff;border-radius:20px;font-size:10px;font-weight:700}
+
+/* Hot job badge */
+.hot-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;border-radius:20px;font-size:10px;font-weight:700;animation:hot-pulse 2s ease infinite}
+@keyframes hot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 6px rgba(239,68,68,0)}}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Floating action button glow */
+#ai-fab{animation:fab-glow 3s ease-in-out infinite}
+@keyframes fab-glow{0%,100%{box-shadow:0 4px 16px rgba(14,165,233,.45)}50%{box-shadow:0 4px 28px rgba(124,58,237,.6)}}
+
+/* Top bar search focus effect */
+.sbx:focus-within{border-color:var(--p);box-shadow:0 0 0 3px rgba(14,165,233,.1)}
+
+/* Section title accent line */
+.stit-accent{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;position:relative;padding-left:10px}
+.stit-accent::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:4px;height:18px;background:linear-gradient(180deg,var(--p),var(--sec));border-radius:2px}
+
+/* Progress bar for worker skills */
+.skill-progress{margin-top:8px}
+.skill-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;color:var(--tx2)}
+.skill-bar-track{flex:1;height:4px;background:var(--br);border-radius:2px;overflow:hidden}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--p),var(--sec));border-radius:2px}
+
+/* New user welcome animation */
+@keyframes welcome-pop{0%{transform:scale(0.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.welcome-pop{animation:welcome-pop .5s ease both}
+
+/* Toast upgrade */
+#tst{transition:opacity .25s,transform .25s}
 </style>
 </head>
 <body>
@@ -287,32 +381,82 @@ input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
 
     <!-- HOME -->
     <div id="th" class="tc on">
-      <div class="hs">
-        <div style="display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:13px;margin-bottom:14px;cursor:pointer;" onclick="oLoc()">
-          <span style="color:var(--p);">📍</span><span id="ld">Pune, Maharashtra</span><span style="font-size:11px;">▾</span>
+      <!-- Animated Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-blob b1"></div>
+        <div class="hero-blob b2"></div>
+        <div class="hero-blob b3"></div>
+        <div style="position:relative;z-index:1;">
+          <div style="display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:13px;margin-bottom:14px;cursor:pointer;" onclick="oLoc()">
+            <span style="color:var(--p);">📍</span><span id="ld">Pune, Maharashtra</span><span style="font-size:11px;">▾</span>
+          </div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:4px;line-height:1.3;">Hello, <span id="gn" style="background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">there</span> 👋</div>
+          <div style="color:var(--tx2);font-size:13px;margin-bottom:16px;">Find trusted local services &amp; jobs near you</div>
+          <div class="hs2">
+            <input type="text" placeholder="Find services, workers or jobs…" id="hsi" onkeydown="if(event.key==='Enter')hS()">
+            <button style="background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:9px 10px;font-size:16px;" onclick="vS()" title="Voice Search">🎤</button>
+            <button class="btn bp sm" onclick="hS()">Search</button>
+          </div>
+          <div id="rsr" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;"></div>
         </div>
-        <div style="font-size:20px;font-weight:800;margin-bottom:4px;">Hello, <span id="gn">there</span> 👋</div>
-        <div style="color:var(--tx2);font-size:13px;margin-bottom:14px;">What are you looking for today?</div>
-        <div class="hs2">
-          <input type="text" placeholder="Find services, workers or jobs near you" id="hsi" onkeydown="if(event.key==='Enter')hS()">
-          <button style="background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:9px 10px;font-size:16px;" onclick="vS()" title="Voice Search">🎤</button>
-          <button class="btn bp sm" onclick="hS()">Search</button>
+      </div>
+
+      <!-- Live Stats Bar -->
+      <div style="padding:12px 0 0;" class="reveal">
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-num" id="st-workers">8+</span>
+            <span class="stat-lbl">👷 Workers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num" id="st-jobs">8+</span>
+            <span class="stat-lbl">💼 Active Jobs</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">3</span>
+            <span class="stat-lbl">📍 Cities</span>
+          </div>
         </div>
-        <div id="rsr" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;"></div>
       </div>
-      <div style="padding:16px 16px 4px;font-size:15px;font-weight:700;">Quick Actions</div>
-      <div class="qa">
-        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(64,202,215,.15);">🔍</div><div class="qil">Find Services</div></div>
-        <div class="qi" onclick="gT('tj')"><div class="qic" style="background:rgba(124,92,216,.15);">💼</div><div class="qil">Find Jobs</div></div>
-        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(52,211,153,.15);">👷</div><div class="qil">Hire Workers</div></div>
-        <div class="qi" onclick="oPJ()"><div class="qic" style="background:rgba(255,184,48,.15);">📋</div><div class="qil">Post a Job</div></div>
+
+      <!-- Quick Actions -->
+      <div style="padding:16px 16px 4px;" class="stit-accent reveal">Quick Actions <span></span></div>
+      <div class="qa reveal">
+        <div class="qi" onclick="gSrv()">
+          <div class="qic" style="background:linear-gradient(135deg,rgba(14,165,233,.18),rgba(14,165,233,.06));">🔍</div>
+          <div class="qil">Find Services</div>
+        </div>
+        <div class="qi" onclick="gT('tj')">
+          <div class="qic" style="background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(124,58,237,.06));">💼</div>
+          <div class="qil">Find Jobs</div>
+        </div>
+        <div class="qi" onclick="gSrv()">
+          <div class="qic" style="background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(16,185,129,.06));">👷</div>
+          <div class="qil">Hire Workers</div>
+        </div>
+        <div class="qi" onclick="oPJ()">
+          <div class="qic" style="background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(245,158,11,.06));">📋</div>
+          <div class="qil">Post a Job</div>
+        </div>
       </div>
-      <div style="padding:16px 16px 8px;" class="stit">Service Categories <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
-      <div class="cg" id="cg"></div>
-      <div style="padding:16px 16px 8px;" class="stit">Nearby Workers <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+
+      <div style="padding:16px 16px 8px;" class="stit-accent reveal">Service Categories <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+      <div class="cg reveal" id="cg"></div>
+      <div style="padding:16px 16px 8px;" class="stit-accent reveal">⭐ Top Workers <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
       <div class="sx" style="padding:0 16px;" id="hw"></div>
-      <div style="padding:16px 16px 8px;" class="stit">Latest Jobs <button class="btn bg sm" onclick="gT('tj')">See All →</button></div>
+      <div style="padding:16px 16px 8px;" class="stit-accent reveal">🔥 Latest Jobs <button class="btn bg sm" onclick="gT('tj')">See All →</button></div>
       <div style="padding:0 16px;" id="hj"></div>
+
+      <!-- Trust Banner -->
+      <div style="margin:16px;padding:16px;background:linear-gradient(135deg,#EFF6FF,#F5F3FF);border-radius:var(--r);border:1px solid rgba(14,165,233,.15);text-align:center;" class="reveal">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;">🛡 Why Choose Kam Connect?</div>
+        <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;">
+          <div style="text-align:center;"><div style="font-size:22px;">✅</div><div style="font-size:10px;color:var(--tx2);font-weight:600;">Verified Workers</div></div>
+          <div style="text-align:center;"><div style="font-size:22px;">⭐</div><div style="font-size:10px;color:var(--tx2);font-weight:600;">Real Reviews</div></div>
+          <div style="text-align:center;"><div style="font-size:22px;">⚡</div><div style="font-size:10px;color:var(--tx2);font-weight:600;">Instant Connect</div></div>
+          <div style="text-align:center;"><div style="font-size:22px;">🆓</div><div style="font-size:10px;color:var(--tx2);font-weight:600;">Free to Use</div></div>
+        </div>
+      </div>
       <div style="height:16px;"></div>
     </div>
 
@@ -1382,6 +1526,76 @@ function aiQuick(q) {
   document.getElementById('ai-q').value = q;
   AI.send(q);
 }
+
+// ── VISUAL FEATURES JS ───────────────────────────────────────
+
+// Scroll reveal observer
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+function initReveal() {
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+}
+
+// Animated counter
+function animCount(el, target, suffix='') {
+  let start = 0;
+  const dur = 1200;
+  const step = target / (dur / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start) + suffix;
+  }, 16);
+}
+
+// Update stats bar with live counts + animation
+function updateStatsBar() {
+  const wEl = document.getElementById('st-workers');
+  const jEl = document.getElementById('st-jobs');
+  if (!wEl || !jEl) return;
+  animCount(wEl, W.length, '+');
+  animCount(jEl, J.length + S.pj.length, '+');
+}
+
+// Category grid with enhanced icons
+const origRHome = rHome;
+rHome = function() {
+  origRHome();
+  updateStatsBar();
+  setTimeout(initReveal, 100);
+  // Upgrade category icons with ci-icon class
+  document.querySelectorAll('.cg .ci').forEach(ci => {
+    const icon = ci.querySelector('div:first-child');
+    if (icon && !icon.classList.contains('ci-icon')) icon.classList.add('ci-icon');
+  });
+};
+
+// Add slide-up animation to worker & job cards as they are rendered
+const origWC = wC;
+wC = function(w, mini) {
+  const html = origWC(w, mini);
+  return html.replace('class="wc', 'class="wc slide-up');
+};
+
+const origJC = jC;
+jC = function(j) {
+  const html = origJC(j);
+  return html.replace('class="jc', 'class="jc slide-up');
+};
+
+// Run reveal on tab switch
+const origGT = gT;
+gT = function(t) {
+  origGT(t);
+  setTimeout(initReveal, 80);
+  if (t === 'th') setTimeout(updateStatsBar, 200);
+};
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(initReveal, 300);
+});
 </script>
 </body>
 </html>
