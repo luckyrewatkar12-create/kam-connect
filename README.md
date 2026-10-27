@@ -165,44 +165,6 @@ The built-in **Kam AI** assistant can answer:
 
 ---
 
-## 🚀 Deploy to Vercel
-
-1. Fork this repository
-2. Go to [vercel.com](https://vercel.com) → **New Project**
-3. Import your forked repo
-4. Leave all settings as default — `vercel.json` handles everything
-5. Click **Deploy** ✅
-6. Get your live link: `https://your-project.vercel.app`
-
-> **Note:** On Vercel, the database runs in-memory and resets on cold starts. Demo seed data always comes back automatically. For persistent storage, integrate [PlanetScale](https://planetscale.com) or [Supabase](https://supabase.com).
-
----
-
-## 📸 Screenshots
-
-| Screen | Description |
-|---|---|
-| 🏠 **Home** | Hero search, quick actions, service categories, nearby workers |
-| 🔍 **Search** | Full-text search across workers, jobs, services |
-| 💼 **Jobs** | Filter by type, category, location |
-| 👷 **Services** | Browse workers by category with availability filter |
-| 🤖 **Kam AI** | Floating chatbot with live platform data |
-| 👤 **Profile** | Role-based profile (Customer / Worker / Employer / Admin) |
-| 🏢 **Dashboard** | Employer dashboard with job & applicant management |
-| 🛡 **Admin** | Platform moderation panel |
-
----
-
-## 🤝 Contributing
-
-1. Fork the repo
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m "Add your feature"`
-4. Push: `git push origin feature/your-feature`
-5. Open a Pull Request
-
----
-
 ## 📄 License
 
 MIT License — free to use, modify and distribute.
