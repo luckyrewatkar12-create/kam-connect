@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAM CONNECT — Local Services &amp; Hiring Platform</title>
+<style>
+:root{
+  --bg:#0D1220;--sf:#17202F;--s2:#1E2C40;
+  --p:#40CAD7;--pd:#2BAAB6;--sec:#7C5CD8;--acc:#FFB830;
+  --ok:#34D399;--wn:#FBBF24;--er:#F87171;--info:#60A5FA;
+  --tx:#FFFFFF;--tx2:#8DA4BF;--tx3:#4A6580;--br:#243348;
+  --r:14px;--rs:8px;--rl:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",system-ui,sans-serif;font-size:14px;overflow-x:hidden}
+a{color:var(--p);text-decoration:none}
+input,textarea,select{background:var(--s2);color:var(--tx);border:1.5px solid var(--br);border-radius:var(--rs);padding:12px 14px;font-family:inherit;font-size:14px;width:100%;outline:none;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--p)}
+select option{background:var(--s2)}
+button{cursor:pointer;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:var(--r);font-weight:600;font-size:14px;border:none;transition:.18s}
+.bp{background:var(--p);color:#000}.bp:hover{background:var(--pd);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--p);border:1.5px solid var(--p)}.bo:hover{background:rgba(64,202,215,.1)}
+.bg{background:transparent;color:var(--tx2);border:1.5px solid var(--br)}.bg:hover{border-color:var(--p);color:var(--p)}
+.bd{background:var(--er);color:#fff}
+.bsuc{background:var(--ok);color:#000}
+.sm{padding:7px 14px;font-size:12px;border-radius:var(--rs)}
+.fw{width:100%;justify-content:center}
+.btn:disabled{opacity:.5;pointer-events:none}
+.card{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;transition:.15s}
+.card:hover{border-color:rgba(64,202,215,.25)}
+.bdg{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.bdi{background:rgba(96,165,250,.15);color:var(--info)}
+.bdok{background:rgba(52,211,153,.15);color:var(--ok)}
+.bdw{background:rgba(251,191,36,.15);color:var(--wn)}
+.bder{background:rgba(248,113,113,.15);color:var(--er)}
+.bds{background:rgba(124,92,216,.15);color:var(--sec)}
+.bdp{background:rgba(64,202,215,.15);color:var(--p)}
+.bdm{background:rgba(74,101,128,.15);color:var(--tx3)}
+.chip{display:inline-flex;align-items:center;padding:4px 10px;background:var(--s2);border:1px solid var(--br);border-radius:20px;font-size:12px;color:var(--tx2)}
+.av{border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--p);flex-shrink:0}
+.stars{color:var(--acc);font-size:13px}
+.pg{display:none;flex-direction:column;min-height:100vh}.pg.on{display:flex}
+.tc{display:none}.tc.on{display:block}
+.topb{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--br);padding:10px 16px;display:flex;align-items:center;gap:10px}
+.logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sbx{flex:1;display:flex;align-items:center;background:var(--s2);border:1.5px solid var(--br);border-radius:10px;padding:0 12px;gap:8px}
+.sbx input{border:none;background:transparent;padding:9px 0;font-size:13px;width:100%}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--sf);border-top:1px solid var(--br);display:flex;padding:6px 0 10px}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px;cursor:pointer;color:var(--tx3);font-size:10px;transition:.15s;position:relative}
+.ni .ic{font-size:22px}.ni.on{color:var(--p)}
+.nbg{position:absolute;top:2px;right:20%;background:var(--er);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;min-width:16px;text-align:center}
+.pc{flex:1;overflow-y:auto;padding-bottom:80px}
+.hs{background:linear-gradient(160deg,var(--sf),var(--bg));padding:20px 16px 16px}
+.hs2{display:flex;align-items:center;background:var(--s2);border:1.5px solid var(--br);border-radius:12px;padding:4px 4px 4px 14px;gap:8px}
+.hs2 input{border:none;background:transparent;flex:1;padding:8px 0;font-size:14px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px}
+.qi{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.qic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.qil{font-size:11px;font-weight:600;text-align:center;color:var(--tx2)}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px}
+.ci{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--sf);border:1px solid var(--br);border-radius:12px;padding:12px 8px;cursor:pointer;transition:.15s}
+.ci:hover{border-color:var(--p);transform:translateY(-2px)}
+.stit{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.sx{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.sx::-webkit-scrollbar{display:none}
+.wc{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:14px;cursor:pointer;transition:.15s;margin-bottom:10px}
+.wc:hover{border-color:rgba(64,202,215,.3);transform:translateY(-2px)}
+.jc{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:14px;cursor:pointer;transition:.15s;margin-bottom:10px}
+.jc:hover{border-color:rgba(64,202,215,.3)}
+.fr{display:flex;gap:8px;padding:10px 16px;overflow-x:auto;scrollbar-width:none}
+.fr::-webkit-scrollbar{display:none}
+.fc{flex-shrink:0;padding:6px 14px;background:var(--sf);border:1.5px solid var(--br);border-radius:20px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;transition:.15s;white-space:nowrap}
+.fc.on{background:rgba(64,202,215,.15);border-color:var(--p);color:var(--p)}
+.mo{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);align-items:flex-end;justify-content:center}
+.mo.on{display:flex}
+.md{background:var(--sf);border-radius:var(--rl) var(--rl) 0 0;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:20px;animation:su .25s ease}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhd{width:40px;height:4px;background:var(--br);border-radius:2px;margin:0 auto 16px}
+.cls{background:var(--s2);border:none;color:var(--tx2);width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.dh{background:linear-gradient(160deg,var(--s2),var(--sf));padding:20px 16px}
+.bkb{display:inline-flex;align-items:center;gap:6px;color:var(--tx2);background:var(--s2);border:none;border-radius:var(--rs);padding:8px 12px;font-size:13px;cursor:pointer;margin-bottom:16px}
+.bkb:hover{color:var(--p)}
+.ir{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--br);font-size:13px}
+.ir:last-child{border:none}.irl{color:var(--tx2);min-width:100px}.irv{font-weight:500;flex:1}
+.fg{margin-bottom:14px}.fl{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:6px;display:block}
+.fe{font-size:11px;color:var(--er);margin-top:4px;display:none}
+.fg.er input,.fg.er select,.fg.er textarea{border-color:var(--er)}.fg.er .fe{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px}
+.sc{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:14px}
+.sc .sv{font-size:26px;font-weight:800;color:var(--p)}.sc .sl{font-size:12px;color:var(--tx2)}
+.tbbar{display:flex;border-bottom:1px solid var(--br);overflow-x:auto;padding:0 16px;scrollbar-width:none}
+.tbbar::-webkit-scrollbar{display:none}
+.tbt{padding:11px 16px;font-size:13px;font-weight:600;color:var(--tx2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s}
+.tbt.on{color:var(--p);border-bottom-color:var(--p)}
+.otp{display:flex;gap:10px;justify-content:center}
+.oi{width:48px;height:54px;text-align:center;font-size:20px;font-weight:700;border-radius:10px}
+.cb{max-width:72%;padding:10px 14px;border-radius:14px;font-size:13px}
+.cb.me{background:var(--p);color:#000;margin-left:auto;border-bottom-right-radius:4px}
+.cb.th{background:var(--s2);border-bottom-left-radius:4px}
+.ni2{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--br);cursor:pointer;transition:.15s}
+.ni2:hover{background:var(--s2)}.ni2.ur{background:rgba(64,202,215,.04)}
+.cli{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--br);cursor:pointer;align-items:center}
+.cli:hover{background:var(--s2)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot.y{background:var(--ok)}.dot.n{background:var(--er)}
+.avd{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600}
+.avd.y{color:var(--ok)}.avd.n{color:var(--er)}
+.rtb{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--br);color:var(--tx2);transition:.15s}
+.rtb.on{background:var(--p);color:#000;border-color:var(--p)}
+.ph{background:linear-gradient(160deg,var(--s2),var(--sf));padding:24px 16px;text-align:center}
+.rt{display:flex;gap:8px;justify-content:center;padding:12px 16px;border-bottom:1px solid var(--br)}
+.is{padding:16px}
+.ib{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.ib h3{font-size:13px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.ar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+#tst{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--s2);color:var(--tx);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:9999;display:none;border:1px solid var(--br);box-shadow:0 4px 20px rgba(0,0,0,.4);white-space:nowrap}
+#tst.sh{display:block;animation:fiu .25s ease}
+#tst.ok{border-color:var(--ok);color:var(--ok)}
+#tst.er{border-color:var(--er);color:var(--er)}
+@keyframes fiu{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+hr{border:none;border-top:1px solid var(--br);margin:12px 0}
+.mt{margin-top:8px}.mt2{margin-top:16px}.mb{margin-bottom:8px}.mb2{margin-bottom:16px}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+@media(min-width:768px){
+  .bnav,.topb{max-width:600px;left:50%;transform:translateX(-50%);border-left:1px solid var(--br);border-right:1px solid var(--br)}
+  .pc{max-width:600px;margin:0 auto}
+}
+@media(max-width:500px){.g2{grid-template-columns:1fr}.qa{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div id="tst"></div>
+
+<!-- ═══════════════════ ONBOARDING ═══════════════════ -->
+<div id="pob" class="pg on">
+  <div style="flex:1;display:flex;flex-direction:column;">
+    <div id="os0" style="display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:140px;height:140px;border-radius:36px;background:linear-gradient(135deg,#40CAD7,#2BAAB6);display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:36px;">🔍</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Find Trusted Local Services</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Discover plumbers, electricians, painters and more near you — with real ratings and reviews.</div>
+    </div>
+    <div id="os1" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:140px;height:140px;border-radius:36px;background:linear-gradient(135deg,#7C5CD8,#5A3DBB);display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:36px;">💼</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Discover Nearby Work</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Find daily-wage, part-time and full-time opportunities in your city. Apply with one tap.</div>
+    </div>
+    <div id="os2" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:140px;height:140px;border-radius:36px;background:linear-gradient(135deg,#FFB830,#E09010);display:flex;align-items:center;justify-content:center;font-size:64px;margin-bottom:36px;">🤝</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Connect &amp; Grow</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Employers find skilled workers. Workers build careers. Communities thrive together.</div>
+    </div>
+  </div>
+  <div style="padding:0 24px 40px;">
+    <div id="odd" style="display:flex;justify-content:center;gap:8px;margin-bottom:24px;">
+      <div class="od" style="width:24px;height:8px;background:var(--p);border-radius:4px;transition:.3s;"></div>
+      <div class="od" style="width:8px;height:8px;background:var(--s2);border-radius:4px;transition:.3s;"></div>
+      <div class="od" style="width:8px;height:8px;background:var(--s2);border-radius:4px;transition:.3s;"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px;">
+      <button class="btn bg sm" onclick="skO()">Skip</button>
+      <button class="btn bp" id="obn" style="flex:1;max-width:220px;justify-content:center;" onclick="nxO()">Continue</button>
+    </div>
+    <div style="display:flex;justify-content:center;gap:8px;">
+      <button class="btn bg sm" onclick="sL('en')">EN</button>
+      <button class="btn bg sm" onclick="sL('hi')">हिं</button>
+      <button class="btn bg sm" onclick="sL('mr')">मर</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ LOGIN ═══════════════════ -->
+<div id="pli" class="pg">
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+    <div style="width:100%;max-width:420px;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">⚡ Kam Connect</div>
+        <div style="color:var(--tx2);font-size:13px;margin-top:4px;">Connect. Work. Grow.</div>
+      </div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Welcome Back 👋</div>
+      <div style="color:var(--tx2);margin-bottom:24px;font-size:13px;">Sign in with your phone number to continue</div>
+      <div class="fg" id="fgp">
+        <label class="fl">Phone Number</label>
+        <div style="position:relative;">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:16px;pointer-events:none;">📱</span>
+          <input type="tel" id="phi" placeholder="+91 98765 43210" maxlength="15" style="padding-left:38px;">
+        </div>
+        <div class="fe">Please enter a valid phone number</div>
+      </div>
+      <button class="btn bp fw mt" onclick="sOtp()">Send OTP</button>
+      <div style="margin:20px 0;text-align:center;position:relative;"><hr><span style="background:var(--bg);padding:0 12px;color:var(--tx3);font-size:12px;position:relative;z-index:1;">OR</span></div>
+      <div style="background:rgba(64,202,215,.08);border:1px solid rgba(64,202,215,.25);border-radius:var(--r);padding:14px;text-align:center;">
+        <div style="font-size:12px;color:var(--tx2);margin-bottom:10px;">🎭 <strong>Demo Mode</strong> — No OTP required</div>
+        <div style="display:flex;gap:8px;flex-direction:column;">
+          <button class="btn bo fw sm" onclick="dL('customer')">👤 Sign in as Customer</button>
+          <button class="btn bo fw sm" onclick="dL('worker')">🔧 Sign in as Worker</button>
+          <button class="btn bo fw sm" onclick="dL('employer')">🏢 Sign in as Employer</button>
+          <button class="btn bg fw sm" onclick="dL('admin')">🛡 Sign in as Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ OTP ═══════════════════ -->
+<div id="pot" class="pg">
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+    <div style="width:100%;max-width:420px;">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">⚡ Kam Connect</div>
+      </div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Verify OTP 🔐</div>
+      <div style="color:var(--tx2);margin-bottom:8px;font-size:13px;">Enter the 6-digit code sent to</div>
+      <div id="opd" style="color:var(--p);font-weight:700;margin-bottom:24px;"></div>
+      <div class="otp">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,0)" id="o0">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,1)" id="o1">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,2)" id="o2">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,3)" id="o3">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,4)" id="o4">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,5)" id="o5">
+      </div>
+      <div id="oe" style="color:var(--er);font-size:12px;text-align:center;margin-top:8px;display:none;">Invalid OTP. Use <strong>123456</strong> for demo.</div>
+      <button class="btn bp fw mt2" onclick="vOtp()">Verify &amp; Sign In</button>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:var(--tx2);">Resend: <button class="btn bg sm" id="reb" onclick="rOtp()" style="display:inline-flex;">Resend (<span id="cd">30</span>s)</button></div>
+      <div style="text-align:center;margin-top:10px;"><button class="btn bg sm" onclick="sP('pli')">← Change Number</button></div>
+      <div style="background:rgba(64,202,215,.08);border:1px solid rgba(64,202,215,.2);border-radius:8px;padding:10px;margin-top:16px;font-size:12px;color:var(--tx2);text-align:center;">Demo OTP: <strong style="color:var(--p);">123456</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ MAIN APP ═══════════════════ -->
+<div id="pap" class="pg" style="flex-direction:column;">
+
+  <!-- Topbar -->
+  <div class="topb">
+    <div class="logo">⚡ Kam</div>
+    <div class="sbx">
+      <span style="color:var(--tx3);font-size:16px;">🔍</span>
+      <input type="text" placeholder="Search services, workers, jobs…" id="tsi" onkeydown="if(event.key==='Enter')tS()">
+    </div>
+    <button class="btn bg sm" onclick="gT('tn')" style="padding:8px;border-radius:50%;min-width:0;position:relative;">
+      🔔<span id="nd" style="position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--er);border-radius:50%;border:2px solid var(--bg);display:none;"></span>
+    </button>
+    <button class="btn bg sm" onclick="gT('tp')" style="padding:8px;border-radius:50%;min-width:0;font-size:18px;">👤</button>
+  </div>
+
+  <div class="pc" id="mc">
+
+    <!-- ── HOME ── -->
+    <div id="th" class="tc on">
+      <div class="hs">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:13px;margin-bottom:14px;cursor:pointer;" onclick="oLoc()">
+          <span style="color:var(--p);">📍</span><span id="ld">Pune, Maharashtra</span><span style="font-size:11px;">▾</span>
+        </div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px;">Hello, <span id="gn">there</span> 👋</div>
+        <div style="color:var(--tx2);font-size:13px;margin-bottom:14px;">What are you looking for today?</div>
+        <div class="hs2">
+          <input type="text" placeholder="Find services, workers or jobs near you" id="hsi" onkeydown="if(event.key==='Enter')hS()">
+          <button style="background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:9px 10px;font-size:16px;" onclick="vS()" title="Voice Search">🎤</button>
+          <button class="btn bp sm" onclick="hS()">Search</button>
+        </div>
+        <div id="rsr" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;"></div>
+      </div>
+      <div style="padding:16px 16px 4px;font-size:15px;font-weight:700;">Quick Actions</div>
+      <div class="qa">
+        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(64,202,215,.15);">🔍</div><div class="qil">Find Services</div></div>
+        <div class="qi" onclick="gT('tj')"><div class="qic" style="background:rgba(124,92,216,.15);">💼</div><div class="qil">Find Jobs</div></div>
+        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(52,211,153,.15);">👷</div><div class="qil">Hire Workers</div></div>
+        <div class="qi" onclick="oPJ()"><div class="qic" style="background:rgba(255,184,48,.15);">📋</div><div class="qil">Post a Job</div></div>
+      </div>
+      <div style="padding:16px 16px 8px;" class="stit">Service Categories <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+      <div class="cg" id="cg"></div>
+      <div style="padding:16px 16px 8px;" class="stit">Nearby Workers <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+      <div class="sx" style="padding:0 16px;" id="hw"></div>
+      <div style="padding:16px 16px 8px;" class="stit">Latest Jobs <button class="btn bg sm" onclick="gT('tj')">See All →</button></div>
+      <div style="padding:0 16px;" id="hj"></div>
+      <div style="height:16px;"></div>
+    </div>
+
+    <!-- ── SEARCH ── -->
+    <div id="ts" class="tc">
+      <div style="padding:14px 16px 0;">
+        <div class="hs2"><input type="text" placeholder="Search services, workers, jobs…" id="smi" oninput="lS(this.value)"><button class="btn bp sm" onclick="lS(document.getElementById('smi').value)">Go</button></div>
+      </div>
+      <div class="fr" id="sf">
+        <div class="fc on" onclick="sST('all',this)">All</div>
+        <div class="fc" onclick="sST('workers',this)">Workers</div>
+        <div class="fc" onclick="sST('jobs',this)">Jobs</div>
+        <div class="fc" onclick="sST('services',this)">Services</div>
+      </div>
+      <div style="padding:0 16px;" id="sr">
+        <div style="padding:40px 0;text-align:center;color:var(--tx3);">
+          <div style="font-size:40px;margin-bottom:12px;">🔍</div>
+          <div>Type to search for workers, jobs or services</div>
+          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" id="sug"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── JOBS ── -->
+    <div id="tj" class="tc">
+      <div style="padding:16px 16px 0;">
+        <div style="font-size:20px;font-weight:800;">Job Listings</div>
+        <div id="jc2" style="font-size:13px;color:var(--tx2);margin-top:2px;">Loading…</div>
+      </div>
+      <div class="fr" id="jfr">
+        <div class="fc on" onclick="fJ('',this)">All</div>
+        <div class="fc" onclick="fJ('Full-time',this)">Full-time</div>
+        <div class="fc" onclick="fJ('Part-time',this)">Part-time</div>
+        <div class="fc" onclick="fJ('Daily Wage',this)">Daily Wage</div>
+        <div class="fc" onclick="fJ('Temporary',this)">Temporary</div>
+        <div class="fc" onclick="fJ('Contract',this)">Contract</div>
+      </div>
+      <div class="fr">
+        <div class="fc on" onclick="fJC('',this)">All Categories</div>
+        <div class="fc" onclick="fJC('Plumbing',this)">Plumbing</div>
+        <div class="fc" onclick="fJC('Electrical',this)">Electrical</div>
+        <div class="fc" onclick="fJC('Carpentry',this)">Carpentry</div>
+        <div class="fc" onclick="fJC('Cleaning',this)">Cleaning</div>
+        <div class="fc" onclick="fJC('Delivery',this)">Delivery</div>
+        <div class="fc" onclick="fJC('Painting',this)">Painting</div>
+        <div class="fc" onclick="fJC('Gardening',this)">Gardening</div>
+        <div class="fc" onclick="fJC('Mechanic',this)">Mechanic</div>
+      </div>
+      <div style="padding:0 16px;" id="jl"></div>
+    </div>
+
+    <!-- ── SERVICES ── -->
+    <div id="tsv" class="tc">
+      <div style="padding:16px 16px 0;">
+        <div style="font-size:20px;font-weight:800;">Local Services</div>
+        <div style="font-size:13px;color:var(--tx2);">Find skilled workers near you</div>
+      </div>
+      <div class="fr" id="svf">
+        <div class="fc on" onclick="fSv('',this)">All</div>
+        <div class="fc" onclick="fSv('Plumbing',this)">🔧 Plumbing</div>
+        <div class="fc" onclick="fSv('Electrical',this)">⚡ Electrical</div>
+        <div class="fc" onclick="fSv('Carpentry',this)">🪚 Carpentry</div>
+        <div class="fc" onclick="fSv('Painting',this)">🖌️ Painting</div>
+        <div class="fc" onclick="fSv('Cleaning',this)">🧹 Cleaning</div>
+        <div class="fc" onclick="fSv('Mechanic',this)">🔩 Mechanic</div>
+        <div class="fc" onclick="fSv('Gardening',this)">🌿 Gardening</div>
+        <div class="fc" onclick="fSv('Delivery',this)">🚚 Delivery</div>
+      </div>
+      <div style="padding:8px 16px;display:flex;gap:8px;align-items:center;">
+        <input type="text" placeholder="Search by name or skill…" id="svs" oninput="fSvS(this.value)" style="border-radius:20px;padding:8px 14px;font-size:13px;">
+        <button class="fc" id="avb" onclick="tAv(this)">Available Only</button>
+      </div>
+      <div style="padding:0 16px;" id="svl"></div>
+    </div>
+
+    <!-- ── PROFILE ── -->
+    <div id="tp" class="tc">
+      <div class="ph" id="pfh"></div>
+      <div class="rt" id="prt"></div>
+      <div id="pfb"></div>
+    </div>
+
+    <!-- ── NOTIFICATIONS ── -->
+    <div id="tn" class="tc">
+      <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:20px;font-weight:800;">Notifications</div>
+        <button class="btn bg sm" onclick="mAR()">Mark all read</button>
+      </div>
+      <div id="nl"></div>
+    </div>
+
+    <!-- ── MESSAGES ── -->
+    <div id="tm" class="tc">
+      <div style="padding:16px;font-size:20px;font-weight:800;">Messages</div>
+      <div id="cl2"></div>
+    </div>
+
+    <!-- ── EMPLOYER DASHBOARD ── -->
+    <div id="te" class="tc">
+      <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-size:20px;font-weight:800;">Employer Dashboard</div><div id="end" style="font-size:13px;color:var(--tx2);">Loading…</div></div>
+        <button class="btn bp sm" onclick="oPJ()">+ Post Job</button>
+      </div>
+      <div class="sg" id="es"></div>
+      <div class="tbbar" id="etb">
+        <button class="tbt on" onclick="eT('active',this)">Active Jobs</button>
+        <button class="tbt" onclick="eT('drafts',this)">Drafts</button>
+        <button class="tbt" onclick="eT('closed',this)">Closed</button>
+        <button class="tbt" onclick="eT('apps',this)">Applications</button>
+      </div>
+      <div id="etc" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- ── ADMIN ── -->
+    <div id="ta" class="tc">
+      <div style="padding:16px;">
+        <div style="font-size:20px;font-weight:800;">🛡 Admin Panel</div>
+        <div style="font-size:13px;color:var(--tx2);">Platform management &amp; moderation</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px;" id="as"></div>
+      <div class="tbbar">
+        <button class="tbt on" onclick="aT('rpts',this)">Reports</button>
+        <button class="tbt" onclick="aT('wrk',this)">Workers</button>
+        <button class="tbt" onclick="aT('emp',this)">Employers</button>
+        <button class="tbt" onclick="aT('rev',this)">Reviews</button>
+      </div>
+      <div id="ac2" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- ── WORKER DETAIL ── -->
+    <div id="twd" class="tc"><div id="wdc"></div></div>
+
+    <!-- ── JOB DETAIL ── -->
+    <div id="tjd" class="tc"><div id="jdc"></div></div>
+
+    <!-- ── POST JOB ── -->
+    <div id="tpj" class="tc">
+      <!-- Form -->
+      <div id="pjf">
+        <div style="padding:16px;">
+          <button class="bkb" onclick="gB()">← Back</button>
+          <div style="font-size:20px;font-weight:800;margin-bottom:4px;" id="pjt">Post a New Job</div>
+          <div style="font-size:13px;color:var(--tx2);">Fill in details to attract the right workers</div>
+        </div>
+        <div style="padding:0 16px 24px;">
+          <div class="fg" id="fgjt"><label class="fl">Job Title *</label><input type="text" id="jti" placeholder="e.g. Plumber needed for bathroom renovation"><div class="fe">Required</div></div>
+          <div class="fg" id="fgjc"><label class="fl">Category *</label><select id="jca"><option value="">Select category…</option><option>Plumbing</option><option>Electrical</option><option>Carpentry</option><option>Painting</option><option>Construction</option><option>Cleaning</option><option>Mechanic</option><option>Delivery</option><option>Gardening</option><option>Home Repair</option><option>Other</option></select><div class="fe">Required</div></div>
+          <div class="fg"><label class="fl">Description *</label><textarea id="jde" rows="4" placeholder="Describe the work, requirements, and skills needed…"></textarea></div>
+          <div class="fg"><label class="fl">Required Skills (comma separated)</label><input type="text" id="jsk" placeholder="e.g. Plumbing, Pipe Fitting, Drain Cleaning"></div>
+          <div class="g2">
+            <div class="fg"><label class="fl">Workers Needed</label><input type="number" id="jwn" value="1" min="1"></div>
+            <div class="fg"><label class="fl">Employment Type</label><select id="jty"><option>Full-time</option><option>Part-time</option><option>Daily Wage</option><option>Temporary</option><option>Contract</option><option>Apprenticeship</option></select></div>
+          </div>
+          <div class="g2">
+            <div class="fg"><label class="fl">Min Wage (₹)</label><input type="number" id="jwi" placeholder="500"></div>
+            <div class="fg"><label class="fl">Max Wage (₹)</label><input type="number" id="jwa" placeholder="800"></div>
+          </div>
+          <div class="fg"><label class="fl">Pay Frequency</label><select id="jfq"><option>Per Day</option><option>Per Week</option><option>Per Month</option><option>Per Job</option></select></div>
+          <div class="g2">
+            <div class="fg"><label class="fl">City *</label><input type="text" id="jci" value="Pune" placeholder="City"></div>
+            <div class="fg"><label class="fl">Locality</label><input type="text" id="jlo" placeholder="Locality"></div>
+          </div>
+          <div class="fg"><label class="fl">Working Hours</label><input type="text" id="jhr" placeholder="8am–6pm, Mon–Sat"></div>
+          <div class="g2">
+            <div class="fg"><label class="fl">Start Date</label><input type="date" id="jsd"></div>
+            <div class="fg"><label class="fl">Application Deadline</label><input type="date" id="jdl"></div>
+          </div>
+          <div class="fg"><label class="fl">Contact Phone</label><input type="tel" id="jph" placeholder="+91 98765 43210"></div>
+          <div style="display:flex;gap:10px;margin-top:8px;">
+            <button class="btn bg" style="flex:1;justify-content:center;" onclick="sDft()">Save Draft</button>
+            <button class="btn bo" style="flex:1;justify-content:center;" onclick="pvJ()">Preview</button>
+            <button class="btn bp" style="flex:1;justify-content:center;" onclick="pbJ()">Publish ✓</button>
+          </div>
+        </div>
+      </div>
+      <!-- Preview panel (hidden by default) -->
+      <div id="pjpv" style="display:none;padding:20px 16px 32px;"></div>
+    </div>
+
+    <!-- ── APPLY ── -->
+    <div id="tap" class="tc">
+      <div style="padding:16px;">
+        <button class="bkb" onclick="gB()">← Back</button>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px;" id="ajt">Apply for Job</div>
+        <div style="font-size:13px;color:var(--tx2);" id="aen">Employer</div>
+      </div>
+      <div style="padding:0 16px 24px;">
+        <div class="card mb2"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">Your Profile</div><div id="app"></div></div>
+        <div class="fg"><label class="fl">Cover Note (optional)</label><textarea id="ano" rows="4" placeholder="Tell the employer why you are the best fit for this job…"></textarea></div>
+        <div id="aw" style="display:none;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:8px;padding:12px;margin-bottom:12px;font-size:12px;color:var(--wn);"></div>
+        <button class="btn bp fw" id="asb" onclick="sApp()">✓ Submit Application</button>
+        <div style="font-size:11px;color:var(--tx3);text-align:center;margin-top:8px;">Your profile and contact details will be shared with the employer</div>
+      </div>
+    </div>
+
+    <!-- ── EDIT WORKER PROFILE ── -->
+    <div id="tep" class="tc">
+      <div style="padding:16px;">
+        <button class="bkb" onclick="gB()">← Back</button>
+        <div style="font-size:20px;font-weight:800;">Edit Worker Profile</div>
+      </div>
+      <div style="padding:0 16px 24px;">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div class="av" style="width:80px;height:80px;font-size:32px;margin:0 auto 10px;" id="eap">S</div>
+          <button class="btn bg sm" onclick="upPh()">📷 Change Photo</button>
+        </div>
+        <div class="fg"><label class="fl">Full Name *</label><input type="text" id="epn" placeholder="Your full name"></div>
+        <div class="fg"><label class="fl">Bio / About</label><textarea id="epb" rows="3" placeholder="Describe your experience and expertise…"></textarea></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">City *</label><input type="text" id="epc" placeholder="Mumbai"></div>
+          <div class="fg"><label class="fl">Locality</label><input type="text" id="epl" placeholder="Andheri"></div>
+        </div>
+        <div class="fg"><label class="fl">Service Area</label><input type="text" id="epa" placeholder="Andheri, Goregaon, Borivali"></div>
+        <div class="fg"><label class="fl">Skills (comma separated)</label><input type="text" id="eps" placeholder="Plumbing, Pipe Fitting, Drain Cleaning"></div>
+        <div class="fg"><label class="fl">Category</label><select id="epcat"><option>Plumbing</option><option>Electrical</option><option>Carpentry</option><option>Painting</option><option>Cleaning</option><option>Mechanic</option><option>Delivery</option><option>Gardening</option><option>Home Repair</option><option>Construction</option><option>Other</option></select></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">Experience (years)</label><input type="number" id="epe" min="0" placeholder="5"></div>
+          <div class="fg"><label class="fl">Expected Wage (₹)</label><input type="number" id="epw" placeholder="600"></div>
+        </div>
+        <div class="fg"><label class="fl">Wage Unit</label><select id="epwu"><option>per day</option><option>per hour</option><option>per month</option><option>per job</option></select></div>
+        <div class="fg"><label class="fl">Languages (comma separated)</label><input type="text" id="epla" placeholder="Hindi, Marathi, English"></div>
+        <div class="fg"><label class="fl">Phone (visible on profile)</label><input type="tel" id="epph" placeholder="+91 98760 11111"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <input type="checkbox" id="epav" style="width:auto;" checked>
+          <label for="epav" style="font-size:13px;cursor:pointer;">Currently available for work</label>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn bg" style="flex:1;justify-content:center;" onclick="gB()">Cancel</button>
+          <button class="btn bp" style="flex:1;justify-content:center;" onclick="sWP()">Save Profile ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FAVORITES ── -->
+    <div id="tfv" class="tc">
+      <div style="padding:16px;"><div style="font-size:20px;font-weight:800;">Saved Items ❤️</div></div>
+      <div class="tbbar">
+        <button class="tbt on" onclick="fvT('w',this)">Workers</button>
+        <button class="tbt" onclick="fvT('j',this)">Jobs</button>
+      </div>
+      <div id="fvc" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div id="tst2" class="tc">
+      <div style="padding:16px;font-size:20px;font-weight:800;">Settings ⚙️</div>
+      <div style="padding:0 16px 24px;">
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Account</div>
+          <div class="ir" onclick="oEP()" style="cursor:pointer;"><span class="irl">Edit Profile</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oLoc()" style="cursor:pointer;"><span class="irl">Location</span><span class="irv" id="sloc">Pune</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir"><span class="irl">Phone</span><span class="irv" id="sphn">—</span></div>
+          <div class="ir"><span class="irl">Role</span><span class="irv" id="srol">Customer</span></div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Language</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn bp sm" id="len" onclick="sAL('en',this)">English</button>
+            <button class="btn bg sm" id="lhi" onclick="sAL('hi',this)">हिंदी</button>
+            <button class="btn bg sm" id="lmr" onclick="sAL('mr',this)">मराठी</button>
+          </div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Notifications</div>
+          <div class="ir"><span class="irl">Job Alerts</span><label><input type="checkbox" checked> Enabled</label></div>
+          <div class="ir"><span class="irl">Applications</span><label><input type="checkbox" checked> Enabled</label></div>
+          <div class="ir"><span class="irl">Messages</span><label><input type="checkbox" checked> Enabled</label></div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Support</div>
+          <div class="ir" onclick="oHelp()" style="cursor:pointer;"><span class="irl">Help &amp; Support</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oRpt()" style="cursor:pointer;"><span class="irl">Report a Problem</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oPrv()" style="cursor:pointer;"><span class="irl">Privacy Policy</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oTrm()" style="cursor:pointer;"><span class="irl">Terms of Service</span><span style="color:var(--tx3);">→</span></div>
+        </div>
+        <button class="btn bd fw" style="margin-top:8px;" onclick="lo()">🚪 Logout</button>
+        <button class="btn bg fw" style="margin-top:8px;color:var(--er);border-color:var(--er);" onclick="dAcc()">Delete Account</button>
+      </div>
+    </div>
+
+  </div><!-- /pc -->
+
+  <!-- Bottom Nav -->
+  <nav class="bnav" id="bn">
+    <div class="ni on" id="nh" onclick="gT('th')"><span class="ic">🏠</span><span>Home</span></div>
+    <div class="ni" id="nsr" onclick="gT('ts')"><span class="ic">🔍</span><span>Search</span></div>
+    <div class="ni" id="nj" onclick="gT('tj')"><span class="ic">💼</span><span>Jobs</span></div>
+    <div class="ni" id="nm" onclick="gT('tm')"><span class="ic">💬</span><span>Chat</span><span class="nbg" id="mb">2</span></div>
+    <div class="ni" id="np" onclick="gT('tp')"><span class="ic">👤</span><span>Profile</span></div>
+  </nav>
+</div><!-- /pap -->
+
+<!-- ═══════════════════ MODALS ═══════════════════ -->
+
+<!-- Location -->
+<div class="mo" id="mloc">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📍 Set Location <button class="cls" onclick="cM('mloc')">✕</button></div>
+    <div class="fg"><label class="fl">City</label><input type="text" id="lci" value="Pune" placeholder="Enter your city"></div>
+    <div class="fg"><label class="fl">Locality / Area</label><input type="text" id="llo" value="Kothrud" placeholder="Enter locality"></div>
+    <button class="btn bp fw" onclick="sLoc()">Use This Location</button>
+    <button class="btn bg fw mt" onclick="dtL()">📡 Detect My Location</button>
+  </div>
+</div>
+
+<!-- Review -->
+<div class="mo" id="mrev">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">⭐ Write a Review <button class="cls" onclick="cM('mrev')">✕</button></div>
+    <div id="rti" style="display:flex;gap:10px;align-items:center;margin-bottom:16px;padding:12px;background:var(--s2);border-radius:var(--rs);"></div>
+    <div class="fg">
+      <label class="fl">Rating</label>
+      <div id="sp" style="display:flex;gap:8px;font-size:28px;cursor:pointer;margin-bottom:4px;">
+        <span onclick="sR(1)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(2)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(3)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(4)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(5)" class="sk2" style="color:var(--acc);">★</span>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Your Review</label><textarea id="rtx" rows="3" placeholder="Share your experience…"></textarea></div>
+    <button class="btn bp fw" onclick="sbRev()">Submit Review</button>
+  </div>
+</div>
+
+<!-- Report -->
+<div class="mo" id="mrpt">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">🚨 Report <button class="cls" onclick="cM('mrpt')">✕</button></div>
+    <div class="fg"><label class="fl">Reason</label><select id="rrs"><option>Fake profile</option><option>Inappropriate content</option><option>Scam or fraud</option><option>Harassment</option><option>Other</option></select></div>
+    <div class="fg"><label class="fl">Details (optional)</label><textarea id="rdt" rows="3" placeholder="Describe the issue…"></textarea></div>
+    <button class="btn bd fw" onclick="sbRpt()">Submit Report</button>
+  </div>
+</div>
+
+<!-- Applicants -->
+<div class="mo" id="mapp">
+  <div class="md" style="max-height:85vh;"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📋 Applicants <button class="cls" onclick="cM('mapp')">✕</button></div>
+    <div id="apc"></div>
+  </div>
+</div>
+
+<!-- Chat -->
+<div class="mo" id="mch">
+  <div class="md" style="padding:0;">
+    <div style="padding:16px;border-bottom:1px solid var(--br);display:flex;align-items:center;gap:10px;">
+      <button class="bkb" onclick="cM('mch')" style="margin:0;padding:6px 10px;">✕</button>
+      <div id="cwn" style="font-weight:700;font-size:15px;"></div>
+    </div>
+    <div id="cms" style="height:300px;overflow-y:auto;padding:12px 0;"></div>
+    <div style="background:var(--bg);border-top:1px solid var(--br);padding:10px 16px;display:flex;gap:8px;">
+      <input type="text" id="cin" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sCM()" style="border-radius:20px;padding:10px 16px;">
+      <button class="btn bp sm" onclick="sCM()">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- Note -->
+<div class="mo" id="mnot">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📝 Add Private Note <button class="cls" onclick="cM('mnot')">✕</button></div>
+    <div class="fg"><label class="fl">Private note (not visible to applicant)</label><textarea id="ntx" rows="4" placeholder="Add your notes about this candidate…"></textarea></div>
+    <input type="hidden" id="nai">
+    <button class="btn bp fw" onclick="svN()">Save Note</button>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+//  API CLIENT
+// ════════════════════════════════════════════════════════════════
+const BASE = '';  // same-origin — served by Express
+
+const API = {
+  async call(method, path, body) {
+    try {
+      const opts = { method, headers: { 'Content-Type': 'application/json' } };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(BASE + path, opts);
+      const json = await res.json();
+      if (!json.ok) throw new Error(json.error || 'Request failed');
+      return json;
+    } catch (e) {
+      console.warn('[API]', method, path, e.message);
+      return { ok: false, error: e.message };
+    }
+  },
+  get:    (path)       => API.call('GET',    path),
+  post:   (path, body) => API.call('POST',   path, body),
+  put:    (path, body) => API.call('PUT',    path, body),
+  patch:  (path, body) => API.call('PATCH',  path, body),
+  del:    (path)       => API.call('DELETE', path),
+};
+
+// ════════════════════════════════════════════════════════════════
+//  LIVE CACHES  (populated from backend on boot)
+// ════════════════════════════════════════════════════════════════
+let W = [];   // workers
+let J = [];   // jobs
+
+const CATS=[{em:'🔧',lb:'Plumbing'},{em:'⚡',lb:'Electrical'},{em:'🪚',lb:'Carpentry'},{em:'🖌️',lb:'Painting'},{em:'🏗️',lb:'Construction'},{em:'🧹',lb:'Cleaning'},{em:'🔩',lb:'Mechanic'},{em:'🚚',lb:'Delivery'},{em:'🌿',lb:'Gardening'},{em:'🔨',lb:'Home Repair'},{em:'❄️',lb:'AC Repair'},{em:'📦',lb:'Other'}];
+
+const CV=[
+  {id:'c1',wt:'Anjali Construction',av:'🏗️',lm:'Can you start on Monday?',tm:'2h ago',ur:2},
+  {id:'c2',wt:'Rahul Sharma',av:'👤',lm:'Thank you, I will be there at 9am',tm:'1d ago',ur:0},
+  {id:'c3',wt:'TechPark Facilities',av:'💻',lm:'Please send your experience details',tm:'3d ago',ur:0}
+];
+
+// ════════════════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════════════════
+const S={
+  user:null,role:'customer',loc:'Pune, Maharashtra',
+  favs:[],
+  apps:[],
+  nots:[],ch:{},cur:'th',prev:null,
+  jf:{ty:'',cat:''},svf:{cat:'',q:'',av:false},
+  st:'all',cjid:null,cwid:null,cajid:null,rtgt:null,rr:5,
+  rs:JSON.parse(localStorage.getItem('rs')||'[]'),
+  wp:null,
+};
+
+// ════════════════════════════════════════════════════════════════
+//  CACHE LOADERS  (fetch from backend, populate W / J / S.apps …)
+// ════════════════════════════════════════════════════════════════
+async function loadWorkers() {
+  const r = await API.get('/api/workers');
+  if (r.ok) { W = r.data; return; }
+}
+async function loadJobs() {
+  const r = await API.get('/api/jobs');
+  if (r.ok) { J = r.data; return; }
+}
+async function loadApps() {
+  if (!S.user) return;
+  const r = await API.get('/api/applications?uid=' + encodeURIComponent(S.user.id));
+  if (r.ok) S.apps = r.data;
+}
+async function loadFavs() {
+  if (!S.user) return;
+  const r = await API.get('/api/favorites?uid=' + encodeURIComponent(S.user.id));
+  if (r.ok) S.favs = r.data;
+}
+async function loadNots() {
+  if (!S.user) return;
+  const r = await API.get('/api/notifications?uid=' + encodeURIComponent(S.user.id));
+  if (r.ok) S.nots = r.data.map(n => ({...n, ur: !!n.ur}));
+}
+async function loadWP() {
+  if (!S.user) return;
+  const r = await API.get('/api/workers/' + encodeURIComponent(S.user.id));
+  if (r.ok) S.wp = r.data;
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ONBOARDING
+// ════════════════════════════════════════════════════════════════
+let op=0,otm;
+function nxO(){
+  if(op<2){document.getElementById('os'+op).style.display='none';op++;document.getElementById('os'+op).style.display='flex';updD();if(op===2)document.getElementById('obn').textContent='Get Started';}
+  else skO();
+}
+function skO(){localStorage.setItem('ob','1');sP('pli');}
+function updD(){document.querySelectorAll('.od').forEach((d,i)=>{d.style.width=i===op?'24px':'8px';d.style.background=i===op?'var(--p)':'var(--s2)';});}
+function sL(c){S.lang=c;localStorage.setItem('lang',c);toast('Language: '+(c==='en'?'English':c==='hi'?'Hindi':'Marathi'));}
+
+// ════════════════════════════════════════════════════════════════
+//  AUTH
+// ════════════════════════════════════════════════════════════════
+function sOtp(){
+  const p=document.getElementById('phi').value.trim();
+  if(p.replace(/\D/g,'').length<10){document.getElementById('fgp').classList.add('er');return;}
+  document.getElementById('fgp').classList.remove('er');
+  localStorage.setItem('pp',p);
+  document.getElementById('opd').textContent=p;
+  API.post('/api/auth/send-otp',{phone:p}).then(r=>{
+    if(r.ok){sP('pot');stC();toast('OTP sent! Use 123456','ok');}
+    else toast(r.error||'Failed to send OTP','er');
+  });
+}
+function stC(){
+  let s=30;document.getElementById('reb').disabled=true;document.getElementById('cd').textContent=s;
+  clearInterval(otm);otm=setInterval(()=>{s--;document.getElementById('cd').textContent=s;if(s<=0){clearInterval(otm);document.getElementById('reb').disabled=false;}},1000);
+}
+function oi(el,i){if(el.value.length>1)el.value=el.value.slice(-1);if(el.value&&i<5)document.getElementById('o'+(i+1)).focus();}
+function vOtp(){
+  const otp=[0,1,2,3,4,5].map(i=>document.getElementById('o'+i).value).join('');
+  const phone=localStorage.getItem('pp')||'';
+  API.post('/api/auth/verify-otp',{phone,otp}).then(r=>{
+    if(r.ok){
+      document.getElementById('oe').style.display='none';
+      _setSession(r.user);sP('pap');initApp();toast('Welcome! 👋','ok');
+    }else{
+      document.getElementById('oe').style.display='block';
+      [0,1,2,3,4,5].forEach(i=>{document.getElementById('o'+i).value='';});
+      document.getElementById('o0').focus();
+    }
+  });
+}
+function rOtp(){stC();sOtp();}
+function dL(role){
+  API.post('/api/auth/demo-login',{role}).then(r=>{
+    if(r.ok){_setSession(r.user);sP('pap');initApp();toast('Welcome, '+r.user.name+'! 👋','ok');}
+    else toast('Login failed','er');
+  });
+}
+function _setSession(user){
+  S.user=user;S.role=user.role||'customer';
+  localStorage.setItem('sess',JSON.stringify(user));
+}
+function lo(){if(!confirm('Are you sure you want to logout?'))return;S.user=null;S.role='customer';localStorage.removeItem('sess');sP('pli');toast('Logged out');}
+function dAcc(){if(!confirm('DELETE your account? This cannot be undone!'))return;if(!confirm('Absolutely sure?'))return;S.user=null;localStorage.clear();sP('pli');toast('Account deleted','er');}
+
+// ════════════════════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════════════════════
+function initApp(){
+  bnav();
+  // Kick off all backend loads in parallel, re-render as each completes
+  Promise.all([
+    loadWorkers().then(()=>{rHome();rSrv();}),
+    loadJobs().then(()=>{rHome();rJobs();}),
+    loadApps().then(()=>{rJobs();rProf();}),
+    loadFavs().then(()=>{rFav();}),
+    loadNots().then(()=>{rNot();updND();}),
+    loadWP().then(()=>{rProf();}),
+  ]).then(()=>{
+    rHome();rJobs();rSrv();rProf();rNot();rMsg();rFav();updND();
+  });
+  gT('th');buildSuggestions();
+}
+
+function bnav(){
+  const r=S.role,bn=document.getElementById('bn');
+  let ex='';
+  if(r==='employer')ex='<div class="ni" id="ne" onclick="gT(\'te\')"><span class="ic">🏢</span><span>Dashboard</span></div>';
+  if(r==='admin')ex='<div class="ni" id="na" onclick="gT(\'ta\')"><span class="ic">🛡</span><span>Admin</span></div>';
+  bn.innerHTML=`<div class="ni on" id="nh" onclick="gT('th')"><span class="ic">🏠</span><span>Home</span></div><div class="ni" id="nsr" onclick="gT('ts')"><span class="ic">🔍</span><span>Search</span></div><div class="ni" id="nj" onclick="gT('tj')"><span class="ic">💼</span><span>Jobs</span></div><div class="ni" id="nm" onclick="gT('tm')"><span class="ic">💬</span><span>Chat</span><span class="nbg" id="mb">2</span></div>${ex}<div class="ni" id="np" onclick="gT('tp')"><span class="ic">👤</span><span>Profile</span></div>`;
+  if(r==='employer')rEmp();
+  if(r==='admin')rAdm();
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════════════════════════════
+function sP(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function gT(t){
+  S.prev=S.cur;S.cur=t;
+  document.querySelectorAll('.tc').forEach(x=>x.classList.remove('on'));
+  document.getElementById(t)?.classList.add('on');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const nm={th:'nh',ts:'nsr',tj:'nj',tm:'nm',tp:'np',te:'ne',ta:'na'};
+  if(nm[t])document.getElementById(nm[t])?.classList.add('on');
+  if(t==='tp')rProf();
+  if(t==='tn'){rNot();mAR();}
+  if(t==='tfv')rFav();
+  document.getElementById('mc').scrollTo(0,0);
+}
+function gB(){gT(S.prev||'th');}
+function gSrv(c){
+  if(c){
+    S.svf.cat=c;
+    document.querySelectorAll('#svf .fc').forEach(x=>{
+      const txt=x.textContent.trim().replace(/^[\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}\uFE00-\uFE0F ]+/u,'');
+      x.classList.toggle('on',txt===c||x.textContent.includes(c));
+    });
+  }
+  rSrv();gT('tsv');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  HOME
+// ════════════════════════════════════════════════════════════════
+function rHome(){
+  const nm=S.user?.name?.split(' ')[0]||'there';
+  document.getElementById('gn').textContent=nm;
+  document.getElementById('ld').textContent=S.loc;
+  document.getElementById('cg').innerHTML=CATS.map(c=>`<div class="ci" onclick="gSrv('${c.lb}')"><div style="font-size:24px;">${c.em}</div><div style="font-size:11px;color:var(--tx2);">${c.lb}</div></div>`).join('');
+  document.getElementById('hw').innerHTML=W.slice(0,5).map(w=>wC(w,true)).join('');
+  document.getElementById('hj').innerHTML=J.slice(0,3).map(j=>jC(j)).join('');
+  rRS();
+}
+function rRS(){
+  const r=document.getElementById('rsr');
+  if(r)r.innerHTML=S.rs.slice(0,5).map(s=>`<span class="chip" style="cursor:pointer;" onclick="qS('${s}')">${s} ✕</span>`).join('');
+}
+function buildSuggestions(){
+  const el=document.getElementById('sug');
+  if(el)el.innerHTML=['Plumber','Electrician','Carpenter','Painter','Delivery'].map(s=>`<span class="chip" style="cursor:pointer;" onclick="document.getElementById('smi').value='${s}';lS('${s}')">${s}</span>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SEARCH
+// ════════════════════════════════════════════════════════════════
+function hS(){const q=document.getElementById('hsi').value.trim();if(!q)return;aRS(q);document.getElementById('smi').value=q;gT('ts');lS(q);}
+function tS(){const q=document.getElementById('tsi').value.trim();document.getElementById('smi').value=q;gT('ts');lS(q);}
+function qS(q){document.getElementById('hsi').value=q;hS();}
+function aRS(q){S.rs=[q,...S.rs.filter(s=>s!==q)].slice(0,8);localStorage.setItem('rs',JSON.stringify(S.rs));rRS();}
+function sST(t,el){S.st=t;document.querySelectorAll('#sf .fc').forEach(c=>c.classList.remove('on'));el.classList.add('on');lS(document.getElementById('smi').value);}
+function lS(q){
+  const r=document.getElementById('sr');
+  if(!q.trim()){
+    r.innerHTML=`<div style="padding:40px 0;text-align:center;color:var(--tx3);"><div style="font-size:40px;margin-bottom:12px;">🔍</div><div>Type to search for workers, jobs or services</div><div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" id="sug"></div></div>`;
+    buildSuggestions();return;
+  }
+  // Show loading state immediately, then fetch
+  r.innerHTML='<div style="padding:30px;text-align:center;color:var(--tx3);">🔍 Searching…</div>';
+  API.get('/api/search?q='+encodeURIComponent(q)+'&type='+S.st).then(res=>{
+    let h='';
+    if(res.ok){
+      const {workers:ws=[],jobs:js=[]}=res.data;
+      if(ws.length)h+=`<div class="stit" style="margin-top:12px;">Workers (${ws.length})</div>`+ws.map(w=>wC(w)).join('');
+      if(js.length)h+=`<div class="stit" style="margin-top:12px;">Jobs (${js.length})</div>`+js.map(j=>jC(j)).join('');
+    }else{
+      // Fallback: client-side filter of cached data
+      const ql=q.toLowerCase();
+      if(S.st==='all'||S.st==='workers'){const ws=W.filter(w=>w.nm.toLowerCase().includes(ql)||w.cat.toLowerCase().includes(ql));if(ws.length)h+=`<div class="stit" style="margin-top:12px;">Workers (${ws.length})</div>`+ws.map(w=>wC(w)).join('');}
+      if(S.st==='all'||S.st==='jobs'){const js=J.filter(j=>j.ti.toLowerCase().includes(ql)||j.co.toLowerCase().includes(ql));if(js.length)h+=`<div class="stit" style="margin-top:12px;">Jobs (${js.length})</div>`+js.map(j=>jC(j)).join('');}
+    }
+    if(!h)h=`<div style="padding:40px 0;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="font-weight:600;margin-top:8px;">No results for "${q}"</div><div style="font-size:12px;margin-top:6px;">Try a different keyword or browse categories</div></div>`;
+    r.innerHTML=h;
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SERVICES
+// ════════════════════════════════════════════════════════════════
+function fSv(c,el){S.svf.cat=c;document.querySelectorAll('#svf .fc').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');rSrv();}
+function fSvS(q){S.svf.q=q;rSrv();}
+function tAv(btn){S.svf.av=!S.svf.av;btn.classList.toggle('on',S.svf.av);rSrv();}
+function rSrv(){
+  // Build query from filters
+  const f=S.svf;
+  let qs='?';
+  if(f.cat)qs+='cat='+encodeURIComponent(f.cat)+'&';
+  if(f.av)qs+='av=1&';
+  if(f.q)qs+='q='+encodeURIComponent(f.q)+'&';
+  const el=document.getElementById('svl');
+  el.innerHTML='<div style="padding:24px;text-align:center;color:var(--tx3);">Loading…</div>';
+  API.get('/api/workers'+qs).then(r=>{
+    const l=r.ok?r.data:W.filter(w=>((!f.cat||w.cat===f.cat)&&(!f.av||w.av)&&(!f.q||(w.nm+' '+w.sk).toLowerCase().includes(f.q.toLowerCase()))));
+    el.innerHTML=l.length?l.map(w=>wC(w)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="margin-top:8px;">No workers found. Try clearing filters.</div></div>`;
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  WORKER CARD + DETAIL
+// ════════════════════════════════════════════════════════════════
+function wC(w,mini){
+  const f=S.favs.includes(w.id);
+  return`<div class="wc${mini?' sx-card':''}" style="${mini?'min-width:220px;':''}" onclick="oWD('${w.id}')">
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      <div class="av" style="width:46px;height:46px;font-size:20px;">${w.em}</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:14px;">${w.nm}</div>
+        <div style="font-size:11px;color:var(--p);font-weight:600;">${w.cat}</div>
+        <div style="font-size:11px;color:var(--tx3);">📍 ${w.lo}, ${w.cy}</div>
+      </div>
+      <button onclick="event.stopPropagation();tFv('${w.id}')" style="background:none;border:none;font-size:20px;padding:0 2px;">${f?'❤️':'🤍'}</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+      <div class="avd ${w.av?'y':'n'}"><div class="dot ${w.av?'y':'n'}"></div>${w.av?'Available':'Busy'}</div>
+      <div style="display:flex;align-items:center;gap:4px;"><span class="stars">★</span><span style="font-size:12px;font-weight:700;">${w.rt}</span><span style="font-size:11px;color:var(--tx3);">(${w.rv})</span></div>
+    </div>
+    ${!mini?`<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">${w.sk.slice(0,3).map(s=>`<span class="chip">${s}</span>`).join('')}</div>`:''}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+      <div style="font-size:13px;font-weight:700;color:var(--ok);">₹${w.wg}/${w.wu.replace('per ','')}</div>
+      ${w.vr?'<span class="bdg bdp">✓ Verified</span>':''}
+    </div>
+  </div>`;
+}
+
+function oWD(id){
+  S.prev=S.cur;S.cwid=id;
+  const w=W.find(x=>x.id===id);if(!w)return;
+  const f=S.favs.includes(id);
+  // Fetch reviews from backend
+  API.get('/api/reviews?tid='+encodeURIComponent(id)).then(rv=>{
+    const ar=rv.ok?rv.data:[];
+    _renderWorkerDetail(w,f,ar);
+  });
+}
+function _renderWorkerDetail(w,f,ar){
+  document.getElementById('wdc').innerHTML=`
+    <div class="dh">
+      <button class="bkb" onclick="gB()">← Back</button>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div class="av" style="width:72px;height:72px;font-size:32px;">${w.em}</div>
+        <div>
+          <h1 style="font-size:20px;font-weight:800;">${w.nm}</h1>
+          <div style="color:var(--p);font-size:13px;font-weight:600;">${w.cat}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+            <span class="stars">★</span><span style="font-weight:700;">${w.rt}</span>
+            <span style="color:var(--tx3);font-size:12px;">(${ar.length+w.rv} reviews)</span>
+            ${w.vr?'<span class="bdg bdp">✓ Verified</span>':''}
+          </div>
+          <div class="avd ${w.av?'y':'n'}" style="margin-top:8px;"><div class="dot ${w.av?'y':'n'}"></div>${w.av?'Available Now':'Currently Busy'}</div>
+        </div>
+      </div>
+      <div class="ar">
+        ${w.ph?`<button class="btn bp sm" onclick="cW('${w.ph}')">📞 Call</button>`:''}
+        ${w.wa?`<button class="btn bsuc sm" onclick="wW('${w.ph}','${w.nm}')">💬 WhatsApp</button>`:''}
+        <button class="btn bg sm" onclick="tFv('${id}')" id="fb${id}">${f?'❤️ Saved':'🤍 Save'}</button>
+        <button class="btn bg sm" onclick="oM('mrpt')">🚨 Report</button>
+      </div>
+    </div>
+    <div class="is">
+      <div class="ib">
+        <div class="ir"><span class="irl">📍 Location</span><span class="irv">${w.lo}, ${w.cy}</span></div>
+        <div class="ir"><span class="irl">🗺️ Service Area</span><span class="irv">${w.ar}</span></div>
+        <div class="ir"><span class="irl">⏱ Experience</span><span class="irv">${w.ex} years</span></div>
+        <div class="ir"><span class="irl">💰 Rate</span><span class="irv" style="color:var(--ok);font-weight:700;">₹${w.wg} ${w.wu}</span></div>
+        <div class="ir"><span class="irl">🌐 Languages</span><span class="irv">${w.la.join(', ')}</span></div>
+      </div>
+      <div class="ib"><h3>About</h3><p style="font-size:13px;color:var(--tx2);line-height:1.6;">${w.bi}</p></div>
+      <div class="ib"><h3>Skills</h3><div style="display:flex;flex-wrap:wrap;gap:6px;">${w.sk.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+      <div class="ib">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <h3 style="margin:0;">Reviews (${ar.length})</h3>
+          <button class="btn bo sm" onclick="oRM('${id}','worker','${w.nm}')">+ Write Review</button>
+        </div>
+        ${ar.length?ar.map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--br);">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-weight:600;font-size:13px;">${r.u||r.rn}</div>
+            <div class="stars">${'★'.repeat(Math.floor(r.r||r.rt))}${'☆'.repeat(5-Math.floor(r.r||r.rt))}</div>
+          </div>
+          <div style="font-size:12px;color:var(--tx2);margin-top:4px;">${r.t||r.cm}</div>
+          <div style="font-size:11px;color:var(--tx3);">${r.d||r.dt}</div>
+        </div>`).join(''):`<div style="color:var(--tx3);font-size:13px;">No reviews yet. Be the first!</div>`}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${w.ph?`<button class="btn bp fw" onclick="cW('${w.ph}')">📞 Call Now</button>`:''}
+        <button class="btn bo fw" onclick="oCh('${id}','${w.nm}')">💬 Message</button>
+        <button class="btn bg fw" onclick="gDir('${w.cy} ${w.lo}')">🗺 Directions</button>
+      </div>
+    </div>`;
+  gT('twd');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  JOB CARD + DETAIL
+// ════════════════════════════════════════════════════════════════
+function jC(j){
+  const ap=S.apps.some(a=>a.ji===j.id);
+  const f=S.favs.includes(j.id);
+  return`<div class="jc" onclick="oJD('${j.id}')">
+    <div style="display:flex;align-items:flex-start;gap:10px;">
+      <div style="width:44px;height:44px;background:var(--s2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${j.ce||'🏢'}</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:14px;">${j.ti}</div>
+        <div style="font-size:12px;color:var(--tx2);">${j.co} · ${j.cy}</div>
+      </div>
+      <button onclick="event.stopPropagation();tFv('${j.id}')" style="background:none;border:none;font-size:18px;padding:0;">${f?'❤️':'🤍'}</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span class="bdg bdi">${j.ty}</span>
+      <span class="bdg bdm">📍 ${j.lo||j.cy}</span>
+      ${j.wn>1?`<span class="bdg bdm">👥 ${j.wn} openings</span>`:''}
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">${j.sk.slice(0,3).map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+    <div style="font-size:15px;font-weight:700;color:var(--ok);margin-top:8px;">
+      ${j.wmi&&j.wma?`₹${j.wmi}–₹${j.wma}`:j.wmi?`₹${j.wmi}+`:'Negotiable'} <span style="font-size:11px;color:var(--tx2);font-weight:400;">${j.fr||''}</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+      <span style="font-size:11px;color:var(--tx3);">🕐 ${j.po}</span>
+      ${ap?'<span class="bdg bdok">✓ Applied</span>':`<button class="btn bp sm" onclick="event.stopPropagation();qAp('${j.id}')">Apply Now</button>`}
+    </div>
+  </div>`;
+}
+
+function fJ(t,el){S.jf.ty=t;document.querySelectorAll('#jfr .fc').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');rJobs();}
+function fJC(c,el){S.jf.cat=c;document.querySelectorAll('.fc[onclick*="fJC"]').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');rJobs();}
+function rJobs(){
+  const f=S.jf;
+  let qs='?';
+  if(f.ty)qs+='ty='+encodeURIComponent(f.ty)+'&';
+  if(f.cat)qs+='cat='+encodeURIComponent(f.cat)+'&';
+  document.getElementById('jc2').textContent='Loading…';
+  document.getElementById('jl').innerHTML='<div style="padding:24px;text-align:center;color:var(--tx3);">Loading jobs…</div>';
+  API.get('/api/jobs'+qs).then(r=>{
+    const l=r.ok?r.data:J.filter(j=>j.op&&(!f.ty||j.ty===f.ty)&&(!f.cat||j.cat===f.cat));
+    if(r.ok)J=l; // keep cache fresh
+    document.getElementById('jc2').textContent=l.length+' job'+(l.length!==1?'s':'')+' found';
+    document.getElementById('jl').innerHTML=l.length?l.map(j=>jC(j)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="margin-top:8px;">No jobs found. Try different filters.</div></div>`;
+  });
+}
+
+function oJD(id){
+  S.prev=S.cur;S.cjid=id;
+  const j=J.find(x=>x.id===id);if(!j)return;
+  const ap=S.apps.some(a=>a.ji===id);
+  const f=S.favs.includes(id);
+  const can=S.role!=='employer'&&S.role!=='admin';
+  document.getElementById('jdc').innerHTML=`
+    <div class="dh">
+      <button class="bkb" onclick="gB()">← Back</button>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:56px;height:56px;background:var(--s2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">${j.ce||'🏢'}</div>
+        <div>
+          <h1 style="font-size:18px;font-weight:800;">${j.ti}</h1>
+          <div style="color:var(--p);font-size:13px;font-weight:600;">${j.co}</div>
+          <div style="color:var(--tx2);font-size:12px;margin-top:3px;">📍 ${j.lo||''} ${j.cy} · 🕐 ${j.po}</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+        <span class="bdg bdi">${j.ty}</span>
+        <span class="bdg bdok" style="font-size:13px;">${j.wmi?`₹${j.wmi}`:''}${j.wma?`–₹${j.wma}`:''}${j.wmi?` ${j.fr}`:'Negotiable'}</span>
+        <span class="bdg bdm">👥 ${j.wn} opening${j.wn>1?'s':''}</span>
+      </div>
+      <div class="ar">
+        ${can&&!ap?`<button class="btn bp" onclick="oAp('${id}')">✓ Apply Now</button>`:''}
+        ${ap?'<div class="bdg bdok" style="font-size:13px;padding:8px 14px;">✓ Already Applied</div>':''}
+        <button class="btn bg sm" onclick="tFv('${id}')">${f?'❤️ Saved':'🤍 Save'}</button>
+        <button class="btn bg sm" onclick="shJ('${id}')">📤 Share</button>
+        <button class="btn bg sm" onclick="oM('mrpt')">🚨</button>
+      </div>
+    </div>
+    <div class="is">
+      <div class="ib">
+        <div class="ir"><span class="irl">📍 Location</span><span class="irv">${j.lo||''}, ${j.cy}</span></div>
+        <div class="ir"><span class="irl">💼 Type</span><span class="irv">${j.ty}</span></div>
+        <div class="ir"><span class="irl">⏰ Hours</span><span class="irv">${j.hr||'Not specified'}</span></div>
+        <div class="ir"><span class="irl">📅 Deadline</span><span class="irv">${j.dl||'Open'}</span></div>
+        <div class="ir"><span class="irl">📊 Applications</span><span class="irv">${j.ap||0} received</span></div>
+      </div>
+      <div class="ib"><h3>Job Description</h3><p style="font-size:13px;color:var(--tx2);line-height:1.7;">${j.de}</p></div>
+      <div class="ib"><h3>Required Skills</h3><div style="display:flex;flex-wrap:wrap;gap:6px;">${j.sk.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+      ${can&&!ap?`<button class="btn bp fw mt2" onclick="oAp('${id}')">✓ Apply for This Job</button>`:''}
+      ${ap?`<div class="btn bg fw mt2" style="cursor:default;justify-content:center;">✓ You have already applied</div>`:''}
+    </div>`;
+  gT('tjd');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  APPLY
+// ════════════════════════════════════════════════════════════════
+function qAp(id){
+  if(S.role==='customer'){
+    if(!confirm('To apply for jobs you need a Worker account. Switch to Worker mode?'))return;
+    S.role='worker';if(S.user)S.user.role='worker';bnav();rProf();toast('Switched to Worker mode');
+  }
+  oAp(id);
+}
+function oAp(id){
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===id);if(!j)return;
+  if(S.apps.some(a=>a.ji===id)){toast('Already applied!','er');return;}
+  S.cajid=id;
+  document.getElementById('ajt').textContent=j.ti;
+  document.getElementById('aen').textContent=j.co;
+  const w=S.wp;
+  document.getElementById('app').innerHTML=w
+    ?`<div style="display:flex;gap:10px;align-items:center;"><div class="av" style="width:42px;height:42px;font-size:18px;">${w.em||'👤'}</div><div><div style="font-weight:700;">${w.nm}</div><div style="font-size:12px;color:var(--tx2);">${(w.sk||[]).slice(0,3).join(', ')}</div><div style="font-size:11px;color:var(--tx3);">${w.cy}</div></div></div>`
+    :`<div style="display:flex;gap:10px;align-items:center;"><div class="av" style="width:42px;height:42px;">${(S.user?.name||'U')[0]}</div><div><div style="font-weight:700;">${S.user?.name||'You'}</div><div style="font-size:12px;color:var(--tx2);">${S.user?.phone||''}</div></div></div><div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:8px;margin-top:8px;font-size:12px;color:var(--wn);">⚠️ Complete your worker profile for better chances. <button class="btn bg sm" onclick="oEP()" style="font-size:11px;">Create Profile</button></div>`;
+  S.prev=S.cur;gT('tap');
+}
+function sApp(){
+  const id=S.cajid;if(!id)return;
+  if(S.apps.some(a=>a.ji===id)){toast('Already applied!','er');return;}
+  const j=J.find(x=>x.id===id);
+  const nt=document.getElementById('ano').value;
+  const btn=document.getElementById('asb');btn.disabled=true;btn.textContent='Submitting…';
+  API.post('/api/applications',{
+    ji:id,jt:j?.ti||'',co:j?.co||'',
+    wid:S.user?.id,wn:S.user?.name||'You',nt
+  }).then(r=>{
+    btn.disabled=false;btn.textContent='✓ Submit Application';
+    if(!r.ok&&r.error==='Already applied'){toast('Already applied!','er');return;}
+    if(!r.ok){toast(r.error||'Failed to submit','er');return;}
+    S.apps.push(r.data);
+    // Add notification
+    API.post('/api/notifications',{uid:S.user.id,ic:'✅',bg:'rgba(52,211,153,.15)',ti:'Application Submitted!',tx:`Your application for "${j?.ti}" has been submitted.`,tm:'Just now',tp:'job',kid:id});
+    S.nots.unshift({id:'n_'+Date.now(),ic:'✅',bg:'rgba(52,211,153,.15)',ti:'Application Submitted!',tx:`Your application for "${j?.ti}" has been submitted.`,tm:'Just now',ur:true});
+    updND();rJobs();toast('Application submitted! ✅','ok');gB();
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  EMPLOYER
+// ════════════════════════════════════════════════════════════════
+function rEmp(){
+  API.get('/api/admin/stats').then(r=>{
+    if(r.ok){const d=r.data;document.getElementById('es').innerHTML=`<div class="sc"><div class="sv">${d.jobs}</div><div class="sl">Active Jobs</div></div><div class="sc"><div class="sv">${d.applications}</div><div class="sl">Total Applications</div></div><div class="sc"><div class="sv">${S.apps.length}</div><div class="sl">My Apps</div></div><div class="sc"><div class="sv">${d.workers}</div><div class="sl">Workers</div></div>`;}
+  });
+  document.getElementById('end').textContent=S.user?.name||'Employer';
+  eT('active',null);
+}
+function eT(t,el){
+  if(el){document.querySelectorAll('#etb .tbt').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const el2=document.getElementById('etc');
+  if(t==='active'){
+    API.get('/api/jobs?').then(r=>{
+      const jbs=(r.ok?r.data:J).filter(j=>j.op);
+      el2.innerHTML=jbs.length?jbs.map(j=>`<div class="card mb"><div style="font-weight:700;">${j.ti}</div><div style="font-size:12px;color:var(--tx2);">📍 ${j.cy} · 📊 ${j.ap||0} applications · ${j.ty}</div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;"><button class="btn bp sm" onclick="oApc('${j.id}')">👥 View Applicants</button><button class="btn bo sm" onclick="oEJ('${j.id}')">✏️ Edit</button><button class="btn bd sm" onclick="cJ('${j.id}')">✕ Close</button></div></div>`).join(''):`<div style="color:var(--tx3);padding:20px;text-align:center;">No active jobs. <button class="btn bp sm" onclick="oPJ()">Post a Job</button></div>`;
+    });
+  }else if(t==='drafts'){
+    el2.innerHTML='<div style="color:var(--tx3);padding:20px;text-align:center;">No drafts saved.</div>';
+  }else if(t==='closed'){
+    API.get('/api/jobs?op=0').then(r=>{
+      const jbs=r.ok?r.data.filter(j=>!j.op):[];
+      el2.innerHTML=jbs.length?jbs.map(j=>`<div class="card mb"><div style="font-weight:700;">${j.ti}</div><div style="font-size:12px;color:var(--tx2);">📍 ${j.cy} · ${j.ty} · Closed</div></div>`).join(''):'<div style="color:var(--tx3);padding:20px;text-align:center;">No closed jobs.</div>';
+    });
+  }else if(t==='apps'){
+    API.get('/api/applications?uid='+(S.user?.id||'')).then(r=>{
+      const apps=r.ok?r.data:S.apps;
+      el2.innerHTML=apps.length?apps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:700;">${a.wn}</div><div style="font-size:12px;color:var(--tx2);">for: ${a.jt} · ${a.dt}</div></div><span class="bdg bdi">${a.st}</span></div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;"><select onchange="uAS('${a.id}',this.value)" style="width:auto;padding:6px 10px;font-size:12px;border-radius:8px;">${['Submitted','Under Review','Shortlisted','Accepted','Rejected'].map(s=>`<option${s===a.st?' selected':''}>${s}</option>`).join('')}</select><button class="btn bg sm" onclick="oNM('${a.id}')">📝 Note</button><button class="btn bg sm" onclick="oCh('','${a.wn}')">💬</button></div></div>`).join(''):`<div style="color:var(--tx3);padding:20px;text-align:center;">No applications yet.</div>`;
+    });
+  }
+}
+function oApc(jid){
+  const j=J.find(x=>x.id===jid);
+  API.get('/api/applications?jid='+encodeURIComponent(jid)).then(r=>{
+    const allApps=r.ok?r.data:[{id:'fa1',wn:'Ramesh K.',st:'Submitted',dt:'1 day ago'},{id:'fa2',wn:'Sunita Pawar',st:'Under Review',dt:'2 days ago'}];
+    document.getElementById('apc').innerHTML=`<div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--tx2);">${j?.ti||''} — ${allApps.length} applicant(s)</div>`+allApps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:700;">${a.wn}</div><div style="font-size:11px;color:var(--tx3);">${a.dt}</div></div><span class="bdg ${a.st==='Shortlisted'?'bds':a.st==='Accepted'?'bdok':a.st==='Rejected'?'bder':'bdi'}">${a.st}</span></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><select onchange="uAS('${a.id}',this.value)" style="width:auto;padding:5px 8px;font-size:11px;border-radius:6px;">${['Submitted','Under Review','Shortlisted','Accepted','Rejected'].map(s=>`<option${s===a.st?' selected':''}>${s}</option>`).join('')}</select><button class="btn bg sm" onclick="oNM('${a.id}')">📝</button><button class="btn bg sm" onclick="oCh('','${a.wn}')">💬</button></div></div>`).join('');
+    oM('mapp');
+  });
+}
+function uAS(id,st){
+  API.patch('/api/applications/'+encodeURIComponent(id),{st}).then(r=>{
+    if(!r.ok){toast('Failed to update status','er');return;}
+    const a=S.apps.find(x=>x.id===id);if(a)a.st=st;
+    toast('Status: '+st,'ok');
+    S.nots.unshift({id:'n_'+Date.now(),ic:'📋',bg:'rgba(64,202,215,.15)',ti:'Status Updated',tx:`Application status changed to "${st}"`,tm:'Just now',ur:true});
+    updND();
+  });
+}
+function cJ(id){
+  if(!confirm('Close this job? It will no longer be visible to job seekers.'))return;
+  API.patch('/api/jobs/'+encodeURIComponent(id)+'/close').then(r=>{
+    if(r.ok){const j=J.find(x=>x.id===id);if(j)j.op=false;rEmp();rJobs();toast('Job closed','ok');}
+    else toast('Failed to close job','er');
+  });
+}
+function oPJ(){
+  if(S.role==='customer'||S.role==='worker'){
+    if(!confirm('Post a Job requires Employer mode. Switch to Employer?'))return;
+    S.role='employer';if(S.user)S.user.role='employer';bnav();toast('Switched to Employer mode');
+  }
+  S.prev=S.cur;gT('tpj');
+}
+function sDft(){const t=document.getElementById('jti').value;if(!t){toast('Enter a title to save draft','er');return;}toast('Draft saved ✓','ok');}
+function pvJ(){
+  const t=document.getElementById('jti').value.trim(),c=document.getElementById('jca').value;
+  if(!t||!c){toast('Fill Title and Category first','er');return;}
+  const wmi=document.getElementById('jwi').value,wma=document.getElementById('jwa').value;
+  const wage=wmi&&wma?`₹${wmi}–₹${wma}`:wmi?`₹${wmi}+`:'Negotiable';
+  document.getElementById('pjpv').innerHTML=`
+    <button class="bkb" onclick="document.getElementById('pjf').style.display='';document.getElementById('pjpv').style.display='none';">← Back to Form</button>
+    <div style="background:var(--s2);border:1.5px solid var(--p);border-radius:var(--r);padding:18px;margin-bottom:12px;">
+      <div style="font-size:11px;font-weight:600;color:var(--p);margin-bottom:6px;">JOB PREVIEW</div>
+      <div style="font-size:18px;font-weight:800;margin-bottom:4px;">${t}</div>
+      <div style="color:var(--tx2);font-size:13px;margin-bottom:10px;">${S.user?.name||'My Company'} · ${document.getElementById('jci').value||'Pune'}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+        <span class="bdg bdi">${document.getElementById('jty').value}</span>
+        <span class="bdg bdok">${wage} ${document.getElementById('jfq').value}</span>
+        <span class="bdg bdm">👥 ${document.getElementById('jwn').value||1} opening(s)</span>
+      </div>
+      <div class="ib" style="margin-bottom:8px;"><h3>Description</h3><p style="font-size:13px;color:var(--tx2);line-height:1.6;">${document.getElementById('jde').value||'No description provided.'}</p></div>
+      <div class="ib" style="margin-bottom:0;"><h3>Required Skills</h3><div style="display:flex;flex-wrap:wrap;gap:6px;">${document.getElementById('jsk').value.split(',').filter(s=>s.trim()).map(s=>`<span class="chip">${s.trim()}</span>`).join('')||'<span class="chip">Not specified</span>'}</div></div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn bg" style="flex:1;justify-content:center;" onclick="document.getElementById('pjf').style.display='';document.getElementById('pjpv').style.display='none';">← Edit</button>
+      <button class="btn bp" style="flex:1;justify-content:center;" onclick="pbJ()">Publish ✓</button>
+    </div>`;
+  document.getElementById('pjf').style.display='none';
+  document.getElementById('pjpv').style.display='block';
+  document.getElementById('mc').scrollTo(0,0);
+}
+function oEJ(id){
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===id);if(!j)return;
+  // Populate form fields with existing job data
+  document.getElementById('jti').value=j.ti||'';
+  document.getElementById('jca').value=j.cat||'';
+  document.getElementById('jde').value=j.de||'';
+  document.getElementById('jsk').value=(j.sk||[]).join(', ');
+  document.getElementById('jwn').value=j.wn||1;
+  document.getElementById('jty').value=j.ty||'Full-time';
+  document.getElementById('jwi').value=j.wmi||'';
+  document.getElementById('jwa').value=j.wma||'';
+  document.getElementById('jfq').value=j.fr||'Per Day';
+  document.getElementById('jci').value=j.cy||'';
+  document.getElementById('jlo').value=j.lo||'';
+  document.getElementById('jhr').value=j.hr||'';
+  document.getElementById('jdl').value=j.dl||'';
+  document.getElementById('jph').value=j.ph||'';
+  // Show form, hide preview
+  document.getElementById('pjf').style.display='';
+  document.getElementById('pjpv').style.display='none';
+  document.getElementById('pjt').textContent='Edit Job';
+  // On publish, update in place
+  S._editJobId=id;
+  S.prev=S.cur;gT('tpj');
+}
+function pbJ(){
+  const t=document.getElementById('jti').value.trim(),c=document.getElementById('jca').value;
+  let ok=true;
+  if(!t){document.getElementById('fgjt').classList.add('er');ok=false;}else document.getElementById('fgjt').classList.remove('er');
+  if(!c){document.getElementById('fgjc').classList.add('er');ok=false;}else document.getElementById('fgjc').classList.remove('er');
+  if(!ok){toast('Please fill all required fields','er');return;}
+  const jd={ti:t,cat:c,de:document.getElementById('jde').value,co:S.user?.name||'My Company',ce:'🏢',cy:document.getElementById('jci').value||'Pune',lo:document.getElementById('jlo').value,ty:document.getElementById('jty').value,sk:document.getElementById('jsk').value.split(',').map(s=>s.trim()).filter(Boolean),wn:parseInt(document.getElementById('jwn').value)||1,wmi:parseFloat(document.getElementById('jwi').value)||0,wma:parseFloat(document.getElementById('jwa').value)||0,fr:document.getElementById('jfq').value,hr:document.getElementById('jhr').value,dl:document.getElementById('jdl').value,ph:document.getElementById('jph').value,eid:S.user?.id};
+  const afterSave=()=>{
+    ['jti','jca','jde','jsk','jwi','jwa','jlo','jhr','jdl','jph'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+    document.getElementById('pjt').textContent='Post a New Job';
+    document.getElementById('pjf').style.display='';
+    document.getElementById('pjpv').style.display='none';
+    loadJobs().then(()=>{rJobs();if(S.role==='employer')rEmp();});
+    toast('Job published! ✅','ok');if(S.role==='employer')gT('te');else gB();
+  };
+  if(S._editJobId){
+    API.put('/api/jobs/'+encodeURIComponent(S._editJobId),jd).then(r=>{
+      if(!r.ok){toast(r.error||'Failed to update job','er');return;}
+      const idx=J.findIndex(x=>x.id===S._editJobId);
+      if(idx>=0)J[idx]={...J[idx],...r.data};
+      S._editJobId=null;afterSave();
+    });
+  }else{
+    API.post('/api/jobs',jd).then(r=>{
+      if(!r.ok){toast(r.error||'Failed to publish job','er');return;}
+      J.push(r.data);afterSave();
+    });
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+//  WORKER PROFILE EDIT
+// ════════════════════════════════════════════════════════════════
+function oEP(){
+  const w=S.wp;
+  if(w){
+    document.getElementById('epn').value=w.nm||'';
+    document.getElementById('epb').value=w.bi||'';
+    document.getElementById('epc').value=w.cy||'';
+    document.getElementById('epl').value=w.lo||'';
+    document.getElementById('epa').value=w.ar||'';
+    document.getElementById('eps').value=(w.sk||[]).join(', ');
+    document.getElementById('epcat').value=w.cat||'Plumbing';
+    document.getElementById('epe').value=w.ex||'';
+    document.getElementById('epw').value=w.wg||'';
+    document.getElementById('epwu').value=w.wu||'per day';
+    document.getElementById('epla').value=(w.la||[]).join(', ');
+    document.getElementById('epph').value=w.ph||'';
+    document.getElementById('epav').checked=w.av!==false;
+  }else if(S.user){
+    document.getElementById('epn').value=S.user.name||'';
+  }
+  S.prev=S.cur;gT('tep');
+}
+function sWP(){
+  const nm=document.getElementById('epn').value.trim();
+  if(!nm){toast('Name is required','er');return;}
+  if(!S.user){toast('Please log in first','er');return;}
+  const p={nm,bi:document.getElementById('epb').value,cy:document.getElementById('epc').value,lo:document.getElementById('epl').value,ar:document.getElementById('epa').value,sk:document.getElementById('eps').value.split(',').map(s=>s.trim()).filter(Boolean),cat:document.getElementById('epcat').value,ex:parseInt(document.getElementById('epe').value)||0,wg:parseFloat(document.getElementById('epw').value)||0,wu:document.getElementById('epwu').value,la:document.getElementById('epla').value.split(',').map(s=>s.trim()).filter(Boolean),ph:document.getElementById('epph').value,av:document.getElementById('epav').checked,em:'👷'};
+  API.put('/api/workers/'+encodeURIComponent(S.user.id),p).then(r=>{
+    if(!r.ok){toast(r.error||'Failed to save profile','er');return;}
+    S.wp=r.data;
+    // Update local worker cache
+    const idx=W.findIndex(x=>x.id===S.user.id);
+    if(idx>=0)W[idx]=r.data;else W.push(r.data);
+    rProf();toast('Profile saved! ✅','ok');gB();
+  });
+}
+function upPh(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>toast('Photo uploaded! (Demo mode)','ok');i.click();}
+
+// ════════════════════════════════════════════════════════════════
+//  PROFILE
+// ════════════════════════════════════════════════════════════════
+function rProf(){
+  const u=S.user;if(!u)return;
+  const rb={customer:'Customer 👤',worker:'Worker 🔧',employer:'Employer 🏢',admin:'Admin 🛡'};
+  document.getElementById('pfh').innerHTML=`<div class="av" style="width:72px;height:72px;font-size:28px;margin:0 auto 12px;">${(u.name||'U')[0]}</div><div style="font-size:18px;font-weight:800;">${u.name}</div><div style="color:var(--tx2);font-size:13px;margin-top:4px;">${u.phone}</div><div style="margin-top:8px;"><span class="bdg bdp">${rb[S.role]}</span></div>`;
+  document.getElementById('prt').innerHTML=['customer','worker','employer'].map(r=>`<div class="rtb ${S.role===r?'on':''}" onclick="swR('${r}')">${r[0].toUpperCase()+r.slice(1)}</div>`).join('');
+  const bd=document.getElementById('pfb');
+  if(S.role==='worker'){
+    const w=S.wp;
+    bd.innerHTML=`<div style="padding:16px;">${w
+      ?`<div class="card mb2"><div style="font-weight:700;margin-bottom:8px;">My Worker Profile</div><div class="ir"><span class="irl">Category</span><span class="irv">${w.cat}</span></div><div class="ir"><span class="irl">Skills</span><span class="irv">${(w.sk||[]).slice(0,4).join(', ')}</span></div><div class="ir"><span class="irl">City</span><span class="irv">${w.cy}</span></div><div class="ir"><span class="irl">Rate</span><span class="irv">₹${w.wg} ${w.wu}</span></div><div class="ir"><span class="irl">Status</span><span class="irv"><span class="dot ${w.av?'y':'n'}" style="display:inline-block;margin-right:4px;"></span>${w.av?'Available':'Not Available'}</span></div><button class="btn bp sm mt" onclick="oEP()">✏️ Edit Profile</button></div>`
+      :`<div class="card mb2" style="text-align:center;padding:24px;"><div style="font-size:36px;margin-bottom:12px;">👷</div><div style="font-weight:700;margin-bottom:6px;">Create Your Worker Profile</div><div style="color:var(--tx2);font-size:13px;margin-bottom:16px;">Showcase your skills and get hired</div><button class="btn bp" onclick="oEP()">Create Profile</button></div>`}
+    <div class="stit">My Applications (${S.apps.length})</div>
+    ${S.apps.length?S.apps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:600;">${a.jt}</div><div style="font-size:12px;color:var(--tx2);">${a.co} · ${a.dt}</div></div><span class="bdg ${a.st==='Accepted'?'bdok':a.st==='Rejected'?'bder':a.st==='Shortlisted'?'bds':'bdi'}">${a.st}</span></div></div>`).join(''):`<div style="color:var(--tx3);font-size:13px;">No applications yet. <a href="#" onclick="gT('tj')">Browse Jobs →</a></div>`}
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn bg sm" onclick="gT('tfv')">❤️ Saved</button>
+      <button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button>
+      <button class="btn bg sm" onclick="gT('tn')">🔔 Notifications</button>
+    </div></div>`;
+  }else if(S.role==='employer'){
+    bd.innerHTML=`<div style="padding:16px;"><div class="card mb2"><div style="font-weight:700;margin-bottom:8px;">Company Profile</div><div class="ir"><span class="irl">Company</span><span class="irv">${u.name}</span></div><div class="ir"><span class="irl">Jobs Posted</span><span class="irv">${J.filter(j=>j.co===u.name).length}</span></div><div class="ir"><span class="irl">Applications</span><span class="irv">${S.apps.length}</span></div><button class="btn bp sm mt" onclick="gT('te')">Go to Dashboard →</button></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn bg sm" onclick="gT('tfv')">❤️ Saved Workers</button><button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button></div></div>`;
+  }else{
+    bd.innerHTML=`<div style="padding:16px;"><div class="card mb2"><div class="ir"><span class="irl">Name</span><span class="irv">${u.name}</span></div><div class="ir"><span class="irl">Phone</span><span class="irv">${u.phone}</span></div><div class="ir"><span class="irl">City</span><span class="irv">${S.loc}</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn bg sm" onclick="gT('tfv')">❤️ Saved</button><button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button><button class="btn bg sm" onclick="gT('tn')">🔔 Notifications</button></div></div>`;
+  }
+  if(document.getElementById('sphn'))document.getElementById('sphn').textContent=u.phone;
+  if(document.getElementById('srol'))document.getElementById('srol').textContent=S.role[0].toUpperCase()+S.role.slice(1);
+  if(document.getElementById('sloc'))document.getElementById('sloc').textContent=S.loc;
+}
+function swR(r){S.role=r;if(S.user)S.user.role=r;bnav();rProf();toast('Switched to '+r[0].toUpperCase()+r.slice(1)+' mode','ok');}
+
+// ════════════════════════════════════════════════════════════════
+//  FAVORITES
+// ════════════════════════════════════════════════════════════════
+function tFv(id){
+  if(!S.user){toast('Please log in to save','er');return;}
+  API.post('/api/favorites',{uid:S.user.id,fid:id}).then(r=>{
+    if(!r.ok){toast('Failed to update saved items','er');return;}
+    if(r.action==='added'){S.favs.push(id);toast('Saved! ❤️','ok');}
+    else{S.favs=S.favs.filter(x=>x!==id);toast('Removed from saved');}
+    document.querySelectorAll(`[onclick*="tFv('${id}')"]`).forEach(b=>{
+      if(b.tagName==='BUTTON'){const f=S.favs.includes(id);b.textContent=f?(b.textContent.includes('Save')?'❤️ Saved':'❤️'):(b.textContent.includes('Saved')?'🤍 Save':'🤍');}
+    });
+    if(document.getElementById('tfv').classList.contains('on'))rFav();
+  });
+}
+function rFav(){
+  // re-render whichever tab is active
+  const active=document.querySelector('[onclick*="fvT"].on');
+  const t=active?active.getAttribute('onclick').match(/fvT\('(\w)'/)?.[1]:'w';
+  fvT(t,active||document.querySelector('[onclick*="fvT"]'));
+}
+function fvT(t,el){
+  if(el){document.querySelectorAll('[onclick*="fvT"]').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const el2=document.getElementById('fvc');
+  if(t==='w'){const fw=W.filter(w=>S.favs.includes(w.id));el2.innerHTML=fw.length?fw.map(w=>wC(w)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">🤍</div><div>No saved workers</div><button class="btn bp sm mt" onclick="gT('tsv')">Browse Workers</button></div>`;}
+  else{const fj=[...J,...S.pj].filter(j=>S.favs.includes(j.id));el2.innerHTML=fj.length?fj.map(j=>jC(j)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">🤍</div><div>No saved jobs</div><button class="btn bp sm mt" onclick="gT('tj')">Browse Jobs</button></div>`;}
+}
+
+// ════════════════════════════════════════════════════════════════
+//  NOTIFICATIONS
+// ════════════════════════════════════════════════════════════════
+function rNot(){
+  document.getElementById('nl').innerHTML=S.nots.map(n=>`<div class="ni2 ${n.ur?'ur':''}" onclick="hN('${n.id}','${n.tp||''}','${n.kid||''}')"><div style="width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:${n.bg||'rgba(64,202,215,.15)'};">${n.ic}</div><div style="flex:1;"><div style="font-weight:600;font-size:13px;">${n.ti}</div><div style="font-size:12px;color:var(--tx2);margin-top:2px;">${n.tx}</div><div style="font-size:11px;color:var(--tx3);margin-top:4px;">${n.tm}</div></div>${n.ur?'<div style="width:8px;height:8px;background:var(--p);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>':''}</div>`).join('')||'<div style="padding:40px;text-align:center;color:var(--tx3);">No notifications</div>';
+}
+function hN(id,tp,kid){
+  const n=S.nots.find(x=>x.id===id);if(n)n.ur=false;
+  if(S.user)API.patch('/api/notifications/'+encodeURIComponent(id)+'/read');
+  updND();rNot();if(tp==='job'&&kid)oJD(kid);else if(tp==='app'&&kid)oJD(kid);
+}
+function mAR(){
+  S.nots.forEach(n=>n.ur=false);
+  if(S.user)API.patch('/api/notifications/read-all?uid='+encodeURIComponent(S.user.id));
+  updND();rNot();
+}
+function updND(){const h=S.nots.some(n=>n.ur);const d=document.getElementById('nd');if(d)d.style.display=h?'block':'none';}
+
+// ════════════════════════════════════════════════════════════════
+//  MESSAGES
+// ════════════════════════════════════════════════════════════════
+function rMsg(){
+  document.getElementById('cl2').innerHTML=CV.map(c=>`<div class="cli" onclick="oCh('${c.id}','${c.wt}')"><div class="av" style="width:46px;height:46px;font-size:22px;">${c.av}</div><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:700;">${c.wt}</div><div style="font-size:11px;color:var(--tx3);">${c.tm}</div></div><div style="font-size:12px;color:var(--tx2);margin-top:2px;">${c.lm}</div></div>${c.ur?`<div style="background:var(--p);color:#000;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;">${c.ur}</div>`:''}</div>`).join('');
+}
+function oCh(id,nm){
+  document.getElementById('cwn').textContent=nm;
+  document.getElementById('mch').dataset.cid=id;
+  oM('mch');
+  // Load from backend, fallback to in-memory cache
+  API.get('/api/messages?cid='+encodeURIComponent(id)).then(r=>{
+    if(r.ok&&r.data.length){S.ch[id]=r.data.map(m=>({from:m.frm,tx:m.tx,tm:m.tm}));}
+    else if(!S.ch[id]){S.ch[id]=[{from:'them',tx:'Hi! How can I help you?',tm:'10:00 AM'},{from:'me',tx:'I saw your profile and I am interested.',tm:'10:01 AM'},{from:'them',tx:'Great! What kind of work do you need?',tm:'10:02 AM'}];}
+    rCM(id);
+  });
+}
+function rCM(id){
+  const ms=S.ch[id]||[];
+  document.getElementById('cms').innerHTML=ms.map(m=>`<div style="display:flex;padding:6px 16px;"><div class="cb ${m.from==='me'?'me':'th'}">${m.tx}<div style="font-size:10px;opacity:.6;margin-top:3px;">${m.tm}</div></div></div>`).join('');
+  const e=document.getElementById('cms');e.scrollTop=e.scrollHeight;
+}
+function sCM(){
+  const i=document.getElementById('cin'),t=i.value.trim();if(!t)return;
+  const id=document.getElementById('mch').dataset.cid||'x';
+  if(!S.ch[id])S.ch[id]=[];
+  const tm=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  S.ch[id].push({from:'me',tx:t,tm});i.value='';rCM(id);
+  // Persist to backend
+  API.post('/api/messages',{cid:id,frm:'me',tx:t,uid:S.user?.id});
+  setTimeout(()=>{
+    const reply='Thanks for your message! I will get back to you shortly.';
+    S.ch[id].push({from:'them',tx:reply,tm:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});
+    API.post('/api/messages',{cid:id,frm:'them',tx:reply,uid:S.user?.id});
+    rCM(id);
+  },1200);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ADMIN
+// ════════════════════════════════════════════════════════════════
+function rAdm(){
+  API.get('/api/admin/stats').then(r=>{
+    const d=r.ok?r.data:{workers:W.length,jobs:J.length,applications:S.apps.length,reports:0};
+    document.getElementById('as').innerHTML=`<div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--p);">${d.workers}</div><div style="font-size:12px;color:var(--tx2);">Workers</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--ok);">${d.jobs}</div><div style="font-size:12px;color:var(--tx2);">Jobs</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--acc);">${d.applications}</div><div style="font-size:12px;color:var(--tx2);">Applications</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--er);">${d.reports}</div><div style="font-size:12px;color:var(--tx2);">Reports</div></div>`;
+  });
+  aT('rpts',null);
+}
+function aT(t,el){
+  if(el){document.querySelectorAll('.tbt').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const c=document.getElementById('ac2');
+  if(t==='rpts'){
+    API.get('/api/reports').then(r=>{
+      const rpts=r.ok?r.data:[];
+      c.innerHTML=rpts.length?rpts.map(rpt=>`<div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid var(--br);align-items:flex-start;"><div style="font-size:24px;">🚨</div><div style="flex:1;"><div style="font-weight:600;font-size:13px;">${rpt.tgt||'Unknown'}</div><div style="font-size:12px;color:var(--tx2);">Reason: ${rpt.rs}</div><div style="font-size:11px;color:var(--tx3);">${rpt.created||''}</div></div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn bd sm" onclick="aAct('suspend','${rpt.tgt||''}')">Suspend</button><button class="btn bg sm" onclick="aAct('dismiss','${rpt.id}')">Dismiss</button></div></div>`).join(''):'<div style="padding:20px;text-align:center;color:var(--tx3);">No reports</div>';
+    });
+  }else if(t==='wrk'){
+    API.get('/api/workers').then(r=>{
+      const wks=r.ok?r.data:W;
+      c.innerHTML=wks.map(w=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;gap:8px;align-items:center;"><div class="av" style="width:36px;height:36px;font-size:16px;">${w.em}</div><div><div style="font-weight:600;font-size:13px;">${w.nm}</div><div style="font-size:11px;color:var(--tx2);">${w.cat} · ${w.cy}</div></div></div><div style="display:flex;gap:4px;">${w.vr?'<span class="bdg bdok">✓ Verified</span>':`<button class="btn bp sm" onclick="vW('${w.id}')">Verify</button>`}<button class="btn bd sm" onclick="aAct('ban','${w.nm}')">Ban</button></div></div></div>`).join('');
+    });
+  }else if(t==='emp'){
+    c.innerHTML=`<div class="card mb"><div style="font-weight:600;">Anjali Construction</div><div style="font-size:12px;color:var(--tx2);">Employer</div><button class="btn bg sm mt" onclick="toast('Employer verified ✓','ok')">Verify</button></div>`;
+  }else if(t==='rev'){
+    API.get('/api/reviews?tid=w1').then(r=>{
+      const revs=r.ok?r.data:[];
+      c.innerHTML=revs.length?revs.map(rv=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:600;font-size:13px;">${rv.rn}</div><div style="font-size:12px;color:var(--tx2);">${rv.cm}</div></div><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;"><span class="stars">${'★'.repeat(Math.floor(rv.rt))}</span><button class="btn bd sm" onclick="delRev('${rv.id}',this)">Remove</button></div></div></div>`).join(''):'<div style="padding:20px;text-align:center;color:var(--tx3);">No reviews found.</div>';
+    });
+  }
+}
+function delRev(id,btn){btn.closest('.card').remove();API.del('/api/reviews/'+encodeURIComponent(id)).then(r=>r.ok?toast('Review removed','ok'):toast('Failed','er'));}
+function aAct(a,tgt){
+  if(a==='dismiss'&&tgt){API.del('/api/reports/'+encodeURIComponent(tgt)).then(()=>{toast('Report dismissed','ok');aT('rpts',null);});return;}
+  if(a==='ban'){API.patch('/api/admin/workers/'+encodeURIComponent(tgt||'')+'/ban').then(()=>toast(tgt+' banned','ok'));return;}
+  toast({suspend:(tgt||'')+' suspended',ban:(tgt||'')+' banned',dismiss:'Report dismissed'}[a]||'Done','ok');
+}
+function vW(id){
+  API.patch('/api/admin/workers/'+encodeURIComponent(id)+'/verify').then(r=>{
+    if(r.ok){const w=W.find(x=>x.id===id);if(w)w.vr=true;toast((w?.nm||id)+' verified ✓','ok');aT('wrk',null);}
+    else toast('Failed to verify','er');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  REVIEWS
+// ════════════════════════════════════════════════════════════════
+function oRM(tid,tt,tnm){
+  S.rtgt={id:tid,type:tt,nm:tnm};S.rr=5;uSt(5);document.getElementById('rtx').value='';
+  document.getElementById('rti').innerHTML=`<div style="font-size:24px;">⭐</div><div><div style="font-weight:700;">${tnm}</div><div style="font-size:12px;color:var(--tx2);">Write your honest review</div></div>`;
+  oM('mrev');
+}
+function sR(n){S.rr=n;uSt(n);}
+function uSt(n){document.querySelectorAll('.sk2').forEach((s,i)=>{s.style.color=i<n?'var(--acc)':'var(--br)';});}
+function sbRev(){
+  const t=document.getElementById('rtx').value.trim();if(!t){toast('Please write a review','er');return;}
+  if(!S.rtgt){toast('No review target set','er');return;}
+  API.post('/api/reviews',{tid:S.rtgt.id,rn:S.user?.name||'You',rt:S.rr,cm:t,uid:S.user?.id}).then(r=>{
+    if(!r.ok){toast(r.error||'Failed to submit review','er');return;}
+    cM('mrev');toast('Review submitted! ⭐','ok');
+    if(S.cwid)oWD(S.cwid);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════
+//  LOCATION
+// ════════════════════════════════════════════════════════════════
+function oLoc(){oM('mloc');}
+function sLoc(){
+  const c=document.getElementById('lci').value.trim(),lo=document.getElementById('llo').value.trim();
+  S.loc=lo?lo+', '+c:c;
+  document.getElementById('ld').textContent=S.loc;
+  if(document.getElementById('sloc'))document.getElementById('sloc').textContent=S.loc;
+  cM('mloc');toast('Location updated 📍','ok');
+}
+function dtL(){
+  if(!navigator.geolocation){toast('GPS not available on this device','er');return;}
+  toast('Detecting your location…');
+  navigator.geolocation.getCurrentPosition(
+    ()=>{S.loc='Current Location';document.getElementById('ld').textContent=S.loc;cM('mloc');toast('Location detected! 📍','ok');},
+    ()=>toast('Could not detect location. Please enter manually.','er')
+  );
+}
+
+// ════════════════════════════════════════════════════════════════
+//  ACTIONS
+// ════════════════════════════════════════════════════════════════
+function cW(ph){window.location.href='tel:'+ph.replace(/\s/g,'');toast('Opening phone dialer…');}
+function wW(ph,nm){
+  const msg=encodeURIComponent(`Hi ${nm}, I found your profile on Kam Connect and I'd like to hire you. Are you available?`);
+  window.open('https://wa.me/'+ph.replace(/[^0-9]/g,'')+'?text='+msg,'_blank');
+}
+function gDir(loc){window.open('https://www.google.com/maps/search/'+encodeURIComponent(loc),'_blank');toast('Opening maps…');}
+function shJ(id){
+  const j=J.find(x=>x.id===id);
+  if(navigator.share)navigator.share({title:j?.ti,text:`Check out this job on Kam Connect: ${j?.ti} at ${j?.co}`,url:window.location.href});
+  else navigator.clipboard.writeText(window.location.href).then(()=>toast('Link copied! 📋','ok'));
+}
+function oRpt(ctx){
+  if(ctx){document.getElementById('rrs').value='Other';}
+  oM('mrpt');
+}
+function sbRpt(){
+  const rs=document.getElementById('rrs').value;
+  const dt=document.getElementById('rdt').value;
+  API.post('/api/reports',{rs,dt,uid:S.user?.id}).then(r=>{
+    cM('mrpt');
+    toast(r.ok?'Report submitted. We will review it shortly.':'Failed to submit report',r.ok?'ok':'er');
+  });
+}
+function oNM(id){document.getElementById('nai').value=id;document.getElementById('ntx').value='';oM('mnot');}
+function svN(){
+  const id=document.getElementById('nai').value,t=document.getElementById('ntx').value;
+  API.patch('/api/applications/'+encodeURIComponent(id),{nt:t}).then(r=>{
+    if(r.ok){const a=S.apps.find(x=>x.id===id);if(a)a.nt=t;}
+    cM('mnot');toast(r.ok?'Note saved 📝':'Failed to save note',r.ok?'ok':'er');
+  });
+}
+function vS(){
+  if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){toast('Voice search not supported on this browser','er');return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const r=new SR();r.lang='en-IN';
+  r.onresult=e=>{const t=e.results[0][0].transcript;document.getElementById('hsi').value=t;hS();};
+  r.onerror=()=>toast('Could not detect voice. Try again.','er');
+  r.start();toast('🎤 Listening…');
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SETTINGS
+// ════════════════════════════════════════════════════════════════
+function sAL(c,btn){
+  localStorage.setItem('lang',c);
+  ['len','lhi','lmr'].forEach(id=>{const b=document.getElementById(id);if(b)b.className='btn bg sm';});
+  btn.className='btn bp sm';
+  toast('Language: '+(c==='en'?'English':c==='hi'?'Hindi':'Marathi'),'ok');
+}
+function oHelp(){alert('Help & Support\n\nEmail: support@kamconnect.in\nPhone: 1800-KAM-HELP (toll free)\nHours: Mon–Sat 9am–6pm\n\nFor urgent issues, WhatsApp us at +91 98765 00000');}
+function oPrv(){alert('Privacy Policy\n\nKam Connect respects your privacy. We collect only the information necessary to connect workers with employers and customers.\n\nYour contact details are only shared when you explicitly choose to be contacted.\n\nYou can delete your account and all data at any time from Settings.');}
+function oTrm(){alert('Terms of Service\n\nBy using Kam Connect, you agree to use the platform honestly and responsibly.\n\nWorkers must provide accurate skills and availability.\nEmployers must post genuine job openings.\nCustomers must engage respectfully.\n\nViolations may result in account suspension.');}
+
+// ════════════════════════════════════════════════════════════════
+//  MODALS
+// ════════════════════════════════════════════════════════════════
+function oM(id){document.getElementById(id).classList.add('on');}
+function cM(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)cM(m.id);}));
+
+// ════════════════════════════════════════════════════════════════
+//  TOAST
+// ════════════════════════════════════════════════════════════════
+let ttm;
+function toast(msg,tp){
+  const t=document.getElementById('tst');
+  t.textContent=msg;t.className='sh'+(tp?' '+tp:'');
+  clearTimeout(ttm);ttm=setTimeout(()=>t.className='',3000);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  BOOT
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const s=localStorage.getItem('sess');
+  const ob=localStorage.getItem('ob');
+  if(s){
+    try{
+      const u=JSON.parse(s);S.user=u;S.role=u.role||'customer';
+      sP('pap');initApp();
+    }catch(e){localStorage.removeItem('sess');sP(ob?'pli':'pob');}
+  }else if(ob){sP('pli');}
+  uSt(5);
+})();
+</script>
+</body>
+</html>

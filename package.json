@@ -1,0 +1,15 @@
+{
+  "name": "kam-connect",
+  "version": "1.0.0",
+  "description": "KAM CONNECT — Local Services & Hiring Platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "sql.js": "^1.12.0"
+  }
+}

@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAM CONNECT — Local Services &amp; Hiring Platform</title>
+<style>
+:root{
+  --bg:#F5F7FA;--sf:#FFFFFF;--s2:#EEF1F6;
+  --p:#0EA5E9;--pd:#0284C7;--sec:#7C3AED;--acc:#F59E0B;
+  --ok:#10B981;--wn:#F59E0B;--er:#EF4444;--info:#3B82F6;
+  --tx:#111827;--tx2:#4B5563;--tx3:#9CA3AF;--br:#E5E7EB;
+  --r:14px;--rs:8px;--rl:20px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:"Segoe UI",system-ui,sans-serif;font-size:14px;overflow-x:hidden}
+a{color:var(--p);text-decoration:none}
+input,textarea,select{background:#fff;color:var(--tx);border:1.5px solid var(--br);border-radius:var(--rs);padding:12px 14px;font-family:inherit;font-size:14px;width:100%;outline:none;transition:.2s}
+input:focus,textarea:focus,select:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(14,165,233,.12)}
+select option{background:#fff}
+button{cursor:pointer;font-family:inherit}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:var(--r);font-weight:600;font-size:14px;border:none;transition:.18s}
+.bp{background:var(--p);color:#fff}.bp:hover{background:var(--pd);transform:translateY(-1px)}
+.bo{background:transparent;color:var(--p);border:1.5px solid var(--p)}.bo:hover{background:rgba(14,165,233,.08)}
+.bg{background:#fff;color:var(--tx2);border:1.5px solid var(--br)}.bg:hover{border-color:var(--p);color:var(--p)}
+.bd{background:var(--er);color:#fff}
+.bsuc{background:var(--ok);color:#fff}
+.sm{padding:7px 14px;font-size:12px;border-radius:var(--rs)}
+.fw{width:100%;justify-content:center}
+.btn:disabled{opacity:.5;pointer-events:none}
+.card{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card:hover{border-color:rgba(14,165,233,.35);box-shadow:0 4px 12px rgba(14,165,233,.1)}
+.bdg{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.bdi{background:rgba(59,130,246,.12);color:var(--info)}
+.bdok{background:rgba(16,185,129,.12);color:var(--ok)}
+.bdw{background:rgba(245,158,11,.12);color:var(--wn)}
+.bder{background:rgba(239,68,68,.12);color:var(--er)}
+.bds{background:rgba(124,58,237,.12);color:var(--sec)}
+.bdp{background:rgba(14,165,233,.12);color:var(--p)}
+.bdm{background:rgba(156,163,175,.15);color:var(--tx3)}
+.chip{display:inline-flex;align-items:center;padding:4px 10px;background:var(--s2);border:1px solid var(--br);border-radius:20px;font-size:12px;color:var(--tx2)}
+.av{border-radius:50%;background:var(--s2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--p);flex-shrink:0}
+.stars{color:var(--acc);font-size:13px}
+.pg{display:none;flex-direction:column;min-height:100vh}.pg.on{display:flex}
+.tc{display:none}.tc.on{display:block}
+.topb{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--br);padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.logo{font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sbx{flex:1;display:flex;align-items:center;background:var(--s2);border:1.5px solid var(--br);border-radius:10px;padding:0 12px;gap:8px}
+.sbx input{border:none;background:transparent;padding:9px 0;font-size:13px;width:100%}
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:#fff;border-top:1px solid var(--br);display:flex;padding:6px 0 10px;box-shadow:0 -2px 12px rgba(0,0,0,.06)}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px;cursor:pointer;color:var(--tx3);font-size:10px;transition:.15s;position:relative}
+.ni .ic{font-size:22px}.ni.on{color:var(--p)}
+.nbg{position:absolute;top:2px;right:20%;background:var(--er);color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 5px;min-width:16px;text-align:center}
+.pc{flex:1;overflow-y:auto;padding-bottom:80px}
+.hs{background:linear-gradient(160deg,#EFF6FF,#F5F7FA);padding:20px 16px 16px}
+.hs2{display:flex;align-items:center;background:#fff;border:1.5px solid var(--br);border-radius:12px;padding:4px 4px 4px 14px;gap:8px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.hs2 input{border:none;background:transparent;flex:1;padding:8px 0;font-size:14px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px}
+.qi{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.qic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.qil{font-size:11px;font-weight:600;text-align:center;color:var(--tx2)}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px}
+.ci{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff;border:1px solid var(--br);border-radius:12px;padding:12px 8px;cursor:pointer;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.ci:hover{border-color:var(--p);transform:translateY(-2px);box-shadow:0 4px 12px rgba(14,165,233,.1)}
+.stit{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.sx{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.sx::-webkit-scrollbar{display:none}
+.wc{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:14px;cursor:pointer;transition:.15s;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.wc:hover{border-color:rgba(14,165,233,.4);transform:translateY(-2px);box-shadow:0 4px 12px rgba(14,165,233,.1)}
+.jc{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:14px;cursor:pointer;transition:.15s;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.jc:hover{border-color:rgba(14,165,233,.4);box-shadow:0 4px 12px rgba(14,165,233,.1)}
+.fr{display:flex;gap:8px;padding:10px 16px;overflow-x:auto;scrollbar-width:none}
+.fr::-webkit-scrollbar{display:none}
+.fc{flex-shrink:0;padding:6px 14px;background:#fff;border:1.5px solid var(--br);border-radius:20px;font-size:12px;font-weight:600;color:var(--tx2);cursor:pointer;transition:.15s;white-space:nowrap}
+.fc.on{background:rgba(14,165,233,.1);border-color:var(--p);color:var(--p)}
+.mo{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);align-items:flex-end;justify-content:center}
+.mo.on{display:flex}
+.md{background:#fff;border-radius:var(--rl) var(--rl) 0 0;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:20px;animation:su .25s ease;box-shadow:0 -8px 32px rgba(0,0,0,.12)}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhd{width:40px;height:4px;background:var(--br);border-radius:2px;margin:0 auto 16px}
+.cls{background:var(--s2);border:none;color:var(--tx2);width:32px;height:32px;border-radius:50%;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cls:hover{background:var(--br)}
+.dh{background:linear-gradient(160deg,#EFF6FF,#F5F7FA);padding:20px 16px}
+.bkb{display:inline-flex;align-items:center;gap:6px;color:var(--tx2);background:var(--s2);border:none;border-radius:var(--rs);padding:8px 12px;font-size:13px;cursor:pointer;margin-bottom:16px}
+.bkb:hover{color:var(--p);background:rgba(14,165,233,.08)}
+.ir{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--br);font-size:13px}
+.ir:last-child{border:none}.irl{color:var(--tx2);min-width:100px}.irv{font-weight:500;flex:1}
+.fg{margin-bottom:14px}.fl{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:6px;display:block}
+.fe{font-size:11px;color:var(--er);margin-top:4px;display:none}
+.fg.er input,.fg.er select,.fg.er textarea{border-color:var(--er)}.fg.er .fe{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:16px}
+.sc{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.sc .sv{font-size:26px;font-weight:800;color:var(--p)}.sc .sl{font-size:12px;color:var(--tx2)}
+.tbbar{display:flex;border-bottom:1px solid var(--br);overflow-x:auto;padding:0 16px;scrollbar-width:none;background:#fff}
+.tbbar::-webkit-scrollbar{display:none}
+.tbt{padding:11px 16px;font-size:13px;font-weight:600;color:var(--tx2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:.15s}
+.tbt.on{color:var(--p);border-bottom-color:var(--p)}
+.otp{display:flex;gap:10px;justify-content:center}
+.oi{width:48px;height:54px;text-align:center;font-size:20px;font-weight:700;border-radius:10px}
+.cb{max-width:72%;padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.5}
+.cb.me{background:var(--p);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.cb.th{background:var(--s2);color:var(--tx);border-bottom-left-radius:4px}
+.ni2{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--br);cursor:pointer;transition:.15s}
+.ni2:hover{background:var(--s2)}.ni2.ur{background:rgba(14,165,233,.04)}
+.cli{display:flex;gap:12px;padding:14px 16px;border-bottom:1px solid var(--br);cursor:pointer;align-items:center}
+.cli:hover{background:var(--s2)}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot.y{background:var(--ok)}.dot.n{background:var(--er)}
+.avd{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600}
+.avd.y{color:var(--ok)}.avd.n{color:var(--er)}
+.rtb{padding:7px 18px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--br);color:var(--tx2);background:#fff;transition:.15s}
+.rtb.on{background:var(--p);color:#fff;border-color:var(--p)}
+.ph{background:linear-gradient(160deg,#EFF6FF,#F5F7FA);padding:24px 16px;text-align:center}
+.rt{display:flex;gap:8px;justify-content:center;padding:12px 16px;border-bottom:1px solid var(--br);background:#fff}
+.is{padding:16px;background:var(--bg)}
+.ib{background:#fff;border:1px solid var(--br);border-radius:var(--r);padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.ib h3{font-size:13px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.ar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+#tst{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#fff;color:var(--tx);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:9999;display:none;border:1px solid var(--br);box-shadow:0 4px 20px rgba(0,0,0,.15);white-space:nowrap}
+#tst.sh{display:block;animation:fiu .25s ease}
+#tst.ok{border-color:var(--ok);color:var(--ok);background:#f0fdf4}
+#tst.er{border-color:var(--er);color:var(--er);background:#fef2f2}
+@keyframes fiu{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+hr{border:none;border-top:1px solid var(--br);margin:12px 0}
+.mt{margin-top:8px}.mt2{margin-top:16px}.mb{margin-bottom:8px}.mb2{margin-bottom:16px}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+/* ── AI CHATBOT ─────────────────────────────────────────── */
+#ai-fab{position:fixed;bottom:76px;right:16px;z-index:500;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--sec));border:none;font-size:22px;color:#fff;box-shadow:0 4px 16px rgba(14,165,233,.45);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+#ai-fab:hover{transform:scale(1.08)}
+#ai-win{position:fixed;bottom:140px;right:12px;z-index:600;width:340px;max-width:calc(100vw - 24px);background:#fff;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;border:1px solid var(--br)}
+#ai-win.open{display:flex}
+#ai-hdr{background:linear-gradient(135deg,var(--p),var(--sec));padding:14px 16px;display:flex;align-items:center;gap:10px;color:#fff}
+#ai-hdr .ai-av{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:18px}
+#ai-hdr .ai-info{flex:1}
+#ai-hdr .ai-title{font-weight:700;font-size:14px}
+#ai-hdr .ai-sub{font-size:11px;opacity:.85}
+#ai-hdr .ai-cls{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#ai-msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;max-height:380px;min-height:200px;background:#F8FAFC}
+#ai-msgs::-webkit-scrollbar{width:4px}#ai-msgs::-webkit-scrollbar-thumb{background:var(--br);border-radius:2px}
+.ai-msg{display:flex;gap:8px;align-items:flex-end}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-bubble{max-width:80%;padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.55;word-break:break-word}
+.ai-msg.bot .ai-bubble{background:#fff;border:1px solid var(--br);border-bottom-left-radius:4px;color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.ai-msg.user .ai-bubble{background:var(--p);color:#fff;border-bottom-right-radius:4px}
+.ai-msg.bot .ai-av2{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--sec));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ai-typing{display:flex;gap:4px;align-items:center;padding:10px 13px}
+.ai-typing span{width:7px;height:7px;border-radius:50%;background:var(--tx3);animation:typ 1.2s infinite}
+.ai-typing span:nth-child(2){animation-delay:.2s}.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typ{0%,80%,100%{transform:scale(.8);opacity:.4}40%{transform:scale(1.1);opacity:1}}
+#ai-inp{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--br);background:#fff}
+#ai-inp input{border:1.5px solid var(--br);border-radius:20px;padding:9px 14px;font-size:13px;flex:1}
+#ai-inp input:focus{border-color:var(--p)}
+#ai-inp button{background:var(--p);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+#ai-inp button:hover{background:var(--pd)}
+.ai-bubble strong{font-weight:700}
+.ai-quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ai-qbtn{padding:5px 12px;background:#EFF6FF;border:1px solid rgba(14,165,233,.3);border-radius:20px;font-size:12px;color:var(--p);cursor:pointer;font-weight:500;white-space:nowrap}
+.ai-qbtn:hover{background:rgba(14,165,233,.1)}
+
+@media(min-width:768px){
+  .bnav,.topb{max-width:600px;left:50%;transform:translateX(-50%);border-left:1px solid var(--br);border-right:1px solid var(--br)}
+  .pc{max-width:600px;margin:0 auto}
+  #ai-fab{right:calc(50% - 300px + 16px)}
+  #ai-win{right:calc(50% - 300px + 12px)}
+}
+@media(max-width:500px){.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="tst"></div>
+
+<!-- ONBOARDING -->
+<div id="pob" class="pg on">
+  <div style="flex:1;display:flex;flex-direction:column;">
+    <div id="os0" style="display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:130px;height:130px;border-radius:36px;background:linear-gradient(135deg,#40CAD7,#2BAAB6);display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:32px;">🔍</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Find Trusted Local Services</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Discover plumbers, electricians, painters and more near you — with real ratings and reviews.</div>
+    </div>
+    <div id="os1" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:130px;height:130px;border-radius:36px;background:linear-gradient(135deg,#7C5CD8,#5A3DBB);display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:32px;">💼</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Discover Nearby Work</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Find daily-wage, part-time and full-time opportunities in your city. Apply with one tap.</div>
+    </div>
+    <div id="os2" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;text-align:center;">
+      <div style="width:130px;height:130px;border-radius:36px;background:linear-gradient(135deg,#FFB830,#E09010);display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:32px;">🤝</div>
+      <div style="font-size:24px;font-weight:800;margin-bottom:12px;">Connect &amp; Grow</div>
+      <div style="color:var(--tx2);font-size:15px;line-height:1.6;">Employers find skilled workers. Workers build careers. Communities thrive together.</div>
+    </div>
+  </div>
+  <div style="padding:0 24px 40px;">
+    <div id="odd" style="display:flex;justify-content:center;gap:8px;margin-bottom:24px;">
+      <div class="od" style="width:24px;height:8px;background:var(--p);border-radius:4px;transition:.3s;"></div>
+      <div class="od" style="width:8px;height:8px;background:var(--s2);border-radius:4px;transition:.3s;"></div>
+      <div class="od" style="width:8px;height:8px;background:var(--s2);border-radius:4px;transition:.3s;"></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px;">
+      <button class="btn bg sm" onclick="skO()">Skip</button>
+      <button class="btn bp" id="obn" style="flex:1;max-width:220px;justify-content:center;" onclick="nxO()">Continue</button>
+    </div>
+    <div style="display:flex;justify-content:center;gap:8px;">
+      <button class="btn bg sm" onclick="sL('en')">EN</button>
+      <button class="btn bg sm" onclick="sL('hi')">हिं</button>
+      <button class="btn bg sm" onclick="sL('mr')">मर</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div id="pli" class="pg">
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#EFF6FF,#F5F7FA);">
+    <div style="width:100%;max-width:420px;background:#fff;border-radius:24px;padding:32px;box-shadow:0 8px 40px rgba(14,165,233,.12);border:1px solid var(--br);">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">⚡ Kam Connect</div>
+        <div style="color:var(--tx2);font-size:13px;margin-top:4px;">Connect. Work. Grow.</div>
+      </div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Welcome Back 👋</div>
+      <div style="color:var(--tx2);margin-bottom:24px;font-size:13px;">Sign in with your phone number to continue</div>
+      <div class="fg" id="fgp">
+        <label class="fl">Phone Number</label>
+        <div style="position:relative;">
+          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);font-size:16px;pointer-events:none;">📱</span>
+          <input type="tel" id="phi" placeholder="+91 98765 43210" maxlength="15" style="padding-left:38px;">
+        </div>
+        <div class="fe">Please enter a valid phone number (min 10 digits)</div>
+      </div>
+      <button class="btn bp fw mt" onclick="sOtp()">Send OTP</button>
+      <div style="margin:20px 0;text-align:center;position:relative;"><hr><span style="background:#fff;padding:0 12px;color:var(--tx3);font-size:12px;position:relative;z-index:1;">OR DEMO MODE</span></div>
+      <div style="background:rgba(64,202,215,.08);border:1px solid rgba(64,202,215,.25);border-radius:var(--r);padding:14px;text-align:center;">
+        <div style="font-size:12px;color:var(--tx2);margin-bottom:10px;">🎭 <strong>Demo Mode</strong> — No OTP required</div>
+        <div style="display:flex;gap:8px;flex-direction:column;">
+          <button class="btn bo fw sm" onclick="dL('customer')">👤 Customer Demo</button>
+          <button class="btn bo fw sm" onclick="dL('worker')">🔧 Worker Demo</button>
+          <button class="btn bo fw sm" onclick="dL('employer')">🏢 Employer Demo</button>
+          <button class="btn bg fw sm" onclick="dL('admin')">🛡 Admin Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTP -->
+<div id="pot" class="pg">
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#EFF6FF,#F5F7FA);">
+    <div style="width:100%;max-width:420px;background:#fff;border-radius:24px;padding:32px;box-shadow:0 8px 40px rgba(14,165,233,.12);border:1px solid var(--br);">
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:36px;font-weight:900;background:linear-gradient(135deg,var(--p),var(--sec));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">⚡ Kam Connect</div>
+      </div>
+      <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Verify OTP 🔐</div>
+      <div style="color:var(--tx2);margin-bottom:8px;font-size:13px;">Enter the 6-digit code sent to</div>
+      <div id="opd" style="color:var(--p);font-weight:700;margin-bottom:24px;"></div>
+      <div class="otp">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,0)" id="o0">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,1)" id="o1">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,2)" id="o2">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,3)" id="o3">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,4)" id="o4">
+        <input type="number" class="oi" maxlength="1" oninput="oi(this,5)" id="o5">
+      </div>
+      <div id="oe" style="color:var(--er);font-size:12px;text-align:center;margin-top:8px;display:none;">Invalid OTP. Use <strong>123456</strong> for demo.</div>
+      <button class="btn bp fw mt2" onclick="vOtp()">Verify &amp; Sign In</button>
+      <div style="text-align:center;margin-top:16px;font-size:12px;color:var(--tx2);">
+        Didn't receive? <button class="btn bg sm" id="reb" onclick="rOtp()" disabled>Resend (<span id="cd">30</span>s)</button>
+      </div>
+      <div style="text-align:center;margin-top:10px;"><button class="btn bg sm" onclick="sP('pli')">← Change Number</button></div>
+      <div style="background:rgba(64,202,215,.08);border:1px solid rgba(64,202,215,.2);border-radius:8px;padding:10px;margin-top:16px;font-size:12px;color:var(--tx2);text-align:center;">Demo OTP: <strong style="color:var(--p);">123456</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="pap" class="pg" style="flex-direction:column;">
+  <div class="topb">
+    <div class="logo">⚡ Kam</div>
+    <div class="sbx">
+      <span style="color:var(--tx3);font-size:16px;">🔍</span>
+      <input type="text" placeholder="Search services, workers, jobs…" id="tsi" onkeydown="if(event.key==='Enter')tS()">
+    </div>
+    <button class="btn bg sm" onclick="gT('tn')" style="padding:8px;border-radius:50%;min-width:0;position:relative;">
+      🔔<span id="nd" style="position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--er);border-radius:50%;border:2px solid var(--bg);display:none;"></span>
+    </button>
+    <button class="btn bg sm" onclick="gT('tp')" style="padding:8px;border-radius:50%;min-width:0;font-size:18px;">👤</button>
+  </div>
+  <div class="pc" id="mc">
+
+    <!-- HOME -->
+    <div id="th" class="tc on">
+      <div class="hs">
+        <div style="display:flex;align-items:center;gap:6px;color:var(--tx2);font-size:13px;margin-bottom:14px;cursor:pointer;" onclick="oLoc()">
+          <span style="color:var(--p);">📍</span><span id="ld">Pune, Maharashtra</span><span style="font-size:11px;">▾</span>
+        </div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px;">Hello, <span id="gn">there</span> 👋</div>
+        <div style="color:var(--tx2);font-size:13px;margin-bottom:14px;">What are you looking for today?</div>
+        <div class="hs2">
+          <input type="text" placeholder="Find services, workers or jobs near you" id="hsi" onkeydown="if(event.key==='Enter')hS()">
+          <button style="background:var(--s2);border:1px solid var(--br);border-radius:8px;padding:9px 10px;font-size:16px;" onclick="vS()" title="Voice Search">🎤</button>
+          <button class="btn bp sm" onclick="hS()">Search</button>
+        </div>
+        <div id="rsr" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;"></div>
+      </div>
+      <div style="padding:16px 16px 4px;font-size:15px;font-weight:700;">Quick Actions</div>
+      <div class="qa">
+        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(64,202,215,.15);">🔍</div><div class="qil">Find Services</div></div>
+        <div class="qi" onclick="gT('tj')"><div class="qic" style="background:rgba(124,92,216,.15);">💼</div><div class="qil">Find Jobs</div></div>
+        <div class="qi" onclick="gSrv()"><div class="qic" style="background:rgba(52,211,153,.15);">👷</div><div class="qil">Hire Workers</div></div>
+        <div class="qi" onclick="oPJ()"><div class="qic" style="background:rgba(255,184,48,.15);">📋</div><div class="qil">Post a Job</div></div>
+      </div>
+      <div style="padding:16px 16px 8px;" class="stit">Service Categories <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+      <div class="cg" id="cg"></div>
+      <div style="padding:16px 16px 8px;" class="stit">Nearby Workers <button class="btn bg sm" onclick="gSrv()">See All →</button></div>
+      <div class="sx" style="padding:0 16px;" id="hw"></div>
+      <div style="padding:16px 16px 8px;" class="stit">Latest Jobs <button class="btn bg sm" onclick="gT('tj')">See All →</button></div>
+      <div style="padding:0 16px;" id="hj"></div>
+      <div style="height:16px;"></div>
+    </div>
+
+    <!-- SEARCH -->
+    <div id="ts" class="tc">
+      <div style="padding:14px 16px 0;">
+        <div class="hs2"><input type="text" placeholder="Search services, workers, jobs…" id="smi" oninput="lS(this.value)"><button class="btn bp sm" onclick="lS(document.getElementById('smi').value)">Go</button></div>
+      </div>
+      <div class="fr" id="sf">
+        <div class="fc on" onclick="sST('all',this)">All</div>
+        <div class="fc" onclick="sST('workers',this)">Workers</div>
+        <div class="fc" onclick="sST('jobs',this)">Jobs</div>
+        <div class="fc" onclick="sST('services',this)">Services</div>
+      </div>
+      <div style="padding:0 16px;" id="sr">
+        <div style="padding:40px 0;text-align:center;color:var(--tx3);">
+          <div style="font-size:40px;margin-bottom:12px;">🔍</div>
+          <div>Type to search for workers, jobs or services</div>
+          <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" id="sug"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOBS -->
+    <div id="tj" class="tc">
+      <div style="padding:16px 16px 0;">
+        <div style="font-size:20px;font-weight:800;">Job Listings</div>
+        <div id="jc2" style="font-size:13px;color:var(--tx2);margin-top:2px;">Loading…</div>
+      </div>
+      <div class="fr" id="jfr">
+        <div class="fc on" onclick="fJ('',this)">All</div>
+        <div class="fc" onclick="fJ('Full-time',this)">Full-time</div>
+        <div class="fc" onclick="fJ('Part-time',this)">Part-time</div>
+        <div class="fc" onclick="fJ('Daily Wage',this)">Daily Wage</div>
+        <div class="fc" onclick="fJ('Temporary',this)">Temporary</div>
+        <div class="fc" onclick="fJ('Contract',this)">Contract</div>
+      </div>
+      <div class="fr">
+        <div class="fc on" onclick="fJC('',this)">All Categories</div>
+        <div class="fc" onclick="fJC('Plumbing',this)">Plumbing</div>
+        <div class="fc" onclick="fJC('Electrical',this)">Electrical</div>
+        <div class="fc" onclick="fJC('Carpentry',this)">Carpentry</div>
+        <div class="fc" onclick="fJC('Cleaning',this)">Cleaning</div>
+        <div class="fc" onclick="fJC('Delivery',this)">Delivery</div>
+        <div class="fc" onclick="fJC('Painting',this)">Painting</div>
+        <div class="fc" onclick="fJC('Gardening',this)">Gardening</div>
+        <div class="fc" onclick="fJC('Mechanic',this)">Mechanic</div>
+      </div>
+      <div style="padding:0 16px;" id="jl"></div>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="tsv" class="tc">
+      <div style="padding:16px 16px 0;">
+        <div style="font-size:20px;font-weight:800;">Local Services</div>
+        <div style="font-size:13px;color:var(--tx2);">Find skilled workers near you</div>
+      </div>
+      <div class="fr" id="svf">
+        <div class="fc on" onclick="fSv('',this)">All</div>
+        <div class="fc" onclick="fSv('Plumbing',this)">🔧 Plumbing</div>
+        <div class="fc" onclick="fSv('Electrical',this)">⚡ Electrical</div>
+        <div class="fc" onclick="fSv('Carpentry',this)">🪚 Carpentry</div>
+        <div class="fc" onclick="fSv('Painting',this)">🖌️ Painting</div>
+        <div class="fc" onclick="fSv('Cleaning',this)">🧹 Cleaning</div>
+        <div class="fc" onclick="fSv('Mechanic',this)">🔩 Mechanic</div>
+        <div class="fc" onclick="fSv('Gardening',this)">🌿 Gardening</div>
+        <div class="fc" onclick="fSv('Delivery',this)">🚚 Delivery</div>
+      </div>
+      <div style="padding:8px 16px;display:flex;gap:8px;align-items:center;">
+        <input type="text" placeholder="Search by name or skill…" id="svs" oninput="fSvS(this.value)" style="border-radius:20px;padding:8px 14px;font-size:13px;">
+        <button class="fc" id="avb" onclick="tAv(this)">Available Only</button>
+      </div>
+      <div style="padding:0 16px;" id="svl"></div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="tp" class="tc">
+      <div class="ph" id="pfh"></div>
+      <div class="rt" id="prt"></div>
+      <div id="pfb"></div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="tn" class="tc">
+      <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:20px;font-weight:800;">Notifications</div>
+        <button class="btn bg sm" onclick="mAR()">Mark all read</button>
+      </div>
+      <div id="nl"></div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div id="tm" class="tc">
+      <div style="padding:16px;font-size:20px;font-weight:800;">Messages</div>
+      <div id="cl2"></div>
+    </div>
+
+    <!-- EMPLOYER DASHBOARD -->
+    <div id="te" class="tc">
+      <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-size:20px;font-weight:800;">Employer Dashboard</div><div id="end" style="font-size:13px;color:var(--tx2);">—</div></div>
+        <button class="btn bp sm" onclick="oPJ()">+ Post Job</button>
+      </div>
+      <div class="sg" id="es"></div>
+      <div class="tbbar" id="etb">
+        <button class="tbt on" onclick="eT('active',this)">Active Jobs</button>
+        <button class="tbt" onclick="eT('drafts',this)">Drafts</button>
+        <button class="tbt" onclick="eT('closed',this)">Closed</button>
+        <button class="tbt" onclick="eT('apps',this)">Applications</button>
+      </div>
+      <div id="etc" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="ta" class="tc">
+      <div style="padding:16px;">
+        <div style="font-size:20px;font-weight:800;">🛡 Admin Panel</div>
+        <div style="font-size:13px;color:var(--tx2);">Platform management &amp; moderation</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px;" id="as"></div>
+      <div class="tbbar">
+        <button class="tbt on" onclick="aT('rpts',this)">Reports</button>
+        <button class="tbt" onclick="aT('wrk',this)">Workers</button>
+        <button class="tbt" onclick="aT('emp',this)">Employers</button>
+        <button class="tbt" onclick="aT('rev',this)">Reviews</button>
+      </div>
+      <div id="ac2" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- WORKER DETAIL -->
+    <div id="twd" class="tc"><div id="wdc"></div></div>
+
+    <!-- JOB DETAIL -->
+    <div id="tjd" class="tc"><div id="jdc"></div></div>
+
+    <!-- POST JOB -->
+    <div id="tpj" class="tc">
+      <div style="padding:16px;">
+        <button class="bkb" onclick="gB()">← Back</button>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px;">Post a New Job</div>
+        <div style="font-size:13px;color:var(--tx2);">Fill in details to attract the right workers</div>
+      </div>
+      <div style="padding:0 16px 24px;">
+        <div class="fg" id="fgjt"><label class="fl">Job Title *</label><input type="text" id="jti" placeholder="e.g. Plumber needed for bathroom renovation"><div class="fe">Required</div></div>
+        <div class="fg" id="fgjc"><label class="fl">Category *</label><select id="jca"><option value="">Select category…</option><option>Plumbing</option><option>Electrical</option><option>Carpentry</option><option>Painting</option><option>Construction</option><option>Cleaning</option><option>Mechanic</option><option>Delivery</option><option>Gardening</option><option>Home Repair</option><option>Other</option></select><div class="fe">Required</div></div>
+        <div class="fg"><label class="fl">Description *</label><textarea id="jde" rows="4" placeholder="Describe the work, requirements, and skills needed…"></textarea></div>
+        <div class="fg"><label class="fl">Required Skills (comma separated)</label><input type="text" id="jsk" placeholder="e.g. Plumbing, Pipe Fitting, Drain Cleaning"></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">Workers Needed</label><input type="number" id="jwn" value="1" min="1"></div>
+          <div class="fg"><label class="fl">Employment Type</label><select id="jty"><option>Full-time</option><option>Part-time</option><option>Daily Wage</option><option>Temporary</option><option>Contract</option><option>Apprenticeship</option></select></div>
+        </div>
+        <div class="g2">
+          <div class="fg"><label class="fl">Min Wage (₹)</label><input type="number" id="jwi" placeholder="500"></div>
+          <div class="fg"><label class="fl">Max Wage (₹)</label><input type="number" id="jwa" placeholder="800"></div>
+        </div>
+        <div class="fg"><label class="fl">Pay Frequency</label><select id="jfq"><option>Per Day</option><option>Per Week</option><option>Per Month</option><option>Per Job</option></select></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">City *</label><input type="text" id="jci" value="Pune" placeholder="City"></div>
+          <div class="fg"><label class="fl">Locality</label><input type="text" id="jlo" placeholder="Locality"></div>
+        </div>
+        <div class="fg"><label class="fl">Working Hours</label><input type="text" id="jhr" placeholder="8am–6pm, Mon–Sat"></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">Start Date</label><input type="date" id="jsd"></div>
+          <div class="fg"><label class="fl">Application Deadline</label><input type="date" id="jdl"></div>
+        </div>
+        <div class="fg"><label class="fl">Contact Phone</label><input type="tel" id="jph" placeholder="+91 98765 43210"></div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button class="btn bg" style="flex:1;justify-content:center;" onclick="sDft()">Save Draft</button>
+          <button class="btn bo" style="flex:1;justify-content:center;" onclick="pvJ()">Preview</button>
+          <button class="btn bp" style="flex:1;justify-content:center;" onclick="pbJ()">Publish ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPLY -->
+    <div id="tap" class="tc">
+      <div style="padding:16px;">
+        <button class="bkb" onclick="gB()">← Back</button>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px;" id="ajt">Apply for Job</div>
+        <div style="font-size:13px;color:var(--tx2);" id="aen">Employer</div>
+      </div>
+      <div style="padding:0 16px 24px;">
+        <div class="card mb2"><div style="font-size:13px;font-weight:700;margin-bottom:8px;">Your Profile</div><div id="app"></div></div>
+        <div class="fg"><label class="fl">Cover Note (optional)</label><textarea id="ano" rows="4" placeholder="Tell the employer why you are the best fit…"></textarea></div>
+        <button class="btn bp fw" id="asb" onclick="sApp()">✓ Submit Application</button>
+        <div style="font-size:11px;color:var(--tx3);text-align:center;margin-top:8px;">Your profile and contact details will be shared with the employer</div>
+      </div>
+    </div>
+
+    <!-- EDIT WORKER PROFILE -->
+    <div id="tep" class="tc">
+      <div style="padding:16px;">
+        <button class="bkb" onclick="gB()">← Back</button>
+        <div style="font-size:20px;font-weight:800;">Edit Worker Profile</div>
+      </div>
+      <div style="padding:0 16px 24px;">
+        <div style="text-align:center;margin-bottom:20px;">
+          <div class="av" style="width:80px;height:80px;font-size:32px;margin:0 auto 10px;" id="eap">👷</div>
+          <button class="btn bg sm" onclick="upPh()">📷 Change Photo</button>
+        </div>
+        <div class="fg"><label class="fl">Full Name *</label><input type="text" id="epn" placeholder="Your full name"></div>
+        <div class="fg"><label class="fl">Bio / About</label><textarea id="epb" rows="3" placeholder="Describe your experience and expertise…"></textarea></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">City *</label><input type="text" id="epc" placeholder="Pune"></div>
+          <div class="fg"><label class="fl">Locality</label><input type="text" id="epl" placeholder="Kothrud"></div>
+        </div>
+        <div class="fg"><label class="fl">Service Area</label><input type="text" id="epa" placeholder="Kothrud, Karve Nagar, Warje"></div>
+        <div class="fg"><label class="fl">Skills (comma separated)</label><input type="text" id="eps" placeholder="Plumbing, Pipe Fitting, Drain Cleaning"></div>
+        <div class="fg"><label class="fl">Category</label><select id="epcat"><option>Plumbing</option><option>Electrical</option><option>Carpentry</option><option>Painting</option><option>Cleaning</option><option>Mechanic</option><option>Delivery</option><option>Gardening</option><option>Home Repair</option><option>Construction</option><option>Other</option></select></div>
+        <div class="g2">
+          <div class="fg"><label class="fl">Experience (years)</label><input type="number" id="epe" min="0" placeholder="5"></div>
+          <div class="fg"><label class="fl">Expected Wage (₹)</label><input type="number" id="epw" placeholder="600"></div>
+        </div>
+        <div class="fg"><label class="fl">Wage Unit</label><select id="epwu"><option>per day</option><option>per hour</option><option>per month</option><option>per job</option></select></div>
+        <div class="fg"><label class="fl">Languages (comma separated)</label><input type="text" id="epla" placeholder="Hindi, Marathi, English"></div>
+        <div class="fg"><label class="fl">Phone (visible on profile)</label><input type="tel" id="epph" placeholder="+91 98760 11111"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+          <input type="checkbox" id="epav" style="width:auto;" checked>
+          <label for="epav" style="font-size:13px;cursor:pointer;">Currently available for work</label>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn bg" style="flex:1;justify-content:center;" onclick="gB()">Cancel</button>
+          <button class="btn bp" style="flex:1;justify-content:center;" onclick="sWP()">Save Profile ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAVORITES -->
+    <div id="tfv" class="tc">
+      <div style="padding:16px;"><div style="font-size:20px;font-weight:800;">Saved Items ❤️</div></div>
+      <div class="tbbar">
+        <button class="tbt on" onclick="fvT('w',this)">Workers</button>
+        <button class="tbt" onclick="fvT('j',this)">Jobs</button>
+      </div>
+      <div id="fvc" style="padding:12px 16px;"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="tst2" class="tc">
+      <div style="padding:16px;font-size:20px;font-weight:800;">Settings ⚙️</div>
+      <div style="padding:0 16px 24px;">
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Account</div>
+          <div class="ir" onclick="oEP()" style="cursor:pointer;"><span class="irl">Edit Profile</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oLoc()" style="cursor:pointer;"><span class="irl">Location</span><span class="irv" id="sloc">Pune</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir"><span class="irl">Phone</span><span class="irv" id="sphn">—</span></div>
+          <div class="ir"><span class="irl">Role</span><span class="irv" id="srol">Customer</span></div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Language</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn bp sm" id="len" onclick="sAL('en',this)">English</button>
+            <button class="btn bg sm" id="lhi" onclick="sAL('hi',this)">हिंदी</button>
+            <button class="btn bg sm" id="lmr" onclick="sAL('mr',this)">मराठी</button>
+          </div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Notifications</div>
+          <div class="ir"><span class="irl">Job Alerts</span><label><input type="checkbox" checked> Enabled</label></div>
+          <div class="ir"><span class="irl">Applications</span><label><input type="checkbox" checked> Enabled</label></div>
+          <div class="ir"><span class="irl">Messages</span><label><input type="checkbox" checked> Enabled</label></div>
+        </div>
+        <div class="card mb2">
+          <div style="font-size:13px;font-weight:700;color:var(--tx2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Support</div>
+          <div class="ir" onclick="oHelp()" style="cursor:pointer;"><span class="irl">Help &amp; Support</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oM('mrpt')" style="cursor:pointer;"><span class="irl">Report a Problem</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oPrv()" style="cursor:pointer;"><span class="irl">Privacy Policy</span><span style="color:var(--tx3);">→</span></div>
+          <div class="ir" onclick="oTrm()" style="cursor:pointer;"><span class="irl">Terms of Service</span><span style="color:var(--tx3);">→</span></div>
+        </div>
+        <button class="btn bd fw" style="margin-top:8px;" onclick="lo()">🚪 Logout</button>
+        <button class="btn bg fw" style="margin-top:8px;color:var(--er);border-color:var(--er);" onclick="dAcc()">Delete Account</button>
+      </div>
+    </div>
+
+  </div><!-- /pc -->
+
+  <nav class="bnav" id="bn">
+    <div class="ni on" id="nh" onclick="gT('th')"><span class="ic">🏠</span><span>Home</span></div>
+    <div class="ni" id="nsr" onclick="gT('ts')"><span class="ic">🔍</span><span>Search</span></div>
+    <div class="ni" id="nj" onclick="gT('tj')"><span class="ic">💼</span><span>Jobs</span></div>
+    <div class="ni" id="nm" onclick="gT('tm')"><span class="ic">💬</span><span>Chat</span><span class="nbg" id="mb">2</span></div>
+    <div class="ni" id="np" onclick="gT('tp')"><span class="ic">👤</span><span>Profile</span></div>
+  </nav>
+</div>
+
+<!-- MODALS -->
+<div class="mo" id="mloc">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📍 Set Location <button class="cls" onclick="cM('mloc')">✕</button></div>
+    <div class="fg"><label class="fl">City</label><input type="text" id="lci" value="Pune" placeholder="Enter your city"></div>
+    <div class="fg"><label class="fl">Locality / Area</label><input type="text" id="llo" value="Kothrud" placeholder="Enter locality"></div>
+    <button class="btn bp fw" onclick="sLoc()">Use This Location</button>
+    <button class="btn bg fw mt" onclick="dtL()">📡 Detect My Location</button>
+  </div>
+</div>
+
+<div class="mo" id="mrev">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">⭐ Write a Review <button class="cls" onclick="cM('mrev')">✕</button></div>
+    <div id="rti" style="display:flex;gap:10px;align-items:center;margin-bottom:16px;padding:12px;background:var(--s2);border-radius:var(--rs);"></div>
+    <div class="fg">
+      <label class="fl">Rating</label>
+      <div id="sp" style="display:flex;gap:8px;font-size:28px;cursor:pointer;margin-bottom:4px;">
+        <span onclick="sR(1)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(2)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(3)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(4)" class="sk2" style="color:var(--acc);">★</span>
+        <span onclick="sR(5)" class="sk2" style="color:var(--acc);">★</span>
+      </div>
+    </div>
+    <div class="fg"><label class="fl">Your Review</label><textarea id="rtx" rows="3" placeholder="Share your experience…"></textarea></div>
+    <button class="btn bp fw" onclick="sbRev()">Submit Review</button>
+  </div>
+</div>
+
+<div class="mo" id="mrpt">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">🚨 Report <button class="cls" onclick="cM('mrpt')">✕</button></div>
+    <div class="fg"><label class="fl">Reason</label><select id="rrs"><option>Fake profile</option><option>Inappropriate content</option><option>Scam or fraud</option><option>Harassment</option><option>Other</option></select></div>
+    <div class="fg"><label class="fl">Details (optional)</label><textarea id="rdt" rows="3" placeholder="Describe the issue…"></textarea></div>
+    <button class="btn bd fw" onclick="sbRpt()">Submit Report</button>
+  </div>
+</div>
+
+<div class="mo" id="mapp">
+  <div class="md" style="max-height:85vh;"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📋 Applicants <button class="cls" onclick="cM('mapp')">✕</button></div>
+    <div id="apc"></div>
+  </div>
+</div>
+
+<div class="mo" id="mch">
+  <div class="md" style="padding:0;">
+    <div style="padding:16px;border-bottom:1px solid var(--br);display:flex;align-items:center;gap:10px;">
+      <button class="bkb" onclick="cM('mch')" style="margin:0;padding:6px 10px;">✕</button>
+      <div id="cwn" style="font-weight:700;font-size:15px;"></div>
+    </div>
+    <div id="cms" style="height:300px;overflow-y:auto;padding:12px 0;"></div>
+    <div style="background:var(--bg);border-top:1px solid var(--br);padding:10px 16px;display:flex;gap:8px;">
+      <input type="text" id="cin" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sCM()" style="border-radius:20px;padding:10px 16px;">
+      <button class="btn bp sm" onclick="sCM()">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="mo" id="mnot">
+  <div class="md"><div class="mhd"></div>
+    <div style="font-size:17px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">📝 Add Private Note <button class="cls" onclick="cM('mnot')">✕</button></div>
+    <div class="fg"><label class="fl">Private note (not visible to applicant)</label><textarea id="ntx" rows="4" placeholder="Add your notes about this candidate…"></textarea></div>
+    <input type="hidden" id="nai">
+    <button class="btn bp fw" onclick="svN()">Save Note</button>
+  </div>
+</div>
+
+<!-- AI CHATBOT FAB + WINDOW -->
+<button id="ai-fab" onclick="aiToggle()" title="Ask Kam AI">🤖</button>
+<div id="ai-win">
+  <div id="ai-hdr">
+    <div class="ai-av">🤖</div>
+    <div class="ai-info">
+      <div class="ai-title">Kam AI Assistant</div>
+      <div class="ai-sub">Ask me anything • Always here to help</div>
+    </div>
+    <button class="ai-cls" onclick="aiToggle()">✕</button>
+  </div>
+  <div id="ai-msgs"></div>
+  <div id="ai-inp">
+    <input type="text" id="ai-q" placeholder="Ask anything…" onkeydown="if(event.key==='Enter')aiSend()">
+    <button onclick="aiSend()">➤</button>
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+const W=[
+  {id:'w1',nm:'Suresh Patil',cat:'Plumbing',em:'🔧',sk:['Plumbing','Pipe Fitting','Drain Cleaning','Waterproofing'],ex:8,cy:'Pune',lo:'Kothrud',ar:'Kothrud, Karve Nagar, Warje',la:['Hindi','Marathi'],bi:'Expert plumber with 8+ years experience in residential and commercial work. Available 7 days a week.',wg:600,wu:'per day',av:true,vr:true,rt:4.7,rv:43,ph:'+91 98760 11111',wa:true},
+  {id:'w2',nm:'Ravi Kumar',cat:'Electrical',em:'⚡',sk:['Wiring','Switchboard','Inverter','AC Fitting','Ceiling Fan'],ex:12,cy:'Pune',lo:'Hadapsar',ar:'Hadapsar, Magarpatta, Kharadi',la:['Hindi','Marathi','English'],bi:'Licensed electrician with 12 years of industrial and residential experience.',wg:700,wu:'per day',av:true,vr:true,rt:4.9,rv:87,ph:'+91 98760 22222',wa:true},
+  {id:'w3',nm:'Mohan Sinha',cat:'Carpentry',em:'🪚',sk:['Furniture','Doors','Windows','Modular Kitchen','Wood Polish'],ex:15,cy:'Mumbai',lo:'Andheri',ar:'Andheri, Goregaon, Borivali',la:['Hindi','Marathi'],bi:'Custom furniture and woodwork specialist. 15 years of craftsmanship.',wg:800,wu:'per day',av:false,vr:false,rt:4.5,rv:31,ph:'+91 98760 33333',wa:false},
+  {id:'w4',nm:'Priya Cleaning Services',cat:'Cleaning',em:'🧹',sk:['Deep Cleaning','Kitchen Cleaning','Post-Construction','Sofa Cleaning'],ex:4,cy:'Pune',lo:'Baner',ar:'Baner, Balewadi, Aundh',la:['Hindi','Marathi','English'],bi:'Professional cleaning services using eco-friendly products.',wg:500,wu:'per day',av:true,vr:true,rt:4.8,rv:62,ph:'+91 98760 44444',wa:true},
+  {id:'w5',nm:'Akbar Shaikh',cat:'Painting',em:'🖌️',sk:['Interior Painting','Exterior Painting','Waterproofing','Texture Work'],ex:10,cy:'Mumbai',lo:'Bandra',ar:'Bandra, Santacruz, Kurla',la:['Hindi','Urdu'],bi:'Quality painting at competitive rates. Interior, exterior, and waterproofing work.',wg:650,wu:'per day',av:true,vr:false,rt:4.3,rv:28,ph:'+91 98760 55555',wa:true},
+  {id:'w6',nm:'Ganesh More',cat:'Mechanic',em:'🔩',sk:['Two Wheeler Repair','Car Servicing','AC Repair','Puncture'],ex:7,cy:'Nashik',lo:'Gangapur Road',ar:'Nashik, College Road',la:['Marathi','Hindi'],bi:'Home-visit mechanic. Bikes and cars serviced at your doorstep.',wg:550,wu:'per day',av:true,vr:false,rt:4.6,rv:19,ph:'+91 98760 66666',wa:true},
+  {id:'w7',nm:'Ramesh Gardener',cat:'Gardening',em:'🌿',sk:['Lawn Maintenance','Landscaping','Plant Care','Pruning'],ex:6,cy:'Pune',lo:'Koregaon Park',ar:'Koregaon Park, Kalyani Nagar',la:['Marathi','Hindi'],bi:'Expert landscaper and gardener for societies and bungalows.',wg:450,wu:'per day',av:true,vr:false,rt:4.4,rv:14,ph:'+91 98760 77777',wa:true},
+  {id:'w8',nm:'Deepak Delivery',cat:'Delivery',em:'🚚',sk:['Two Wheeler Delivery','Last Mile','Hyperlocal','Food Delivery'],ex:3,cy:'Pune',lo:'Viman Nagar',ar:'Viman Nagar, Nagar Road',la:['Hindi','Marathi'],bi:'Reliable two-wheeler delivery executive. Own Activa, valid license.',wg:600,wu:'per day',av:true,vr:false,rt:4.2,rv:8,ph:'+91 98760 88888',wa:true}
+];
+const J=[
+  {id:'j1',ti:'Plumber Needed — Residential Project',co:'Anjali Construction',ce:'🏗️',cat:'Plumbing',ty:'Temporary',cy:'Pune',lo:'Kothrud',sk:['Plumbing','Pipe Fitting'],wn:3,wmi:600,wma:800,fr:'Per Day',de:'We need experienced plumbers for a new residential building in Kothrud. Work includes pipe fitting, bathroom fittings, and drainage installation. 3-month project with possibility of extension.',hr:'8am–6pm, Mon–Sat',dl:'2025-08-14',ap:12,po:'2 days ago',op:true},
+  {id:'j2',ti:'Senior Electrician — IT Office Complex',co:'TechPark Facilities',ce:'💻',cat:'Electrical',ty:'Full-time',cy:'Pune',lo:'Hinjewadi',sk:['Industrial Wiring','UPS','Fire Alarm'],wn:2,wmi:25000,wma:35000,fr:'Per Month',de:'Hiring a senior electrician for ongoing maintenance of a large IT office complex. Must have experience with industrial wiring, UPS systems, fire alarms.',hr:'9am–6pm, Mon–Fri',dl:'2025-08-28',ap:7,po:'4 days ago',op:true},
+  {id:'j3',ti:'Delivery Boys — Grocery App',co:'QuickMart',ce:'🛒',cat:'Delivery',ty:'Part-time',cy:'Pune',lo:'Aundh',sk:['Two Wheeler','Smartphone','Valid License'],wn:10,wmi:600,wma:900,fr:'Per Day',de:'QuickMart grocery delivery app looking for delivery partners. Must have own two-wheeler and valid license. Flexible shifts available.',hr:'Flexible shifts',dl:'2025-09-01',ap:34,po:'1 day ago',op:true},
+  {id:'j4',ti:'Carpenter — Modular Furniture',co:'Shree Interior Designs',ce:'🛋️',cat:'Carpentry',ty:'Full-time',cy:'Mumbai',lo:'Andheri',sk:['Modular Kitchen','Laminates','Hardware Fitting'],wn:2,wmi:18000,wma:25000,fr:'Per Month',de:'Experienced carpenter needed for modular furniture fabrication at our Andheri workshop.',hr:'9am–7pm, Mon–Sat',dl:'2025-09-15',ap:5,po:'6 days ago',op:true},
+  {id:'j5',ti:'Gardeners for Society Maintenance',co:'GreenLeaf Gardens',ce:'🌳',cat:'Gardening',ty:'Contract',cy:'Pune',lo:'Viman Nagar',sk:['Lawn Maintenance','Plant Care'],wn:3,wmi:300,wma:400,fr:'Per Day',de:'Residential society looking for gardeners for daily maintenance of lawns, plants, flower beds.',hr:'6am–10am daily',dl:'2025-08-25',ap:8,po:'2 days ago',op:true},
+  {id:'j6',ti:'Painting Team — New 15-Floor Building',co:'Anjali Construction',ce:'🏗️',cat:'Painting',ty:'Temporary',cy:'Mumbai',lo:'Thane',sk:['Interior Painting','Exterior Painting','Waterproofing'],wn:5,wmi:600,wma:750,fr:'Per Day',de:'Need 5 painters for a 15-floor residential building in Thane. Interior and exterior work.',hr:'7am–5pm, Mon–Sat',dl:'2025-08-20',ap:21,po:'3 days ago',op:true},
+  {id:'j7',ti:'House Cleaner — Weekly Service',co:'HomeStar Services',ce:'🏠',cat:'Cleaning',ty:'Part-time',cy:'Pune',lo:'Baner',sk:['Deep Cleaning','Kitchen Cleaning'],wn:5,wmi:400,wma:500,fr:'Per Day',de:'Premium home cleaning service seeking experienced cleaners for weekly residential cleaning.',hr:'9am–3pm as scheduled',dl:'2025-09-10',ap:11,po:'5 days ago',op:true},
+  {id:'j8',ti:'Two-Wheeler Mechanic — Workshop',co:'Speed Auto',ce:'🏍️',cat:'Mechanic',ty:'Full-time',cy:'Nashik',lo:'College Road',sk:['Two Wheeler Repair','Servicing','Diagnosis'],wn:1,wmi:15000,wma:20000,fr:'Per Month',de:'Speed Auto workshop hiring an experienced two-wheeler mechanic. Must know Honda, TVS, and Bajaj models.',hr:'9am–7pm, Mon–Sat',dl:'2025-08-30',ap:4,po:'1 day ago',op:true}
+];
+const RV={
+  w1:[{u:'Rahul S.',r:5,t:'Suresh fixed my bathroom leak perfectly. Very professional!',d:'10 days ago'},{u:'Meena K.',r:4,t:'Good work, came on time. Reasonable rates.',d:'20 days ago'}],
+  w2:[{u:'Rahul S.',r:5,t:'Ravi is the best electrician I have hired.',d:'15 days ago'},{u:'Priti M.',r:5,t:'Installed 3 ACs and rewired the switchboard flawlessly.',d:'25 days ago'}],
+  w4:[{u:'Asha N.',r:5,t:'Amazing post-renovation cleaning. House sparkles!',d:'8 days ago'}]
+};
+const CATS=[{em:'🔧',lb:'Plumbing'},{em:'⚡',lb:'Electrical'},{em:'🪚',lb:'Carpentry'},{em:'🖌️',lb:'Painting'},{em:'🏗️',lb:'Construction'},{em:'🧹',lb:'Cleaning'},{em:'🔩',lb:'Mechanic'},{em:'🚚',lb:'Delivery'},{em:'🌿',lb:'Gardening'},{em:'🔨',lb:'Home Repair'},{em:'❄️',lb:'AC Repair'},{em:'📦',lb:'Other'}];
+const NF=[
+  {id:'n1',ic:'✅',bg:'rgba(52,211,153,.15)',ti:'Application Shortlisted!',tx:'Your application for "Plumber Needed" has been shortlisted by Anjali Construction.',tm:'2 hours ago',ur:true,tp:'app',kid:'j1'},
+  {id:'n2',ic:'💼',bg:'rgba(64,202,215,.15)',ti:'New Job Alert',tx:'A new Electrical job was posted in Pune matching your skills.',tm:'5 hours ago',ur:true,tp:'job',kid:'j2'},
+  {id:'n3',ic:'💬',bg:'rgba(124,92,216,.15)',ti:'New Message',tx:'Anjali Construction sent you a message about your application.',tm:'1 day ago',ur:false,tp:'msg'},
+  {id:'n4',ic:'⭐',bg:'rgba(255,184,48,.15)',ti:'Review Received',tx:'You received a new 5-star review from Rahul S.',tm:'2 days ago',ur:false}
+];
+const CV=[
+  {id:'c1',wt:'Anjali Construction',av:'🏗️',lm:'Can you start on Monday?',tm:'2h ago',ur:2},
+  {id:'c2',wt:'Rahul Sharma',av:'👤',lm:'Thank you, I will be there at 9am',tm:'1d ago',ur:0},
+  {id:'c3',wt:'TechPark Facilities',av:'💻',lm:'Please send your experience details',tm:'3d ago',ur:0}
+];
+
+// ── STATE ─────────────────────────────────────────────────────
+const S={
+  user:null,role:'customer',loc:'Pune, Maharashtra',
+  favs:JSON.parse(localStorage.getItem('fvs')||'[]'),
+  apps:JSON.parse(localStorage.getItem('aps')||'[]'),
+  pj:JSON.parse(localStorage.getItem('pj')||'[]'),
+  rs:JSON.parse(localStorage.getItem('rs')||'[]'),
+  ur:JSON.parse(localStorage.getItem('ur')||'[]'),
+  wp:JSON.parse(localStorage.getItem('wp')||'null'),
+  nots:[...NF],ch:{},cur:'th',prev:null,
+  jf:{ty:'',cat:''},svf:{cat:'',q:'',av:false},
+  st:'all',cjid:null,cwid:null,cajid:null,rtgt:null,rr:5
+};
+
+// ── ONBOARDING ────────────────────────────────────────────────
+let op=0,otm;
+function nxO(){if(op<2){document.getElementById('os'+op).style.display='none';op++;document.getElementById('os'+op).style.display='flex';updD();if(op===2)document.getElementById('obn').textContent='Get Started';}else skO();}
+function skO(){localStorage.setItem('ob','1');sP('pli');}
+function updD(){document.querySelectorAll('.od').forEach((d,i)=>{d.style.width=i===op?'24px':'8px';d.style.background=i===op?'var(--p)':'var(--s2)';});}
+function sL(c){S.lang=c;localStorage.setItem('lang',c);toast('Language: '+(c==='en'?'English':c==='hi'?'Hindi':'Marathi'));}
+
+// ── AUTH ──────────────────────────────────────────────────────
+function sOtp(){
+  const p=document.getElementById('phi').value.trim();
+  if(p.replace(/\D/g,'').length<10){document.getElementById('fgp').classList.add('er');return;}
+  document.getElementById('fgp').classList.remove('er');
+  localStorage.setItem('pp',p);
+  document.getElementById('opd').textContent=p;
+  sP('pot');stC();toast('Demo: OTP sent! Use 123456','ok');
+}
+function stC(){let s=30;const rb=document.getElementById('reb');rb.disabled=true;document.getElementById('cd').textContent=s;clearInterval(otm);otm=setInterval(()=>{s--;document.getElementById('cd').textContent=s;if(s<=0){clearInterval(otm);rb.disabled=false;}},1000);}
+function oi(el,i){if(el.value.length>1)el.value=el.value.slice(-1);if(el.value&&i<5)document.getElementById('o'+(i+1)).focus();}
+function vOtp(){const otp=[0,1,2,3,4,5].map(i=>document.getElementById('o'+i).value).join('');if(otp==='123456'){document.getElementById('oe').style.display='none';dL('customer');}else{document.getElementById('oe').style.display='block';}}
+function rOtp(){stC();toast('OTP resent! Use 123456','ok');}
+function dL(role){
+  const nm={customer:'Rahul Sharma',worker:'Suresh Patil',employer:'Anjali Construction',admin:'Admin'};
+  const ph={customer:'+91 98765 00001',worker:'+91 98765 00002',employer:'+91 98765 00003',admin:'+91 98765 00004'};
+  S.user={id:'demo_'+role,name:nm[role],phone:ph[role],role};S.role=role;
+  localStorage.setItem('sess',JSON.stringify(S.user));
+  sP('pap');initApp();toast('Welcome, '+nm[role]+'! 👋','ok');
+}
+function lo(){if(!confirm('Are you sure you want to logout?'))return;S.user=null;S.role='customer';localStorage.removeItem('sess');sP('pli');toast('Logged out');}
+function dAcc(){if(!confirm('DELETE your account? This cannot be undone!'))return;if(!confirm('Absolutely sure?'))return;S.user=null;localStorage.clear();sP('pli');toast('Account deleted','er');}
+
+// ── INIT ──────────────────────────────────────────────────────
+function initApp(){bnav();rHome();rJobs();rSrv();rProf();rNot();rMsg();rFav();updND();gT('th');buildSuggestions();}
+function bnav(){
+  const r=S.role,bn=document.getElementById('bn');
+  let ex='';
+  if(r==='employer')ex='<div class="ni" id="ne" onclick="gT(\'te\')"><span class="ic">🏢</span><span>Dashboard</span></div>';
+  if(r==='admin')ex='<div class="ni" id="na" onclick="gT(\'ta\')"><span class="ic">🛡</span><span>Admin</span></div>';
+  bn.innerHTML=`<div class="ni on" id="nh" onclick="gT('th')"><span class="ic">🏠</span><span>Home</span></div><div class="ni" id="nsr" onclick="gT('ts')"><span class="ic">🔍</span><span>Search</span></div><div class="ni" id="nj" onclick="gT('tj')"><span class="ic">💼</span><span>Jobs</span></div><div class="ni" id="nm" onclick="gT('tm')"><span class="ic">💬</span><span>Chat</span><span class="nbg" id="mb">2</span></div>${ex}<div class="ni" id="np" onclick="gT('tp')"><span class="ic">👤</span><span>Profile</span></div>`;
+  if(r==='employer')rEmp();
+  if(r==='admin')rAdm();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────
+function sP(id){document.querySelectorAll('.pg').forEach(p=>p.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function gT(t){
+  S.prev=S.cur;S.cur=t;
+  document.querySelectorAll('.tc').forEach(x=>x.classList.remove('on'));
+  document.getElementById(t)?.classList.add('on');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
+  const nm={th:'nh',ts:'nsr',tj:'nj',tm:'nm',tp:'np',te:'ne',ta:'na'};
+  if(nm[t])document.getElementById(nm[t])?.classList.add('on');
+  if(t==='tp')rProf();
+  if(t==='tn'){rNot();mAR();}
+  if(t==='tfv')rFav();
+  document.getElementById('mc').scrollTo(0,0);
+}
+function gB(){gT(S.prev||'th');}
+function gSrv(c){
+  if(c){S.svf.cat=c;document.querySelectorAll('#svf .fc').forEach(x=>x.classList.toggle('on',x.textContent.includes(c)));}
+  rSrv();gT('tsv');
+}
+
+// ── HOME ──────────────────────────────────────────────────────
+function rHome(){
+  const nm=S.user?.name?.split(' ')[0]||'there';
+  document.getElementById('gn').textContent=nm;
+  document.getElementById('ld').textContent=S.loc;
+  document.getElementById('cg').innerHTML=CATS.map(c=>`<div class="ci" onclick="gSrv('${c.lb}')"><div style="font-size:24px;">${c.em}</div><div style="font-size:11px;color:var(--tx2);">${c.lb}</div></div>`).join('');
+  document.getElementById('hw').innerHTML=W.slice(0,5).map(w=>wC(w,true)).join('');
+  document.getElementById('hj').innerHTML=J.slice(0,3).map(j=>jC(j)).join('');
+  rRS();
+}
+function rRS(){const r=document.getElementById('rsr');if(r)r.innerHTML=S.rs.slice(0,5).map(s=>`<span class="chip" style="cursor:pointer;" onclick="qS('${s}')">${s} ✕</span>`).join('');}
+function buildSuggestions(){const el=document.getElementById('sug');if(el)el.innerHTML=['Plumber','Electrician','Carpenter','Painter','Delivery'].map(s=>`<span class="chip" style="cursor:pointer;" onclick="document.getElementById('smi').value='${s}';lS('${s}')">${s}</span>`).join('');}
+
+// ── SEARCH ────────────────────────────────────────────────────
+function hS(){const q=document.getElementById('hsi').value.trim();if(!q)return;aRS(q);document.getElementById('smi').value=q;gT('ts');lS(q);}
+function tS(){const q=document.getElementById('tsi').value.trim();document.getElementById('smi').value=q;gT('ts');lS(q);}
+function qS(q){document.getElementById('hsi').value=q;hS();}
+function aRS(q){S.rs=[q,...S.rs.filter(s=>s!==q)].slice(0,8);localStorage.setItem('rs',JSON.stringify(S.rs));rRS();}
+function sST(t,el){S.st=t;document.querySelectorAll('#sf .fc').forEach(c=>c.classList.remove('on'));el.classList.add('on');lS(document.getElementById('smi').value);}
+function lS(q){
+  const r=document.getElementById('sr');
+  if(!q.trim()){r.innerHTML=`<div style="padding:40px 0;text-align:center;color:var(--tx3);"><div style="font-size:40px;margin-bottom:12px;">🔍</div><div>Type to search for workers, jobs or services</div><div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;" id="sug"></div></div>`;buildSuggestions();return;}
+  const ql=q.toLowerCase();let h='';
+  if(S.st==='all'||S.st==='workers'){const ws=W.filter(w=>w.nm.toLowerCase().includes(ql)||w.cat.toLowerCase().includes(ql)||w.sk.some(s=>s.toLowerCase().includes(ql))||w.cy.toLowerCase().includes(ql));if(ws.length)h+=`<div class="stit" style="margin-top:12px;">Workers (${ws.length})</div>`+ws.map(w=>wC(w)).join('');}
+  if(S.st==='all'||S.st==='jobs'){const js=[...J,...S.pj].filter(j=>j.ti.toLowerCase().includes(ql)||j.co.toLowerCase().includes(ql)||j.cat.toLowerCase().includes(ql)||j.sk.some(s=>s.toLowerCase().includes(ql))||j.cy.toLowerCase().includes(ql));if(js.length)h+=`<div class="stit" style="margin-top:12px;">Jobs (${js.length})</div>`+js.map(j=>jC(j)).join('');}
+  if(!h)h=`<div style="padding:40px 0;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="font-weight:600;margin-top:8px;">No results for "${q}"</div><div style="font-size:12px;margin-top:6px;">Try a different keyword or browse categories</div></div>`;
+  r.innerHTML=h;
+}
+
+// ── SERVICES ──────────────────────────────────────────────────
+function fSv(c,el){S.svf.cat=c;document.querySelectorAll('#svf .fc').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');rSrv();}
+function fSvS(q){S.svf.q=q;rSrv();}
+function tAv(btn){S.svf.av=!S.svf.av;btn.classList.toggle('on',S.svf.av);rSrv();}
+function rSrv(){
+  const f=S.svf;let l=[...W];
+  if(f.cat)l=l.filter(w=>w.cat===f.cat);
+  if(f.av)l=l.filter(w=>w.av);
+  if(f.q){const q=f.q.toLowerCase();l=l.filter(w=>w.nm.toLowerCase().includes(q)||w.sk.some(s=>s.toLowerCase().includes(q)));}
+  document.getElementById('svl').innerHTML=l.length?l.map(w=>wC(w)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="margin-top:8px;">No workers found. Try clearing filters.</div></div>`;
+}
+
+// ── WORKER CARD + DETAIL ──────────────────────────────────────
+function wC(w,mini){
+  const f=S.favs.includes(w.id);
+  return`<div class="wc${mini?' sx-card':''}" style="${mini?'min-width:220px;':''}" onclick="oWD('${w.id}')">
+    <div style="display:flex;gap:10px;align-items:flex-start;">
+      <div class="av" style="width:46px;height:46px;font-size:20px;">${w.em}</div>
+      <div style="flex:1;"><div style="font-weight:700;font-size:14px;">${w.nm}</div><div style="font-size:11px;color:var(--p);font-weight:600;">${w.cat}</div><div style="font-size:11px;color:var(--tx3);">📍 ${w.lo}, ${w.cy}</div></div>
+      <button onclick="event.stopPropagation();tFv('${w.id}')" style="background:none;border:none;font-size:20px;padding:0 2px;">${f?'❤️':'🤍'}</button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+      <div class="avd ${w.av?'y':'n'}"><div class="dot ${w.av?'y':'n'}"></div>${w.av?'Available':'Busy'}</div>
+      <div style="display:flex;align-items:center;gap:4px;"><span class="stars">★</span><span style="font-size:12px;font-weight:700;">${w.rt}</span><span style="font-size:11px;color:var(--tx3);">(${w.rv})</span></div>
+    </div>
+    ${!mini?`<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">${w.sk.slice(0,3).map(s=>`<span class="chip">${s}</span>`).join('')}</div>`:''}
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+      <div style="font-size:13px;font-weight:700;color:var(--ok);">₹${w.wg}/${w.wu.replace('per ','')}</div>
+      ${w.vr?'<span class="bdg bdp">✓ Verified</span>':''}
+    </div>
+  </div>`;
+}
+function oWD(id){
+  S.prev=S.cur;S.cwid=id;
+  const w=W.find(x=>x.id===id);if(!w)return;
+  const f=S.favs.includes(id);
+  const ar=[...(RV[id]||[]),...S.ur.filter(r=>r.tid===id)];
+  document.getElementById('wdc').innerHTML=`
+    <div class="dh">
+      <button class="bkb" onclick="gB()">← Back</button>
+      <div style="display:flex;gap:14px;align-items:flex-start;">
+        <div class="av" style="width:72px;height:72px;font-size:32px;">${w.em}</div>
+        <div>
+          <h1 style="font-size:20px;font-weight:800;">${w.nm}</h1>
+          <div style="color:var(--p);font-size:13px;font-weight:600;">${w.cat}</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+            <span class="stars">★</span><span style="font-weight:700;">${w.rt}</span>
+            <span style="color:var(--tx3);font-size:12px;">(${ar.length+w.rv} reviews)</span>
+            ${w.vr?'<span class="bdg bdp">✓ Verified</span>':''}
+          </div>
+          <div class="avd ${w.av?'y':'n'}" style="margin-top:8px;"><div class="dot ${w.av?'y':'n'}"></div>${w.av?'Available Now':'Currently Busy'}</div>
+        </div>
+      </div>
+      <div class="ar">
+        ${w.ph?`<button class="btn bp sm" onclick="cW('${w.ph}')">📞 Call</button>`:''}
+        ${w.wa?`<button class="btn bsuc sm" onclick="wW('${w.ph}','${w.nm}')">💬 WhatsApp</button>`:''}
+        <button class="btn bg sm" onclick="tFv('${id}')" id="fb${id}">${f?'❤️ Saved':'🤍 Save'}</button>
+        <button class="btn bg sm" onclick="oM('mrpt')">🚨 Report</button>
+      </div>
+    </div>
+    <div class="is">
+      <div class="ib">
+        <div class="ir"><span class="irl">📍 Location</span><span class="irv">${w.lo}, ${w.cy}</span></div>
+        <div class="ir"><span class="irl">🗺️ Service Area</span><span class="irv">${w.ar}</span></div>
+        <div class="ir"><span class="irl">⏱ Experience</span><span class="irv">${w.ex} years</span></div>
+        <div class="ir"><span class="irl">💰 Rate</span><span class="irv" style="color:var(--ok);font-weight:700;">₹${w.wg} ${w.wu}</span></div>
+        <div class="ir"><span class="irl">🌐 Languages</span><span class="irv">${w.la.join(', ')}</span></div>
+      </div>
+      <div class="ib"><h3>About</h3><p style="font-size:13px;color:var(--tx2);line-height:1.6;">${w.bi}</p></div>
+      <div class="ib"><h3>Skills</h3><div style="display:flex;flex-wrap:wrap;gap:6px;">${w.sk.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+      <div class="ib">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <h3 style="margin:0;">Reviews (${ar.length})</h3>
+          <button class="btn bo sm" onclick="oRM('${id}','worker','${w.nm}')">+ Write Review</button>
+        </div>
+        ${ar.length?ar.map(r=>`<div style="padding:10px 0;border-bottom:1px solid var(--br);"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="font-weight:600;font-size:13px;">${r.u||r.rn}</div><div class="stars">${'★'.repeat(Math.floor(r.r||r.rt))}${'☆'.repeat(5-Math.floor(r.r||r.rt))}</div></div><div style="font-size:12px;color:var(--tx2);margin-top:4px;">${r.t||r.cm}</div><div style="font-size:11px;color:var(--tx3);">${r.d||r.dt}</div></div>`).join(''):`<div style="color:var(--tx3);font-size:13px;">No reviews yet. Be the first!</div>`}
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${w.ph?`<button class="btn bp fw" onclick="cW('${w.ph}')">📞 Call Now</button>`:''}
+        <button class="btn bo fw" onclick="oCh('${id}','${w.nm}')">💬 Message</button>
+        <button class="btn bg fw" onclick="gDir('${w.cy} ${w.lo}')">🗺 Directions</button>
+      </div>
+    </div>`;
+  gT('twd');
+}
+
+// ── JOB CARD + DETAIL ─────────────────────────────────────────
+function jC(j){
+  const ap=S.apps.some(a=>a.ji===j.id);
+  const f=S.favs.includes(j.id);
+  return`<div class="jc" onclick="oJD('${j.id}')">
+    <div style="display:flex;align-items:flex-start;gap:10px;">
+      <div style="width:44px;height:44px;background:var(--s2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${j.ce||'🏢'}</div>
+      <div style="flex:1;"><div style="font-weight:700;font-size:14px;">${j.ti}</div><div style="font-size:12px;color:var(--tx2);">${j.co} · ${j.cy}</div></div>
+      <button onclick="event.stopPropagation();tFv('${j.id}')" style="background:none;border:none;font-size:18px;padding:0;">${f?'❤️':'🤍'}</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span class="bdg bdi">${j.ty}</span>
+      <span class="bdg bdm">📍 ${j.lo||j.cy}</span>
+      ${j.wn>1?`<span class="bdg bdm">👥 ${j.wn} openings</span>`:''}
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;">${j.sk.slice(0,3).map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+    <div style="font-size:15px;font-weight:700;color:var(--ok);margin-top:8px;">${j.wmi&&j.wma?`₹${j.wmi}–₹${j.wma}`:j.wmi?`₹${j.wmi}+`:'Negotiable'} <span style="font-size:11px;color:var(--tx2);font-weight:400;">${j.fr||''}</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
+      <span style="font-size:11px;color:var(--tx3);">🕐 ${j.po}</span>
+      ${ap?'<span class="bdg bdok">✓ Applied</span>':`<button class="btn bp sm" onclick="event.stopPropagation();qAp('${j.id}')">Apply Now</button>`}
+    </div>
+  </div>`;
+}
+function fJ(t,el){S.jf.ty=t;document.querySelectorAll('#jfr .fc').forEach(c=>c.classList.remove('on'));if(el)el.classList.add('on');rJobs();}
+function fJC(c,el){S.jf.cat=c;document.querySelectorAll('.fc[onclick*="fJC"]').forEach(x=>x.classList.remove('on'));if(el)el.classList.add('on');rJobs();}
+function rJobs(){
+  const f=S.jf;const all=[...J,...S.pj];let l=all.filter(j=>j.op!==false);
+  if(f.ty)l=l.filter(j=>j.ty===f.ty);
+  if(f.cat)l=l.filter(j=>j.cat===f.cat);
+  document.getElementById('jc2').textContent=l.length+' job'+(l.length!==1?'s':'')+' found';
+  document.getElementById('jl').innerHTML=l.length?l.map(j=>jC(j)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">😕</div><div style="margin-top:8px;">No jobs found. Try different filters.</div></div>`;
+}
+function oJD(id){
+  S.prev=S.cur;S.cjid=id;
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===id);if(!j)return;
+  const ap=S.apps.some(a=>a.ji===id);
+  const f=S.favs.includes(id);
+  const can=S.role!=='employer'&&S.role!=='admin';
+  document.getElementById('jdc').innerHTML=`
+    <div class="dh">
+      <button class="bkb" onclick="gB()">← Back</button>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:56px;height:56px;background:var(--s2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;">${j.ce||'🏢'}</div>
+        <div>
+          <h1 style="font-size:18px;font-weight:800;">${j.ti}</h1>
+          <div style="color:var(--p);font-size:13px;font-weight:600;">${j.co}</div>
+          <div style="color:var(--tx2);font-size:12px;margin-top:3px;">📍 ${j.lo||''} ${j.cy} · 🕐 ${j.po}</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;">
+        <span class="bdg bdi">${j.ty}</span>
+        <span class="bdg bdok" style="font-size:13px;">${j.wmi?`₹${j.wmi}`:''}${j.wma?`–₹${j.wma}`:''}${j.wmi?` ${j.fr}`:'Negotiable'}</span>
+        <span class="bdg bdm">👥 ${j.wn} opening${j.wn>1?'s':''}</span>
+      </div>
+      <div class="ar">
+        ${can&&!ap?`<button class="btn bp" onclick="oAp('${id}')">✓ Apply Now</button>`:''}
+        ${ap?'<div class="bdg bdok" style="font-size:13px;padding:8px 14px;">✓ Already Applied</div>':''}
+        <button class="btn bg sm" onclick="tFv('${id}')">${f?'❤️ Saved':'🤍 Save'}</button>
+        <button class="btn bg sm" onclick="shJ('${id}')">📤 Share</button>
+        <button class="btn bg sm" onclick="oM('mrpt')">🚨</button>
+      </div>
+    </div>
+    <div class="is">
+      <div class="ib">
+        <div class="ir"><span class="irl">📍 Location</span><span class="irv">${j.lo||''}, ${j.cy}</span></div>
+        <div class="ir"><span class="irl">💼 Type</span><span class="irv">${j.ty}</span></div>
+        <div class="ir"><span class="irl">⏰ Hours</span><span class="irv">${j.hr||'Not specified'}</span></div>
+        <div class="ir"><span class="irl">📅 Deadline</span><span class="irv">${j.dl||'Open'}</span></div>
+        <div class="ir"><span class="irl">📊 Applications</span><span class="irv">${j.ap||0} received</span></div>
+      </div>
+      <div class="ib"><h3>Job Description</h3><p style="font-size:13px;color:var(--tx2);line-height:1.7;">${j.de}</p></div>
+      <div class="ib"><h3>Required Skills</h3><div style="display:flex;flex-wrap:wrap;gap:6px;">${j.sk.map(s=>`<span class="chip">${s}</span>`).join('')}</div></div>
+      ${can&&!ap?`<button class="btn bp fw mt2" onclick="oAp('${id}')">✓ Apply for This Job</button>`:''}
+      ${ap?`<div class="btn bg fw mt2" style="cursor:default;justify-content:center;">✓ You have already applied</div>`:''}
+    </div>`;
+  gT('tjd');
+}
+
+// ── APPLY ─────────────────────────────────────────────────────
+function qAp(id){
+  if(S.role==='customer'){if(!confirm('To apply for jobs you need a Worker account. Switch to Worker mode?'))return;S.role='worker';if(S.user)S.user.role='worker';bnav();rProf();toast('Switched to Worker mode');}
+  oAp(id);
+}
+function oAp(id){
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===id);if(!j)return;
+  if(S.apps.some(a=>a.ji===id)){toast('Already applied!','er');return;}
+  S.cajid=id;
+  document.getElementById('ajt').textContent=j.ti;
+  document.getElementById('aen').textContent=j.co;
+  const w=S.wp;
+  document.getElementById('app').innerHTML=w
+    ?`<div style="display:flex;gap:10px;align-items:center;"><div class="av" style="width:42px;height:42px;font-size:18px;">${w.em||'👷'}</div><div><div style="font-weight:700;">${w.nm}</div><div style="font-size:12px;color:var(--tx2);">${(w.sk||[]).slice(0,3).join(', ')}</div><div style="font-size:11px;color:var(--tx3);">${w.cy}</div></div></div>`
+    :`<div style="display:flex;gap:10px;align-items:center;"><div class="av" style="width:42px;height:42px;">${(S.user?.name||'U')[0]}</div><div><div style="font-weight:700;">${S.user?.name||'You'}</div><div style="font-size:12px;color:var(--tx2);">${S.user?.phone||''}</div></div></div><div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);border-radius:6px;padding:8px;margin-top:8px;font-size:12px;color:var(--wn);">⚠️ Complete your worker profile for better chances. <button class="btn bg sm" onclick="oEP()" style="font-size:11px;">Create Profile</button></div>`;
+  S.prev=S.cur;gT('tap');
+}
+function sApp(){
+  const id=S.cajid;if(!id)return;
+  if(S.apps.some(a=>a.ji===id)){toast('Already applied!','er');return;}
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===id);
+  const nt=document.getElementById('ano').value;
+  const a={id:'ap_'+Date.now(),ji:id,jt:j?.ti||'',co:j?.co||'',wid:S.user?.id,wn:S.user?.name||'You',st:'Submitted',nt,dt:new Date().toLocaleDateString()};
+  S.apps.push(a);localStorage.setItem('aps',JSON.stringify(S.apps));
+  S.nots.unshift({id:'n_'+Date.now(),ic:'✅',bg:'rgba(52,211,153,.15)',ti:'Application Submitted!',tx:`Your application for "${j?.ti}" has been submitted.`,tm:'Just now',ur:true});
+  updND();rJobs();toast('Application submitted! ✅','ok');gB();
+}
+
+// ── EMPLOYER ──────────────────────────────────────────────────
+function rEmp(){
+  const all=[...J.filter(j=>j.co==='Anjali Construction'),...S.pj];
+  const tas=all.reduce((s,j)=>s+(j.ap||0),0);
+  document.getElementById('es').innerHTML=`<div class="sc"><div class="sv">${all.filter(j=>j.op!==false).length}</div><div class="sl">Active Jobs</div></div><div class="sc"><div class="sv">${tas}</div><div class="sl">Total Applications</div></div><div class="sc"><div class="sv">${S.apps.length}</div><div class="sl">In Review</div></div><div class="sc"><div class="sv">${all.length}</div><div class="sl">Total Posted</div></div>`;
+  document.getElementById('end').textContent=S.user?.name||'My Company';
+  eT('active',null);
+}
+function eT(t,el){
+  if(el){document.querySelectorAll('#etb .tbt').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const all=[...J.filter(j=>j.co==='Anjali Construction'),...S.pj];
+  const el2=document.getElementById('etc');
+  if(t==='active'){
+    const jbs=all.filter(j=>j.op!==false);
+    el2.innerHTML=jbs.length?jbs.map(j=>`<div class="card mb"><div style="font-weight:700;">${j.ti}</div><div style="font-size:12px;color:var(--tx2);">📍 ${j.cy} · 📊 ${j.ap||0} applications · ${j.ty}</div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;"><button class="btn bp sm" onclick="oApc('${j.id}')">👥 View Applicants</button><button class="btn bo sm" onclick="toast('Use Post Job to create a new listing','ok')">✏️ Edit</button><button class="btn bd sm" onclick="cJ('${j.id}')">✕ Close</button></div></div>`).join(''):`<div style="color:var(--tx3);padding:20px;text-align:center;">No active jobs. <button class="btn bp sm" onclick="oPJ()">Post a Job</button></div>`;
+  }else if(t==='drafts'){
+    el2.innerHTML='<div style="color:var(--tx3);padding:20px;text-align:center;">No drafts saved.</div>';
+  }else if(t==='closed'){
+    const cjbs=all.filter(j=>j.op===false);
+    el2.innerHTML=cjbs.length?cjbs.map(j=>`<div class="card mb"><div style="font-weight:700;">${j.ti}</div><div style="font-size:12px;color:var(--tx2);">📍 ${j.cy} · Closed</div></div>`).join(''):`<div style="color:var(--tx3);padding:20px;text-align:center;">No closed jobs.</div>`;
+  }else if(t==='apps'){
+    el2.innerHTML=S.apps.length?S.apps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:700;">${a.wn}</div><div style="font-size:12px;color:var(--tx2);">for: ${a.jt} · ${a.dt}</div></div><span class="bdg bdi">${a.st}</span></div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;"><select onchange="uAS('${a.id}',this.value)" style="width:auto;padding:6px 10px;font-size:12px;border-radius:8px;">${['Submitted','Under Review','Shortlisted','Accepted','Rejected'].map(s=>`<option${s===a.st?' selected':''}>${s}</option>`).join('')}</select><button class="btn bg sm" onclick="oNM('${a.id}')">📝 Note</button><button class="btn bg sm" onclick="oCh('','${a.wn}')">💬</button></div></div>`).join(''):`<div style="color:var(--tx3);padding:20px;text-align:center;">No applications yet.</div>`;
+  }
+}
+function oApc(jid){
+  const all=[...J,...S.pj];const j=all.find(x=>x.id===jid);
+  const fake=[{id:'fa1',wn:'Ramesh K.',st:'Submitted',dt:'1 day ago'},{id:'fa2',wn:'Sunita Pawar',st:'Under Review',dt:'2 days ago'},{id:'fa3',wn:'Vikram Desai',st:'Shortlisted',dt:'3 days ago'}];
+  const allApps=[...fake,...S.apps.filter(a=>a.ji===jid)];
+  document.getElementById('apc').innerHTML=`<div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--tx2);">${j?.ti||''} — ${allApps.length} applicants</div>`+allApps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:700;">${a.wn}</div><div style="font-size:11px;color:var(--tx3);">${a.dt}</div></div><span class="bdg ${a.st==='Shortlisted'?'bds':a.st==='Accepted'?'bdok':a.st==='Rejected'?'bder':'bdi'}">${a.st}</span></div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;"><select onchange="uAS('${a.id}',this.value)" style="width:auto;padding:5px 8px;font-size:11px;border-radius:6px;">${['Submitted','Under Review','Shortlisted','Accepted','Rejected'].map(s=>`<option${s===a.st?' selected':''}>${s}</option>`).join('')}</select><button class="btn bg sm" onclick="oNM('${a.id}')">📝</button><button class="btn bg sm" onclick="oCh('','${a.wn}')">💬</button></div></div>`).join('');
+  oM('mapp');
+}
+function uAS(id,st){
+  const a=S.apps.find(x=>x.id===id);
+  if(a){a.st=st;localStorage.setItem('aps',JSON.stringify(S.apps));toast('Status: '+st,'ok');S.nots.unshift({id:'n_'+Date.now(),ic:'📋',bg:'rgba(64,202,215,.15)',ti:'Status Updated',tx:`Application status changed to "${st}"`,tm:'Just now',ur:true});updND();}
+}
+function cJ(id){
+  if(!confirm('Close this job? Workers will no longer be able to apply.'))return;
+  const j=J.find(x=>x.id===id)||S.pj.find(x=>x.id===id);
+  if(j)j.op=false;localStorage.setItem('pj',JSON.stringify(S.pj));rEmp();rJobs();toast('Job closed','ok');
+}
+function oPJ(){
+  if(S.role==='customer'||S.role==='worker'){if(!confirm('Post a Job requires Employer mode. Switch?'))return;S.role='employer';if(S.user)S.user.role='employer';bnav();toast('Switched to Employer mode');}
+  S.prev=S.cur;gT('tpj');
+}
+function sDft(){const t=document.getElementById('jti').value;if(!t){toast('Enter a title to save draft','er');return;}toast('Draft saved ✓','ok');}
+function pvJ(){
+  const t=document.getElementById('jti').value,c=document.getElementById('jca').value;
+  if(!t||!c){toast('Fill Title and Category first','er');return;}
+  alert(`JOB PREVIEW\n\nTitle: ${t}\nCategory: ${c}\nType: ${document.getElementById('jty').value}\nWage: ₹${document.getElementById('jwi').value||'?'}–₹${document.getElementById('jwa').value||'?'} ${document.getElementById('jfq').value}\nCity: ${document.getElementById('jci').value}\nLocality: ${document.getElementById('jlo').value}\n\nDescription:\n${document.getElementById('jde').value||'Not provided'}\n\nSkills: ${document.getElementById('jsk').value||'Not specified'}`);
+}
+function pbJ(){
+  const t=document.getElementById('jti').value.trim(),c=document.getElementById('jca').value;
+  let ok=true;
+  if(!t){document.getElementById('fgjt').classList.add('er');ok=false;}else document.getElementById('fgjt').classList.remove('er');
+  if(!c){document.getElementById('fgjc').classList.add('er');ok=false;}else document.getElementById('fgjc').classList.remove('er');
+  if(!ok){toast('Please fill all required fields','er');return;}
+  const j={id:'pj_'+Date.now(),ti:t,cat:c,de:document.getElementById('jde').value,co:S.user?.name||'My Company',ce:'🏢',cy:document.getElementById('jci').value||'Pune',lo:document.getElementById('jlo').value,ty:document.getElementById('jty').value,sk:document.getElementById('jsk').value.split(',').map(s=>s.trim()).filter(Boolean),wn:parseInt(document.getElementById('jwn').value)||1,wmi:parseFloat(document.getElementById('jwi').value)||0,wma:parseFloat(document.getElementById('jwa').value)||0,fr:document.getElementById('jfq').value,hr:document.getElementById('jhr').value,dl:document.getElementById('jdl').value,ph:document.getElementById('jph').value,ap:0,po:'Just now',op:true,eid:S.user?.id};
+  S.pj.push(j);localStorage.setItem('pj',JSON.stringify(S.pj));
+  rJobs();if(S.role==='employer')rEmp();
+  ['jti','jde','jsk','jwi','jwa','jlo','jhr','jdl','jph'].forEach(i=>{const e=document.getElementById(i);if(e)e.value='';});
+  document.getElementById('jca').value='';
+  toast('Job published! ✅','ok');if(S.role==='employer')gT('te');else gB();
+}
+
+// ── WORKER PROFILE EDIT ───────────────────────────────────────
+function oEP(){
+  const w=S.wp;
+  if(w){
+    document.getElementById('epn').value=w.nm||'';
+    document.getElementById('epb').value=w.bi||'';
+    document.getElementById('epc').value=w.cy||'';
+    document.getElementById('epl').value=w.lo||'';
+    document.getElementById('epa').value=w.ar||'';
+    document.getElementById('eps').value=(w.sk||[]).join(', ');
+    document.getElementById('epe').value=w.ex||'';
+    document.getElementById('epw').value=w.wg||'';
+    document.getElementById('epla').value=(w.la||[]).join(', ');
+    document.getElementById('epph').value=w.ph||'';
+    document.getElementById('epav').checked=w.av!==false;
+  }
+  S.prev=S.cur;gT('tep');
+}
+function sWP(){
+  const nm=document.getElementById('epn').value.trim();
+  if(!nm){toast('Name is required','er');return;}
+  const p={nm,bi:document.getElementById('epb').value,cy:document.getElementById('epc').value,lo:document.getElementById('epl').value,ar:document.getElementById('epa').value,sk:document.getElementById('eps').value.split(',').map(s=>s.trim()).filter(Boolean),cat:document.getElementById('epcat').value,ex:parseInt(document.getElementById('epe').value)||0,wg:parseFloat(document.getElementById('epw').value)||0,wu:document.getElementById('epwu').value,la:document.getElementById('epla').value.split(',').map(s=>s.trim()).filter(Boolean),ph:document.getElementById('epph').value,av:document.getElementById('epav').checked,em:'👷',id:'my_worker'};
+  S.wp=p;localStorage.setItem('wp',JSON.stringify(p));
+  rProf();toast('Profile saved! ✅','ok');gB();
+}
+function upPh(){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>toast('Photo uploaded! (Demo mode — stored locally)','ok');i.click();}
+
+// ── PROFILE ───────────────────────────────────────────────────
+function rProf(){
+  const u=S.user;if(!u)return;
+  const rb={customer:'Customer 👤',worker:'Worker 🔧',employer:'Employer 🏢',admin:'Admin 🛡'};
+  document.getElementById('pfh').innerHTML=`<div class="av" style="width:72px;height:72px;font-size:28px;margin:0 auto 12px;">${(u.name||'U')[0]}</div><div style="font-size:18px;font-weight:800;">${u.name}</div><div style="color:var(--tx2);font-size:13px;margin-top:4px;">${u.phone}</div><div style="margin-top:8px;"><span class="bdg bdp">${rb[S.role]}</span></div>`;
+  document.getElementById('prt').innerHTML=['customer','worker','employer'].map(r=>`<div class="rtb ${S.role===r?'on':''}" onclick="swR('${r}')">${r[0].toUpperCase()+r.slice(1)}</div>`).join('');
+  const bd=document.getElementById('pfb');
+  if(S.role==='worker'){
+    const w=S.wp;
+    bd.innerHTML=`<div style="padding:16px;">${w
+      ?`<div class="card mb2"><div style="font-weight:700;margin-bottom:8px;">My Worker Profile</div><div class="ir"><span class="irl">Category</span><span class="irv">${w.cat}</span></div><div class="ir"><span class="irl">Skills</span><span class="irv">${(w.sk||[]).slice(0,4).join(', ')}</span></div><div class="ir"><span class="irl">City</span><span class="irv">${w.cy}</span></div><div class="ir"><span class="irl">Rate</span><span class="irv">₹${w.wg} ${w.wu}</span></div><div class="ir"><span class="irl">Status</span><span class="irv"><span class="dot ${w.av?'y':'n'}" style="display:inline-block;margin-right:4px;"></span>${w.av?'Available':'Not Available'}</span></div><button class="btn bp sm mt" onclick="oEP()">✏️ Edit Profile</button></div>`
+      :`<div class="card mb2" style="text-align:center;padding:24px;"><div style="font-size:36px;margin-bottom:12px;">👷</div><div style="font-weight:700;margin-bottom:6px;">Create Your Worker Profile</div><div style="color:var(--tx2);font-size:13px;margin-bottom:16px;">Showcase your skills and get hired</div><button class="btn bp" onclick="oEP()">Create Profile</button></div>`}
+    <div class="stit">My Applications (${S.apps.length})</div>
+    ${S.apps.length?S.apps.map(a=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:600;">${a.jt}</div><div style="font-size:12px;color:var(--tx2);">${a.co} · ${a.dt}</div></div><span class="bdg ${a.st==='Accepted'?'bdok':a.st==='Rejected'?'bder':a.st==='Shortlisted'?'bds':'bdi'}">${a.st}</span></div></div>`).join(''):`<div style="color:var(--tx3);font-size:13px;padding:8px 0;">No applications yet. <a href="#" onclick="gT('tj')">Browse Jobs →</a></div>`}
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn bg sm" onclick="gT('tfv')">❤️ Saved</button>
+      <button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button>
+      <button class="btn bg sm" onclick="gT('tn')">🔔 Notifications</button>
+    </div></div>`;
+  }else if(S.role==='employer'){
+    bd.innerHTML=`<div style="padding:16px;"><div class="card mb2"><div style="font-weight:700;margin-bottom:8px;">Company Profile</div><div class="ir"><span class="irl">Company</span><span class="irv">${u.name}</span></div><div class="ir"><span class="irl">Jobs Posted</span><span class="irv">${J.filter(j=>j.co==='Anjali Construction').length+S.pj.length}</span></div><div class="ir"><span class="irl">Applications</span><span class="irv">${S.apps.length}</span></div><button class="btn bp sm mt" onclick="gT('te')">Go to Dashboard →</button></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn bg sm" onclick="gT('tfv')">❤️ Saved Workers</button><button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button></div></div>`;
+  }else{
+    bd.innerHTML=`<div style="padding:16px;"><div class="card mb2"><div class="ir"><span class="irl">Name</span><span class="irv">${u.name}</span></div><div class="ir"><span class="irl">Phone</span><span class="irv">${u.phone}</span></div><div class="ir"><span class="irl">City</span><span class="irv">${S.loc}</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn bg sm" onclick="gT('tfv')">❤️ Saved</button><button class="btn bg sm" onclick="gT('tst2')">⚙️ Settings</button><button class="btn bg sm" onclick="gT('tn')">🔔 Notifications</button></div></div>`;
+  }
+  if(document.getElementById('sphn'))document.getElementById('sphn').textContent=u.phone;
+  if(document.getElementById('srol'))document.getElementById('srol').textContent=S.role[0].toUpperCase()+S.role.slice(1);
+  if(document.getElementById('sloc'))document.getElementById('sloc').textContent=S.loc;
+}
+function swR(r){S.role=r;if(S.user)S.user.role=r;bnav();rProf();toast('Switched to '+r[0].toUpperCase()+r.slice(1)+' mode','ok');}
+
+// ── FAVORITES ─────────────────────────────────────────────────
+function tFv(id){
+  const i=S.favs.indexOf(id);
+  if(i>=0){S.favs.splice(i,1);toast('Removed from saved');}
+  else{S.favs.push(id);toast('Saved! ❤️','ok');}
+  localStorage.setItem('fvs',JSON.stringify(S.favs));
+  document.querySelectorAll(`[onclick*="tFv('${id}')"]`).forEach(b=>{if(b.tagName==='BUTTON'){const f=S.favs.includes(id);b.textContent=f?(b.textContent.includes('Save')?'❤️ Saved':'❤️'):(b.textContent.includes('Saved')?'🤍 Save':'🤍');}});
+  if(document.getElementById('tfv').classList.contains('on'))rFav();
+}
+function rFav(){
+  const active=document.querySelector('[onclick*="fvT"].on');
+  const t=active?.getAttribute('onclick')?.match(/fvT\('(\w)'/)?.at(1)||'w';
+  fvT(t,active||document.querySelector('[onclick*="fvT"]'));
+}
+function fvT(t,el){
+  if(el){document.querySelectorAll('[onclick*="fvT"]').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const el2=document.getElementById('fvc');
+  if(t==='w'){const fw=W.filter(w=>S.favs.includes(w.id));el2.innerHTML=fw.length?fw.map(w=>wC(w)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">🤍</div><div>No saved workers</div><button class="btn bp sm mt" onclick="gT('tsv')">Browse Workers</button></div>`;}
+  else{const fj=[...J,...S.pj].filter(j=>S.favs.includes(j.id));el2.innerHTML=fj.length?fj.map(j=>jC(j)).join(''):`<div style="padding:40px;text-align:center;color:var(--tx3);"><div style="font-size:40px;">🤍</div><div>No saved jobs</div><button class="btn bp sm mt" onclick="gT('tj')">Browse Jobs</button></div>`;}
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────────────────
+function rNot(){document.getElementById('nl').innerHTML=S.nots.map(n=>`<div class="ni2 ${n.ur?'ur':''}" onclick="hN('${n.id}','${n.tp||''}','${n.kid||''}')"><div style="width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:${n.bg||'rgba(64,202,215,.15)'};">${n.ic}</div><div style="flex:1;"><div style="font-weight:600;font-size:13px;">${n.ti}</div><div style="font-size:12px;color:var(--tx2);margin-top:2px;">${n.tx}</div><div style="font-size:11px;color:var(--tx3);margin-top:4px;">${n.tm}</div></div>${n.ur?'<div style="width:8px;height:8px;background:var(--p);border-radius:50%;flex-shrink:0;margin-top:4px;"></div>':''}</div>`).join('')||'<div style="padding:40px;text-align:center;color:var(--tx3);">No notifications</div>';}
+function hN(id,tp,kid){const n=S.nots.find(x=>x.id===id);if(n)n.ur=false;updND();rNot();if(tp==='job'&&kid)oJD(kid);else if(tp==='app'&&kid)oJD(kid);}
+function mAR(){S.nots.forEach(n=>n.ur=false);updND();rNot();}
+function updND(){const h=S.nots.some(n=>n.ur);const d=document.getElementById('nd');if(d)d.style.display=h?'block':'none';}
+
+// ── MESSAGES ──────────────────────────────────────────────────
+function rMsg(){document.getElementById('cl2').innerHTML=CV.map(c=>`<div class="cli" onclick="oCh('${c.id}','${c.wt}')"><div class="av" style="width:46px;height:46px;font-size:22px;">${c.av}</div><div style="flex:1;"><div style="display:flex;justify-content:space-between;align-items:center;"><div style="font-weight:700;">${c.wt}</div><div style="font-size:11px;color:var(--tx3);">${c.tm}</div></div><div style="font-size:12px;color:var(--tx2);margin-top:2px;">${c.lm}</div></div>${c.ur?`<div style="background:var(--p);color:#000;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;">${c.ur}</div>`:''}</div>`).join('');}
+function oCh(id,nm){
+  document.getElementById('cwn').textContent=nm;
+  document.getElementById('mch').dataset.cid=id;
+  if(!S.ch[id])S.ch[id]=[{from:'them',tx:'Hi! How can I help you?',tm:'10:00 AM'},{from:'me',tx:'I saw your profile and I am interested.',tm:'10:01 AM'},{from:'them',tx:'Great! What kind of work do you need?',tm:'10:02 AM'}];
+  rCM(id);oM('mch');
+}
+function rCM(id){const ms=S.ch[id]||[];document.getElementById('cms').innerHTML=ms.map(m=>`<div style="display:flex;padding:6px 16px;"><div class="cb ${m.from==='me'?'me':'th'}">${m.tx}<div style="font-size:10px;opacity:.6;margin-top:3px;">${m.tm}</div></div></div>`).join('');const e=document.getElementById('cms');e.scrollTop=e.scrollHeight;}
+function sCM(){
+  const i=document.getElementById('cin'),t=i.value.trim();if(!t)return;
+  const id=document.getElementById('mch').dataset.cid||'x';
+  if(!S.ch[id])S.ch[id]=[];
+  const tm=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  S.ch[id].push({from:'me',tx:t,tm});i.value='';rCM(id);
+  setTimeout(()=>{S.ch[id].push({from:'them',tx:'Thanks for your message! I will get back to you shortly.',tm:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});rCM(id);},1200);
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────
+function rAdm(){
+  document.getElementById('as').innerHTML=`<div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--p);">${W.length}</div><div style="font-size:12px;color:var(--tx2);">Workers</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--ok);">${J.length+S.pj.length}</div><div style="font-size:12px;color:var(--tx2);">Jobs</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--acc);">${S.apps.length+47}</div><div style="font-size:12px;color:var(--tx2);">Applications</div></div><div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;text-align:center;"><div style="font-size:28px;font-weight:800;color:var(--er);">3</div><div style="font-size:12px;color:var(--tx2);">Reports</div></div>`;
+  aT('rpts',null);
+}
+function aT(t,el){
+  if(el){document.querySelectorAll('.tbt').forEach(b=>b.classList.remove('on'));el.classList.add('on');}
+  const c=document.getElementById('ac2');
+  if(t==='rpts')c.innerHTML=[{tgt:'Worker — Ramesh K.',rs:'Fake profile',tm:'1 day ago'},{tgt:'Job — Painting Team',rs:'Suspicious listing',tm:'2 days ago'},{tgt:'Worker — Unknown',rs:'Inappropriate content',tm:'3 days ago'}].map(r=>`<div style="display:flex;gap:12px;padding:14px;border-bottom:1px solid var(--br);align-items:flex-start;"><div style="font-size:24px;">🚨</div><div style="flex:1;"><div style="font-weight:600;font-size:13px;">${r.tgt}</div><div style="font-size:12px;color:var(--tx2);">Reason: ${r.rs}</div><div style="font-size:11px;color:var(--tx3);">${r.tm}</div></div><div style="display:flex;flex-direction:column;gap:4px;"><button class="btn bd sm" onclick="aAct('suspend','${r.tgt}')">Suspend</button><button class="btn bg sm" onclick="aAct('dismiss')">Dismiss</button></div></div>`).join('');
+  else if(t==='wrk')c.innerHTML=W.map(w=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div style="display:flex;gap:8px;align-items:center;"><div class="av" style="width:36px;height:36px;font-size:16px;">${w.em}</div><div><div style="font-weight:600;font-size:13px;">${w.nm}</div><div style="font-size:11px;color:var(--tx2);">${w.cat} · ${w.cy}</div></div></div><div style="display:flex;gap:4px;">${w.vr?'<span class="bdg bdok">✓ Verified</span>':`<button class="btn bp sm" onclick="vW('${w.id}')">Verify</button>`}<button class="btn bd sm" onclick="aAct('ban','${w.nm}')">Ban</button></div></div></div>`).join('');
+  else if(t==='emp')c.innerHTML=`<div class="card mb"><div style="font-weight:600;">Anjali Construction</div><div style="font-size:12px;color:var(--tx2);">Mumbai · 2 active jobs · Employer</div><button class="btn bg sm mt" onclick="toast('Employer verified ✓','ok')">Verify</button></div><div class="card mb"><div style="font-weight:600;">TechPark Facilities</div><div style="font-size:12px;color:var(--tx2);">Pune · 1 active job · Employer</div><button class="btn bg sm mt" onclick="toast('Employer verified ✓','ok')">Verify</button></div>`;
+  else if(t==='rev')c.innerHTML=Object.values(RV).flat().map(r=>`<div class="card mb"><div style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-weight:600;font-size:13px;">${r.u}</div><div style="font-size:12px;color:var(--tx2);">${r.t}</div></div><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;"><span class="stars">${'★'.repeat(Math.floor(r.r))}</span><button class="btn bd sm" onclick="this.closest('.card').remove();toast('Review removed','ok')">Remove</button></div></div></div>`).join('');
+}
+function aAct(a,tgt){toast({suspend:(tgt||'')+' suspended',ban:(tgt||'')+' banned',dismiss:'Report dismissed'}[a]||'Done','ok');}
+function vW(id){const w=W.find(x=>x.id===id);if(w){w.vr=true;toast(w.nm+' verified ✓','ok');aT('wrk',null);}}
+
+// ── REVIEWS ───────────────────────────────────────────────────
+function oRM(tid,tt,tnm){S.rtgt={id:tid,type:tt,nm:tnm};S.rr=5;uSt(5);document.getElementById('rtx').value='';document.getElementById('rti').innerHTML=`<div style="font-size:24px;">⭐</div><div><div style="font-weight:700;">${tnm}</div><div style="font-size:12px;color:var(--tx2);">Write your honest review</div></div>`;oM('mrev');}
+function sR(n){S.rr=n;uSt(n);}
+function uSt(n){document.querySelectorAll('.sk2').forEach((s,i)=>{s.style.color=i<n?'var(--acc)':'var(--br)';});}
+function sbRev(){
+  const t=document.getElementById('rtx').value.trim();if(!t){toast('Please write a review','er');return;}
+  S.ur.push({id:'rv_'+Date.now(),tid:S.rtgt?.id,rn:S.user?.name||'You',rt:S.rr,cm:t,dt:'Just now'});
+  localStorage.setItem('ur',JSON.stringify(S.ur));
+  cM('mrev');toast('Review submitted! ⭐','ok');
+  if(S.cwid)oWD(S.cwid);
+}
+
+// ── LOCATION ──────────────────────────────────────────────────
+function oLoc(){oM('mloc');}
+function sLoc(){const c=document.getElementById('lci').value.trim(),lo=document.getElementById('llo').value.trim();S.loc=lo?lo+', '+c:c;document.getElementById('ld').textContent=S.loc;if(document.getElementById('sloc'))document.getElementById('sloc').textContent=S.loc;cM('mloc');toast('Location updated 📍','ok');}
+function dtL(){if(!navigator.geolocation){toast('GPS not available','er');return;}toast('Detecting location…');navigator.geolocation.getCurrentPosition(()=>{S.loc='Current Location';document.getElementById('ld').textContent=S.loc;cM('mloc');toast('Location detected! 📍','ok');},()=>toast('Could not detect. Enter manually.','er'));}
+
+// ── ACTIONS ───────────────────────────────────────────────────
+function cW(ph){window.location.href='tel:'+ph.replace(/\s/g,'');toast('Opening phone dialer…');}
+function wW(ph,nm){const msg=encodeURIComponent(`Hi ${nm}, I found your profile on Kam Connect and I'd like to hire you. Are you available?`);window.open('https://wa.me/'+ph.replace(/[^0-9]/g,'')+'?text='+msg,'_blank');}
+function gDir(loc){window.open('https://www.google.com/maps/search/'+encodeURIComponent(loc),'_blank');toast('Opening maps…');}
+function shJ(id){const j=[...J,...S.pj].find(x=>x.id===id);if(navigator.share)navigator.share({title:j?.ti,text:`Check out this job on Kam Connect: ${j?.ti} at ${j?.co}`,url:window.location.href});else navigator.clipboard.writeText(window.location.href).then(()=>toast('Link copied! 📋','ok'));}
+function sbRpt(){cM('mrpt');toast('Report submitted. We will review it shortly.','ok');}
+function oNM(id){document.getElementById('nai').value=id;document.getElementById('ntx').value='';oM('mnot');}
+function svN(){const id=document.getElementById('nai').value,t=document.getElementById('ntx').value;const a=S.apps.find(x=>x.id===id);if(a){a.nt=t;localStorage.setItem('aps',JSON.stringify(S.apps));}cM('mnot');toast('Note saved 📝','ok');}
+function vS(){if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){toast('Voice search not supported','er');return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const r=new SR();r.lang='en-IN';r.onresult=e=>{const t=e.results[0][0].transcript;document.getElementById('hsi').value=t;hS();};r.onerror=()=>toast('Could not detect voice. Try again.','er');r.start();toast('🎤 Listening…');}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+function sAL(c,btn){localStorage.setItem('lang',c);['len','lhi','lmr'].forEach(id=>{const b=document.getElementById(id);if(b)b.className='btn bg sm';});btn.className='btn bp sm';toast('Language: '+(c==='en'?'English':c==='hi'?'Hindi':'Marathi'),'ok');}
+function oHelp(){alert('Help & Support\n\nEmail: support@kamconnect.in\nPhone: 1800-KAM-HELP (toll free)\nHours: Mon–Sat 9am–6pm\n\nFor urgent issues, WhatsApp: +91 98765 00000');}
+function oPrv(){alert('Privacy Policy\n\nKam Connect respects your privacy. We collect only information needed to connect workers with employers.\n\nYour contact details are shared only when you choose to be contacted.\n\nDelete your account and all data anytime from Settings.');}
+function oTrm(){alert('Terms of Service\n\nBy using Kam Connect, you agree to use the platform honestly.\n\nWorkers must provide accurate skills.\nEmployers must post genuine jobs.\nViolations may result in account suspension.');}
+
+// ── MODALS ────────────────────────────────────────────────────
+function oM(id){document.getElementById(id).classList.add('on');}
+function cM(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)cM(m.id);}));
+
+// ── TOAST ─────────────────────────────────────────────────────
+let ttm;
+function toast(msg,tp){const t=document.getElementById('tst');t.textContent=msg;t.className='sh'+(tp?' '+tp:'');clearTimeout(ttm);ttm=setTimeout(()=>t.className='',3000);}
+
+// ── BOOT ──────────────────────────────────────────────────────
+(function(){
+  const s=localStorage.getItem('sess');
+  const ob=localStorage.getItem('ob');
+  if(s){try{S.user=JSON.parse(s);S.role=S.user.role||'customer';sP('pap');initApp();}catch(e){localStorage.removeItem('sess');sP(ob?'pli':'pob');}}
+  else if(ob){sP('pli');}
+  uSt(5);
+})();
+
+// ── AI CHATBOT ────────────────────────────────────────────────
+const AI = {
+  open: false,
+  history: [],
+  typing: false,
+
+  // Render markdown-lite: **bold**, newlines, bullet points
+  md(txt) {
+    return txt
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\n\n/g,'</p><p>')
+      .replace(/\n/g,'<br>')
+      .replace(/^(\d+\.\s)/gm,'<br>$1')
+      .replace(/^(- |• )/gm,'<br>• ');
+  },
+
+  addMsg(role, text) {
+    const msgs = document.getElementById('ai-msgs');
+    const isBot = role === 'bot';
+    const div = document.createElement('div');
+    div.className = 'ai-msg ' + role;
+    div.innerHTML = isBot
+      ? `<div class="ai-av2">🤖</div><div class="ai-bubble"><p>${this.md(text)}</p></div>`
+      : `<div class="ai-bubble">${this.md(text)}</div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  },
+
+  showTyping() {
+    const msgs = document.getElementById('ai-msgs');
+    const div = document.createElement('div');
+    div.className = 'ai-msg bot';
+    div.id = 'ai-typing-indicator';
+    div.innerHTML = `<div class="ai-av2">🤖</div><div class="ai-bubble ai-typing"><span></span><span></span><span></span></div>`;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  },
+
+  removeTyping() {
+    const t = document.getElementById('ai-typing-indicator');
+    if(t) t.remove();
+  },
+
+  addQuick(suggestions) {
+    const msgs = document.getElementById('ai-msgs');
+    const div = document.createElement('div');
+    div.className = 'ai-quick';
+    div.innerHTML = suggestions.map(s => `<span class="ai-qbtn" onclick="aiQuick('${s}')">${s}</span>`).join('');
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  },
+
+  async send(msg) {
+    if (!msg.trim() || this.typing) return;
+    this.typing = true;
+    this.addMsg('user', msg);
+    this.history.push({ role: 'user', content: msg });
+    document.getElementById('ai-q').value = '';
+
+    this.showTyping();
+    try {
+      const res = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history: this.history.slice(-8) })
+      });
+      const data = await res.json();
+      this.removeTyping();
+      const reply = data.reply || 'Sorry, I could not process that. Please try again.';
+      this.addMsg('bot', reply);
+      this.history.push({ role: 'bot', content: reply });
+    } catch(e) {
+      this.removeTyping();
+      const fallback = this.localFallback(msg);
+      this.addMsg('bot', fallback);
+      this.history.push({ role: 'bot', content: fallback });
+    }
+    this.typing = false;
+  },
+
+  // Local fallback when server is unreachable
+  localFallback(msg) {
+    const m = msg.toLowerCase();
+    if (/plumb/i.test(m)) return `🔧 Looking for a plumber? Go to the **Services** tab and filter by Plumbing. You can call or WhatsApp directly from their profile!`;
+    if (/electr/i.test(m)) return `⚡ For electricians, check the **Services** tab → filter by Electrical. Top pick: **Ravi Kumar** — ⭐4.9, ₹700/day.`;
+    if (/job/i.test(m)) return `💼 Head to the **Jobs** tab to browse all openings. You can filter by Full-time, Part-time, Daily Wage etc.`;
+    if (/hi|hello|hey|namaste/i.test(m)) return `Hello! 👋 I'm **Kam AI**. I can help you find workers, jobs, and more on Kam Connect. What do you need?`;
+    if (/help/i.test(m)) return `I can help with:\n\n🔍 Find workers — "Find a plumber"\n💼 Browse jobs — "Show jobs"\n📊 Platform info — "How many workers?"\n💰 Wage rates — "What are the rates?"`;
+    return `I'm here to help! Try asking:\n\n- **"Find a plumber in Pune"**\n- **"Show available jobs"**\n- **"What is Kam Connect?"**`;
+  },
+
+  init() {
+    const msgs = document.getElementById('ai-msgs');
+    msgs.innerHTML = '';
+    this.addMsg('bot', `Hello! 👋 I'm **Kam AI**, your smart assistant on Kam Connect.\n\nI can help you find workers, browse jobs, check wages, and answer any question. Just ask me anything!`);
+    this.addQuick(['Find a plumber', 'Show jobs', 'Wage rates', 'How to apply?']);
+  }
+};
+
+function aiToggle() {
+  AI.open = !AI.open;
+  const win = document.getElementById('ai-win');
+  const fab = document.getElementById('ai-fab');
+  if (AI.open) {
+    win.classList.add('open');
+    fab.textContent = '✕';
+    fab.style.background = 'linear-gradient(135deg,#EF4444,#DC2626)';
+    if (!AI.history.length) AI.init();
+    setTimeout(() => document.getElementById('ai-q').focus(), 200);
+  } else {
+    win.classList.remove('open');
+    fab.textContent = '🤖';
+    fab.style.background = 'linear-gradient(135deg,var(--p),var(--sec))';
+  }
+}
+
+function aiSend() {
+  const q = document.getElementById('ai-q').value.trim();
+  if (q) AI.send(q);
+}
+
+function aiQuick(q) {
+  document.getElementById('ai-q').value = q;
+  AI.send(q);
+}
+</script>
+</body>
+</html>
