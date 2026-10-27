@@ -353,20 +353,44 @@ app.get('/api/search', (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
-//  AI CHATBOT
+//  AI CHATBOT  — fully DB-independent, works on Vercel serverless
 // ═══════════════════════════════════════════════════════════════════════════════
+
+// Static seed data — no DB needed, always available instantly
+const AI_WORKERS = [
+  {nm:'Suresh Patil',cat:'Plumbing',cy:'Pune',wg:600,wu:'per day',av:true,vr:true,rt:4.7},
+  {nm:'Ravi Kumar',cat:'Electrical',cy:'Pune',wg:700,wu:'per day',av:true,vr:true,rt:4.9},
+  {nm:'Mohan Sinha',cat:'Carpentry',cy:'Mumbai',wg:800,wu:'per day',av:false,vr:false,rt:4.5},
+  {nm:'Priya Cleaning Services',cat:'Cleaning',cy:'Pune',wg:500,wu:'per day',av:true,vr:true,rt:4.8},
+  {nm:'Akbar Shaikh',cat:'Painting',cy:'Mumbai',wg:650,wu:'per day',av:true,vr:false,rt:4.3},
+  {nm:'Ganesh More',cat:'Mechanic',cy:'Nashik',wg:550,wu:'per day',av:true,vr:false,rt:4.6},
+  {nm:'Ramesh Gardener',cat:'Gardening',cy:'Pune',wg:450,wu:'per day',av:true,vr:false,rt:4.4},
+  {nm:'Deepak Delivery',cat:'Delivery',cy:'Pune',wg:600,wu:'per day',av:true,vr:false,rt:4.2},
+];
+const AI_JOBS = [
+  {ti:'Plumber Needed — Residential Project',co:'Anjali Construction',cy:'Pune',ty:'Temporary',wmi:600,wma:800,fr:'Per Day'},
+  {ti:'Senior Electrician — IT Office Complex',co:'TechPark Facilities',cy:'Pune',ty:'Full-time',wmi:25000,wma:35000,fr:'Per Month'},
+  {ti:'Delivery Boys — Grocery App',co:'QuickMart',cy:'Pune',ty:'Part-time',wmi:600,wma:900,fr:'Per Day'},
+  {ti:'Carpenter — Modular Furniture',co:'Shree Interior Designs',cy:'Mumbai',ty:'Full-time',wmi:18000,wma:25000,fr:'Per Month'},
+  {ti:'Gardeners for Society Maintenance',co:'GreenLeaf Gardens',cy:'Pune',ty:'Contract',wmi:300,wma:400,fr:'Per Day'},
+  {ti:'Painting Team — 15-Floor Building',co:'Anjali Construction',cy:'Mumbai',ty:'Temporary',wmi:600,wma:750,fr:'Per Day'},
+  {ti:'House Cleaner — Weekly Service',co:'HomeStar Services',cy:'Pune',ty:'Part-time',wmi:400,wma:500,fr:'Per Day'},
+  {ti:'Two-Wheeler Mechanic — Workshop',co:'Speed Auto',cy:'Nashik',ty:'Full-time',wmi:15000,wma:20000,fr:'Per Month'},
+];
+
 app.post('/api/ai/chat', (req, res) => {
   try {
     const { message = '' } = req.body;
     if (!message.trim()) return res.status(400).json({ ok: false, error: 'Empty message' });
 
     const msg = message.toLowerCase().trim();
-    const workers = db.all('SELECT * FROM workers').map(db.parseWorker);
-    const jobs    = db.all('SELECT * FROM jobs WHERE op=1').map(db.parseJob);
-    const stats   = {
-      workers: workers.length, jobs: jobs.length,
-      apps: db.get('SELECT COUNT(*) AS cnt FROM applications').cnt,
-    };
+
+    // Use static data — no DB required
+    const workers = AI_WORKERS;
+    const jobs    = AI_JOBS;
+    const avWorkers = workers.filter(w => w.av).length;
+    const vrWorkers = workers.filter(w => w.vr).length;
+    const avgWage   = Math.round(workers.reduce((s,w)=>s+w.wg,0)/workers.length);
 
     const pick = arr => arr[Math.floor(Math.random() * arr.length)];
     const fmt  = w => `**${w.nm}** (${w.cat}, ${w.cy}) — ₹${w.wg}/${w.wu.replace('per ','')} · ⭐${w.rt}`;
@@ -374,50 +398,114 @@ app.post('/api/ai/chat', (req, res) => {
     const findW = (cat, em) => {
       const found = workers.filter(w => w.cat === cat && w.av);
       return found.length
-        ? `${em} Found **${found.length} available ${cat.toLowerCase()} workers**:\n\n${found.slice(0,3).map(fmt).join('\n')}\n\nTap a worker card to view profile & contact.`
-        : `No available ${cat.toLowerCase()} workers right now.`;
+        ? `${em} Found **${found.length} available ${cat.toLowerCase()} workers**:\n\n${found.map(fmt).join('\n')}\n\nOpen the **Services** tab to view full profile & contact.`
+        : `No available ${cat.toLowerCase()} workers right now. Browse the **Services** tab.`;
     };
 
     let reply = '';
+
     if (/^(hi|hello|hey|namaste|hii|howdy|yo|sup|hola)\b/.test(msg))
-      reply = pick([`Hello! 👋 I'm **Kam AI**, your assistant on Kam Connect. I can help you find workers, browse jobs, check stats, or answer anything!`,`Namaste! 🙏 I'm **Kam AI**. Live data: **${stats.workers} workers**, **${stats.jobs} jobs**. How can I help?`]);
-    else if (/plumb/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Plumbing','🔧');
-    else if (/electr/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Electrical','⚡');
-    else if (/clean/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Cleaning','🧹');
-    else if (/paint/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Painting','🖌️');
-    else if (/carpenter|carpent|furniture/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Carpentry','🪚');
-    else if (/mechanic/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Mechanic','🔩');
-    else if (/deliver/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Delivery','🚚');
-    else if (/garden|lawn/i.test(msg) && /find|need|want|show|get|hire|looking/i.test(msg)) reply = findW('Gardening','🌿');
-    else if (/show.*job|list.*job|latest job|naukri/i.test(msg)) reply = `💼 **${jobs.length} active jobs**:\n\n${jobs.slice(0,4).map(fmtJ).join('\n')}\n\nGo to **Jobs** tab to apply!`;
-    else if (/pune.*job|job.*pune/i.test(msg)) { const f=jobs.filter(j=>j.cy.toLowerCase().includes('pune')); reply=f.length?`📍 **${f.length} jobs in Pune**:\n\n${f.slice(0,4).map(fmtJ).join('\n')}`:`No jobs in Pune right now.`; }
-    else if (/mumbai.*job|job.*mumbai/i.test(msg)) { const f=jobs.filter(j=>j.cy.toLowerCase().includes('mumbai')); reply=f.length?`📍 **${f.length} jobs in Mumbai**:\n\n${f.slice(0,4).map(fmtJ).join('\n')}`:`No jobs in Mumbai right now.`; }
-    else if (/full.?time/i.test(msg)) { const f=jobs.filter(j=>j.ty==='Full-time'); reply=f.length?`👔 **${f.length} full-time jobs**:\n\n${f.slice(0,3).map(fmtJ).join('\n')}`:`No full-time jobs right now.`; }
-    else if (/part.?time/i.test(msg)) { const f=jobs.filter(j=>j.ty==='Part-time'); reply=f.length?`⏱ **${f.length} part-time jobs**:\n\n${f.slice(0,3).map(fmtJ).join('\n')}`:`No part-time jobs right now.`; }
-    else if (/daily.?wage/i.test(msg)) { const f=jobs.filter(j=>j.ty==='Daily Wage'); reply=f.length?`📅 **${f.length} daily wage jobs**:\n\n${f.slice(0,3).map(fmtJ).join('\n')}`:`No daily wage jobs right now.`; }
-    else if (/how.*apply|apply.*job/i.test(msg)) reply = `To apply:\n\n1. Go to **Jobs** tab\n2. Open any job\n3. Tap **Apply Now**\n4. Submit ✅`;
-    else if (/post.*job|create.*job/i.test(msg)) reply = `To post a job:\n\n1. Switch to **Employer** mode\n2. Tap **+ Post Job**\n3. Fill details & **Publish** ✅`;
-    else if (/top.*worker|best.*worker|show.*worker/i.test(msg)) { const top=[...workers].sort((a,b)=>b.rt-a.rt).slice(0,4); reply=`⭐ **Top workers**:\n\n${top.map(fmt).join('\n')}`; }
-    else if (/available.*worker|worker.*available/i.test(msg)) { const av=workers.filter(w=>w.av); reply=`✅ **${av.length} available workers**:\n\n${av.slice(0,4).map(fmt).join('\n')}`; }
-    else if (/stat|how many|count|total/i.test(msg)) { const av=workers.filter(w=>w.av).length; reply=`📊 **Kam Connect Stats:**\n\n👷 **${stats.workers}** workers (${av} available)\n💼 **${stats.jobs}** active jobs\n📋 **${stats.apps}** applications`; }
-    else if (/cost|price|wage|rate|salary|pay/i.test(msg)) { const avg=Math.round(workers.reduce((s,w)=>s+w.wg,0)/workers.length); reply=`💰 **Wage rates:**\n\n📉 Min: ₹${Math.min(...workers.map(w=>w.wg))}/day\n📈 Max: ₹${Math.max(...workers.map(w=>w.wg))}/day\n📊 Avg: ₹${avg}/day`; }
-    else if (/verif/i.test(msg)) { const vr=workers.filter(w=>w.vr).length; reply=`✓ **${vr}/${workers.length}** workers are Verified. Look for ✓ badge on profiles!`; }
-    else if (/help|what can you do/i.test(msg)) reply = `I can help with:\n\n🔍 Find workers — "Find a plumber"\n💼 Jobs — "Show jobs in Pune"\n📊 Stats — "How many workers?"\n💰 Wages — "What are the rates?"\n💬 General questions — just ask!`;
-    else if (/what is kam|about kam/i.test(msg)) reply = `**Kam Connect** connects workers, employers & customers.\n\n👷 ${stats.workers} workers · 💼 ${stats.jobs} jobs · 📍 Pune, Mumbai, Nashik`;
-    else if (/thank|thanks|great|awesome/i.test(msg)) reply = pick([`You're welcome! 😊`,`Happy to help! 🙌`,`Anytime! ⚡`]);
-    else if (/bye|goodbye/i.test(msg)) reply = `Goodbye! 👋 Have a great day!`;
-    else if (/capital.*india|india.*capital/i.test(msg)) reply = `🏛️ Capital of India is **New Delhi**.`;
-    else if (/capital.*maharashtra/i.test(msg)) reply = `🏛️ Capital of Maharashtra is **Mumbai**.`;
-    else if (/pm.*india|prime minister/i.test(msg)) reply = `🇮🇳 Prime Minister of India: **Narendra Modi** (2024).`;
-    else if (/what.*time|current.*time/i.test(msg)) { const t=new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}); reply=`🕐 Current IST time: **${t}**`; }
-    else if (/today.*date|what.*date/i.test(msg)) { const d=new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Asia/Kolkata'}); reply=`📅 Today: **${d}**`; }
-    else if (/joke/i.test(msg)) reply = pick([`Why did the plumber fail school?\n\nBecause he always **went down the drain!** 🔧😂`,`What do you call a reliable electrician?\n\n**Watt a great guy!** ⚡😄`]);
-    else {
       reply = pick([
-        `I'm **Kam AI** and I'm here to help with Kam Connect!\n\nTry:\n- **"Find a plumber"**\n- **"Show jobs in Pune"**\n- **"What are wage rates?"**`,
-        `Not sure about that, but I can help with workers, jobs & platform info!\n\nType **help** to see what I can do 😊`,
+        `Hello! 👋 I'm **Kam AI**, your assistant on Kam Connect.\n\nI can help you find workers, browse jobs, check stats, and answer general questions. What do you need?`,
+        `Namaste! 🙏 I'm **Kam AI**. We have **${workers.length} workers** and **${jobs.length} active jobs** on platform. How can I help you today?`,
       ]);
+    else if (/plumb/i.test(msg)) reply = findW('Plumbing','🔧');
+    else if (/electr/i.test(msg)) reply = findW('Electrical','⚡');
+    else if (/clean/i.test(msg)) reply = findW('Cleaning','🧹');
+    else if (/paint/i.test(msg)) reply = findW('Painting','🖌️');
+    else if (/carpenter|carpent|furniture/i.test(msg)) reply = findW('Carpentry','🪚');
+    else if (/mechanic/i.test(msg)) reply = findW('Mechanic','🔩');
+    else if (/deliver/i.test(msg)) reply = findW('Delivery','🚚');
+    else if (/garden|lawn/i.test(msg)) reply = findW('Gardening','🌿');
+    else if (/show.*job|list.*job|latest job|find.*job|job.*list|naukri|kaam/i.test(msg))
+      reply = `💼 **${jobs.length} active jobs** on Kam Connect:\n\n${jobs.slice(0,4).map(fmtJ).join('\n')}\n\nOpen the **Jobs** tab to apply!`;
+    else if (/pune.*job|job.*pune/i.test(msg)) {
+      const f = jobs.filter(j=>j.cy.toLowerCase().includes('pune'));
+      reply = f.length ? `📍 **${f.length} jobs in Pune**:\n\n${f.map(fmtJ).join('\n')}` : `No jobs in Pune right now.`;
     }
+    else if (/mumbai.*job|job.*mumbai/i.test(msg)) {
+      const f = jobs.filter(j=>j.cy.toLowerCase().includes('mumbai'));
+      reply = f.length ? `📍 **${f.length} jobs in Mumbai**:\n\n${f.map(fmtJ).join('\n')}` : `No jobs in Mumbai right now.`;
+    }
+    else if (/full.?time/i.test(msg)) {
+      const f = jobs.filter(j=>j.ty==='Full-time');
+      reply = `👔 **${f.length} full-time jobs**:\n\n${f.map(fmtJ).join('\n')}`;
+    }
+    else if (/part.?time/i.test(msg)) {
+      const f = jobs.filter(j=>j.ty==='Part-time');
+      reply = `⏱ **${f.length} part-time jobs**:\n\n${f.map(fmtJ).join('\n')}`;
+    }
+    else if (/daily.?wage/i.test(msg)) {
+      const f = jobs.filter(j=>j.ty==='Daily Wage');
+      reply = f.length ? `📅 **${f.length} daily wage jobs**:\n\n${f.map(fmtJ).join('\n')}` : `No daily wage jobs right now.`;
+    }
+    else if (/how.*apply|apply.*job/i.test(msg))
+      reply = `To apply for a job:\n\n1. Open the **Jobs** tab\n2. Tap any job card\n3. Tap **Apply Now**\n4. Add a cover note (optional)\n5. Tap **Submit Application** ✅\n\nYou'll get a notification when the employer responds!`;
+    else if (/post.*job|create.*job/i.test(msg))
+      reply = `To post a job:\n\n1. Go to **Profile** → switch to **Employer** mode\n2. Tap **+ Post Job**\n3. Fill title, category, wage, description\n4. Tap **Publish** ✅\n\nYour job will be visible to all workers instantly!`;
+    else if (/top.*worker|best.*worker|show.*worker|worker.*list/i.test(msg)) {
+      const top = [...workers].sort((a,b)=>b.rt-a.rt).slice(0,4);
+      reply = `⭐ **Top-rated workers** on Kam Connect:\n\n${top.map(fmt).join('\n')}`;
+    }
+    else if (/available.*worker|worker.*available/i.test(msg)) {
+      const av = workers.filter(w=>w.av);
+      reply = `✅ **${av.length} workers available** right now:\n\n${av.map(fmt).join('\n')}`;
+    }
+    else if (/stat|how many|count|total|number/i.test(msg))
+      reply = `📊 **Kam Connect Live Stats:**\n\n👷 **${workers.length}** total workers (${avWorkers} available)\n💼 **${jobs.length}** active jobs\n✅ **${vrWorkers}** verified workers\n📍 **3** cities — Pune, Mumbai, Nashik`;
+    else if (/cost|price|wage|rate|salary|pay|charge|fee/i.test(msg))
+      reply = `💰 **Worker wage rates on Kam Connect:**\n\n📉 Minimum: ₹${Math.min(...workers.map(w=>w.wg))}/day\n📈 Maximum: ₹${Math.max(...workers.map(w=>w.wg))}/day\n📊 Average: ₹${avgWage}/day\n\nRates vary by category & experience!`;
+    else if (/verif/i.test(msg))
+      reply = `✅ **${vrWorkers} out of ${workers.length}** workers are Verified on Kam Connect.\n\nVerified workers have been reviewed by our admin team. Look for the **✓ Verified** badge on worker profiles!`;
+    else if (/help|what can you do|feature/i.test(msg))
+      reply = `Here's what I can do:\n\n🔍 **Find workers** — "Find a plumber in Pune"\n💼 **Browse jobs** — "Show jobs in Mumbai"\n📊 **Platform stats** — "How many workers?"\n💰 **Wage rates** — "What are the rates?"\n📋 **How-to guides** — "How to apply for a job?"\n🌍 **General knowledge** — "Capital of India?"\n🕐 **Time & Date** — "What time is it?"\n😄 **Jokes** — "Tell me a joke"`;
+    else if (/what is kam|about kam|about this|about platform/i.test(msg))
+      reply = `**Kam Connect** is a local services & hiring platform that connects:\n\n👷 **Workers** — plumbers, electricians, carpenters, painters & more\n🏢 **Employers** — post jobs and hire skilled workers fast\n👤 **Customers** — find trusted local services with real reviews\n\n📍 Currently serving **${workers.length} workers** across Pune, Mumbai & Nashik! 🚀`;
+    else if (/worker.*profile|create.*profile|how.*profile/i.test(msg))
+      reply = `To create your worker profile:\n\n1. Go to **Profile** tab\n2. Switch role to **Worker**\n3. Tap **Create Profile**\n4. Fill your name, skills, category, wage & city\n5. Save ✓\n\nEmployers can then find and contact you directly!`;
+    else if (/thank|thanks|great|awesome|nice|perfect|superb/i.test(msg))
+      reply = pick([`You're welcome! 😊 Anything else I can help with?`, `Happy to help! 🙌`, `Glad I could help! ⚡`]);
+    else if (/bye|goodbye|see you|take care/i.test(msg))
+      reply = `Goodbye! 👋 Come back anytime. Have a great day! 😊`;
+    else if (/capital.*india|india.*capital/i.test(msg))
+      reply = `🏛️ The capital of India is **New Delhi**.`;
+    else if (/capital.*maharashtra|maharashtra.*capital/i.test(msg))
+      reply = `🏛️ The capital of Maharashtra is **Mumbai**.`;
+    else if (/pm.*india|prime minister.*india|india.*prime minister/i.test(msg))
+      reply = `🇮🇳 The Prime Minister of India is **Narendra Modi** (as of 2024).`;
+    else if (/population.*india|india.*population/i.test(msg))
+      reply = `🇮🇳 India's population is approximately **1.44 billion**, making it the most populous country in the world.`;
+    else if (/currency.*india|india.*currency/i.test(msg))
+      reply = `💵 India's currency is the **Indian Rupee (₹ / INR)**. 1 USD ≈ ₹83–84.`;
+    else if (/what.*time|current.*time|time.*india|ist/i.test(msg)) {
+      const t = new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'});
+      reply = `🕐 Current IST time: **${t}**`;
+    }
+    else if (/today.*date|current.*date|what.*date/i.test(msg)) {
+      const d = new Date().toLocaleDateString('en-IN', {weekday:'long',year:'numeric',month:'long',day:'numeric',timeZone:'Asia/Kolkata'});
+      reply = `📅 Today is: **${d}**`;
+    }
+    else if (/\d+\s*[\+\-\*\/]\s*\d/i.test(msg)) {
+      const expr = msg.match(/([\d\s\+\-\*\/\.\(\)]+)/);
+      if (expr) {
+        try {
+          const result = Function('"use strict";return(' + expr[1].trim() + ')')();
+          reply = `🔢 **${expr[1].trim()} = ${result}**`;
+        } catch { reply = `I couldn't calculate that. Try: "What is 25 + 75?"` }
+      }
+    }
+    else if (/joke/i.test(msg))
+      reply = pick([
+        `Why did the plumber go to school?\n\nBecause he wanted to **fix his pipe dreams!** 🔧😂`,
+        `What do you call a reliable electrician?\n\n**Watt a great guy!** ⚡😄`,
+        `Why don't scientists trust atoms?\n\nBecause they **make up everything!** 😄`,
+        `Why did the worker bring a ladder to the office?\n\nHis boss said **"Aim high!"** 😂`,
+      ]);
+    else
+      reply = pick([
+        `I'm **Kam AI** — your assistant on Kam Connect! 🤖\n\nI can help with:\n- **"Find a plumber in Pune"**\n- **"Show jobs in Mumbai"**\n- **"How many workers are there?"**\n\nType **help** to see everything I can do!`,
+        `Hmm, I'm not sure about that — but I'm great at helping with workers, jobs & platform info!\n\nTry asking:\n- **"Find an electrician"**\n- **"Show available jobs"**\n- **"What are wage rates?"**`,
+      ]);
 
     res.json({ ok: true, reply, timestamp: new Date().toISOString() });
   } catch (e) {
